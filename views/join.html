@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% block join %}
+<a href="/" class="btn">이전</a>
+<div id="login">
+    <div id="loginboard">
+        <img src="letter.svg" id="letter" />
+        <img src="cheese.svg" id="cheese" />
+        <img src="student.svg" id="student" />
+    </div>
+    <p></p>
+    <form id="loginForm" action="/auth/join" method="post">
+        <div class="loginone">
+            <div class="input_group">
+                <label for="email">이메일: </label>
+                <input id="email" type="email" name="email" required autofocus />
+            </div>
+            <div class="input_group">
+                <label for="ownId">아이디: </label>
+                <input id="ownId" type="ownId" name="ownId" required />
+            </div>
+            <div class="input_group">
+                <label for="password">비밀번호: </label>
+                <input id="password" type="password" name="password" required />
+            </div>
+            <div class="input_group">
+                <label for="nickname">닉네임: </label>
+                <input id="nickname" type="nickname" name="nickname" required />
+            </div>
+        </div>
+        <br /><br />
+        <div class="loginhelp">
+            <button id="joinBtn" type="submit" class="btn">완료</button>
+        </div>
+    </form>
+</div>
+{% endblock %} {% block script %} {% endblock %}

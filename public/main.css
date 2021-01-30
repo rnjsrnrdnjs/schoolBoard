@@ -1,0 +1,70 @@
+html,body{margin:0; padding:0; height:100%; font-family: 'Gamja Flower', cursive;}
+.btn{
+	display:inline-block;
+	padding:0 5 px;
+	text-decoration:none;
+	cursor:pointer;
+	border-radius:4px;
+	background-color:#55EE94;
+	border:1px solid #55EE94;
+	color:white;
+	height:37px;
+	line-height:37px;
+	vertical-align:top;
+	font-size:15px;
+}
+input [type='text'], input[type='email'], input[type='password'],input[type=ownId],input[type='nickname'], textarea{
+	border-radius:4px;
+	height:37px;
+	padding:10px;
+	border: 2px solid #969696;
+}
+.container {width:100%; height:100%;}
+@media screen and (min-width:800px){
+	.container {width:800px;margin :0 auto;}
+}
+.input-group{margin-bottom:15px;}
+.input-group label{width:25%; display:inline-block; color:white; }
+.input-group input{width:70%; }
+
+#headname1{
+	font-weight: bold;
+	font-size:40px;
+	white-space:"nowrap";color:#FFC314;
+}
+#headname3{
+	font-size:40px;
+	font-weight: bold;
+	color:#EB0000;
+}
+#lose{
+	text-decoration:none;
+}
+div#loginboard {
+    height: 200px;
+}
+#loginboard{
+	width:100%;
+	background-size:100% 100%;
+	background-image:url("/board.svg");
+	background-repeat:no-repeat;
+}
+#letter,#cheese,#student{
+	padding: 10px;
+    width: 80px;
+    height: 100px;
+}
+#login{
+	text-align:center;
+}
+.loginone{
+	background-color:#369F36;
+	border-radius:30px;
+}
+.loginhelp{
+	background-color:#8B5927;
+	border-radius:30px;
+}
+
+
+

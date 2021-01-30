@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>치즈마니또</title>
-		<meta name="viewport" content="width=device-width,user-scalable=no">
-		<meta http-equiv="X-UA-Compatible" content="IE-edge">
-		<link rel="stylesheet" herf="/main.css">
-		
-	</head>
-	<body>
-		치즈마니또를 만드는중이에요~~
-		
-	</body>
-</html>	
+    <head>
+        <title>치즈마니또</title>
+        <meta name="viewport" content="width=device-width,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+        <link rel="stylesheet" href="/main.css" />
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+	        <header>
+	        </header>
+            {% if user %} 
+				{% block content %} {% endblock %} 
+			{% else %}
+				{% if login %}
+					{% block login %} {% endblock %}
+				{% else %}
+					{% block join %} {% endblock %}
+				{% endif %}
+            {% endif %}
+
+            <footer></footer>
+        </div>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            window.onload = () => {
+                if (new URL(location.href).searchParams.get('loginError')) {
+                    alert(new URL(location.href).searchParams.get('loginError'));
+                }
+            };
+        </script>
+        {% block script %} {% endblock %}
+    </body>
+</html>
