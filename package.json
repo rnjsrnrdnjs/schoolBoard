@@ -19,7 +19,7 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "start": "nodemon app"
+    "start": "node app"
   },
   "author": "0X90",
   "license": "MIT"
