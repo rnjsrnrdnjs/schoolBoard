@@ -4,6 +4,7 @@
   "description": "to make board",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -12,6 +13,8 @@
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "nunjucks": "^3.2.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0"
   },
@@ -20,7 +23,7 @@
   },
   "scripts": {
     "start": "node app",
-	"test": "nodemon app"
+    "test": "nodemon app"
   },
   "author": "0X90",
   "license": "MIT"

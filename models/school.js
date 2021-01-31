@@ -5,7 +5,7 @@ module.exports = class School extends Sequelize.Model {
         return super.init(
             {
 				schoolName:{
-					type:Sequelize.String(20),
+					type:Sequelize.STRING(20),
 					unique:true,
 				},
             },{

@@ -5,11 +5,11 @@ module.exports = class Post extends Sequelize.Model {
         return super.init(
             {
                 content: {
-                    type: Sequelize.String(140),
+                    type: Sequelize.STRING(140),
                     allowNull: false,
                 },
                 img: {
-                    type: Sequelize.String(200),
+                    type: Sequelize.STRING(200),
                     allowNull: false,
                 },
             },
@@ -26,5 +26,7 @@ module.exports = class Post extends Sequelize.Model {
         );
     }
 
-    static associate(db) {}
+    static associate(db) {
+		db.Post.belongsTo(db.User);
+	}
 };

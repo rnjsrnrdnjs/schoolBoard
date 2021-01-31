@@ -5,29 +5,23 @@ module.exports = class User extends Sequelize.Model {
         return super.init(
             {
                 email: {
-                    type: Sequelize.String(40),
+                    type: Sequelize.STRING(40),
                     allowNull: false,
                     unique: true,
                 },
-                //아이디
-                ownId: {
-					type:sequelize.String(20),
-                    allowNull: false,
-                    unique: true,
-				},
                 //비밀번호
                 password: {
-					type:sequelize.String(100),
+					type:Sequelize.STRING(100),
                     allowNull: false,
 				},
                 //닉네임
                 nickname: {
-					type:sequelize.String(100),
+					type:Sequelize.STRING(100),
                     allowNull: false, 
 				},
                 //성별
                 sexual: {
-					type:sequelize.String(2),
+					type:Sequelize.STRING(2),
                     allowNull: false,
 				},
             },{
@@ -43,5 +37,7 @@ module.exports = class User extends Sequelize.Model {
         );
     }
 
-    static associate(db) {}
+    static associate(db) {
+		db.User.hasMany(db.Post);
+	}
 };
