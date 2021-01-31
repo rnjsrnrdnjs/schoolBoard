@@ -1,38 +1,17 @@
-{% extends 'layout.html' %}
-{% block login %} 
-			<div id="login">
-				<div id="loginboard">
-					<img src="letter.svg" id="letter">
-					<img src="cheese.svg" id="cheese">
-					<img src="student.svg" id="student">
-				</div>
-				<p>
-				</p>
-                <form id="loginForm" action="/auth/login" method="post">
-                    <div class="loginone">
-						<div id="headname1">치즈</div><div id="headname3">마니또</div>
-                        <div class="input_group">
-                            <label for="ownId">아이디: </label>
-                            <input id="ownId" type="ownId" name="ownId" required />
-                        </div>
-						<br><br>
-                        <div class="input_group">
-                            <label for="password">비밀번호: </label>
-                            <input id="password" type="password" name="password" required />
-                        </div>
-						<br><br>
-                        <a id="lose" href="/lose">비밀번호를 잃어버리셨나요?</a>
-                    </div>
-					<br><br>
-                    <div class="loginhelp">
-                        <a id="join" href="/join" class="btn">회원가입</a>
-						<p>
-						</p>
-                        <button id="loginBtn" type="submit" class="btn">로그인</button>
-                    </div>
-                </form>
-			</div>
-{% endblock %}
-{% block script %}
-
+{% extends 'main.html' %} {% block login %}
+<form id="loginForm" action="/auth/login" method="post">
+    <div class="input_group">
+        <label for="ownId">아이디: </label>
+        <input id="ownId" type="ownId" name="ownId" required autofocus />
+    </div>
+    <p></p>
+    <div class="input_group">
+        <label for="password">비밀번호: </label>
+        <input id="password" type="password" name="password" required />
+    </div>
+    <p></p>
+    <a id="lose" href="/lose">비밀번호를 잃어버리셨나요?</a>
+    <br /><br />
+    <button id="loginBtn" type="submit" class="btn">로그인</button>
+</form>
 {% endblock %}

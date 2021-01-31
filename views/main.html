@@ -1,17 +1,67 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	{% if choose %} 
-<!-- 메인화면
--->
 
-22
+
+	{% if user %} 
+		{% if choose %} <!-- 메인화면-->		
+		<header>
+			<div id="header">
+			<img src="/logo.png" id="logo">
+			<a href="/" id="headname2" style="display:inline" ;>치즈</a><a href="/" id="headname3" style="display:inline";>마니또</a>
+			<a href="/message" id="aMessage">
+			<img src="/message.png" id="message">
+			</a>
+			<a href="/setting" id="aSetting">
+			<img src="/setting.svg" id="setting">
+			</a>
+			</div>
+	    </header>
+		{% block subcontent %}
+		{% endblock %}
+		<footer>
+		</footer>
+		{% else %} <!--학교 선택 부분-->			
+			<div class="notMain">
+				<img src="school.svg" id="school">
+				<form id="mainForm" action="/main" method="post">
+					<div class="loginboard">
+					<div id="headname1">치즈</div><div id="headname3">마니또</div>
+						<p></p>
+						학교 선택
+       				 	<div class="input-group">
+						<input id="search" type="search" name="search" required />
+						</div>
+					<button id="mainStart">
+					<img src="/magnify.svg"/>
+						시작
+					</button>
+					</div>
+				</form>
+			</div>
+			<script>
+
+			</script>
+		{% endif %}
 	{% else %}
-<!--학교 선택 부분
--->
-		
-11
-	{% endif %}
+		<div class="notMain">
+			<img src="school.svg" id="school">
+			<a href="/login" class="btn">
+			로그인	페이지
+			</a>
+			<a href="/join" class="btn">
+			회원가입 페이지
+			</a>
+			<div class="loginboard">
+				<div id="headname1">치즈</div><div id="headname3">마니또</div>
+				<p>
+				</p>
+			{% block login %} {% endblock %}
+			</div>
+		</div>
+    {% endif %}
+
+
 
 {% endblock %}
 
