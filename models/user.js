@@ -15,7 +15,7 @@ module.exports = class User extends Sequelize.Model {
                     allowNull: false,
 				},
                 //닉네임
-                nickname: {
+                nick: {
 					type:Sequelize.STRING(100),
                     allowNull: false, 
 				},
@@ -24,6 +24,11 @@ module.exports = class User extends Sequelize.Model {
 					type:Sequelize.STRING(2),
                     allowNull: false,
 				},
+				schoolName:{
+					type: Sequelize.STRING(20),
+                    allowNull: false,
+                    unique: true,
+				}
             },{
 				sequelize,
 				timestamps:false,
@@ -38,6 +43,7 @@ module.exports = class User extends Sequelize.Model {
     }
 
     static associate(db) {
-		db.User.hasMany(db.Post);
+		db.User.belongsTo(db.School);
+		db.User.belongsTo(db.Chat);
 	}
 };

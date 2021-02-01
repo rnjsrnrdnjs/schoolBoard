@@ -1,26 +1,35 @@
-{% extends 'main.html' %} {% block login %}
+{% extends 'layout.html' %} {% block content %}
+<img src="/manito.svg" id ="loginImg">
 <form id="loginForm" action="/auth/join" method="post">
+	<div style="text-align:center">
     <div class="input_group">
-        <label for="email">이메일: </label>
-        <input id="email" type="email" name="email" required autofocus />
+        <input id="email" type="email" name="email"  placeholder="이메일" required autofocus />
     </div>
     <p></p>
     <div class="input_group">
-        <label for="password">비밀번호: </label>
-        <input id="password" type="password" name="password" required />
+        <input id="password" type="password" name="password" placeholder="비밀번호" required />
     </div>
     <p></p>
     <div class="input_group">
-        <label for="nickname">닉네임: </label>
-        <input id="nickname" type="nickname" name="nickname" required />
+        <input id="nick" type="nick" name="nick" placeholder="사용할 닉네임" required />
     </div>
     <p></p>
-    <select id="sexual" type="sexual" name="sexual" required>
-        <option value="">-- 성별 --</option>
-        <option value="man">남자</option>
-        <option value="woman">여자</option>
-    </select>
+	<label for="man">
+	<input id="man" type="radio" name="man" value="man"  />
+		<span id="o">남자</span>
+	</label>
+	<label for="woman">
+	<input id="woman" type="radio" name="man" value="woman"  />
+		<span id="w">여자</span>
+	</label>
+		
     <p></p>
+    <div class="input_group">
+        <input id="schoolName" type="schoolName" name="schoolName"  placeholder="학교 선택" required />
+    </div>
+		<p>
+		</p>
     <button id="joinBtn" type="submit" class="btn">가입</button>
+	</div>
 </form>
 {% endblock %}

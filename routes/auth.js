@@ -7,7 +7,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { email, password  , nick, sexual} = req.body;
+  const { email, password  , nick, sexual,schoolname} = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
     if (exUser) {
@@ -19,6 +19,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
       password: hash,
 	  nick,
 	  sexual,
+	  schoolname,
     });
     return res.redirect('/');
   } catch (error) {
@@ -41,7 +42,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.redirect('/');
+      return res.redirect('/main');
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 });

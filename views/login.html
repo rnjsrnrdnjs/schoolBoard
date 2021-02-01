@@ -1,17 +1,19 @@
-{% extends 'main.html' %} {% block login %}
+{% extends 'layout.html' %} {% block content %}
+	<img src="/manito.svg" id ="loginImg">
 <form id="loginForm" action="/auth/login" method="post">
-    <div class="input_group">
-        <label for="ownId">아이디: </label>
-        <input id="ownId" type="ownId" name="ownId" required autofocus />
+	<div style="text-align:center";>
+		    <div class="input_group">
+        <input id="ownId" type="ownId" name="ownId" placeholder="이메일" required autofocus />
     </div>
     <p></p>
     <div class="input_group">
-        <label for="password">비밀번호: </label>
-        <input id="password" type="password" name="password" required />
+        <input id="password" type="password" name="password" placeholder="비밀번호" required />
     </div>
     <p></p>
     <a id="lose" href="/lose">비밀번호를 잃어버리셨나요?</a>
     <br /><br />
     <button id="loginBtn" type="submit" class="btn">로그인</button>
+			</div>
 </form>
 {% endblock %}
+{% block script %} {% endblock %}

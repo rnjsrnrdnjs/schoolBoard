@@ -1,0 +1,20 @@
+{% extends 'layout.html' %} {% block content %}
+<header></header>
+	<div  OnClick="location.href ='/board'" style="cursor:pointer;" class="mainBoard" id="board">
+		게시판
+	</div>
+	<div OnClick="location.href ='/manito'" style="cursor:pointer;" class="mainBoard" id="manito">
+		마니또
+	</div>
+	<div  OnClick="location.href ='/game'" style="cursor:pointer;" class="mainBoard" id="game">
+		게임
+	</div>
+<footer>
+	<a href="/main" class="btn">게시판</a>
+	<a href="/chat" class="btn">채팅</a>
+	<a href="/game" class="btn">게임</a>
+	<a href="/school" class="btn">학급정보</a>
+	<a href="/setting" class="btn">설정</a>
+</footer>
+{% endblock %}
+{% block script %} {% endblock %}

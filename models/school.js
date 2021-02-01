@@ -4,9 +4,14 @@ module.exports = class School extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-				schoolName:{
-					type:Sequelize.STRING(20),
-					unique:true,
+				info:{
+					type:Sequelize.STRING(200),
+				},
+				level:{
+					type:Sequelize.STRING(200),
+				},
+				location:{
+					type:Sequelize.STRING(200),
 				},
             },{
 				sequelize,
@@ -21,5 +26,9 @@ module.exports = class School extends Sequelize.Model {
         );
     }
 
-    static associate(db) {}
+    static associate(db) {
+		db.School.hasMany(db.User);
+		db.School.hasMany(db.Post);
+
+	}
 };
