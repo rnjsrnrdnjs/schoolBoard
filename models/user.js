@@ -14,20 +14,18 @@ module.exports = class User extends Sequelize.Model {
 					type:Sequelize.STRING(100),
                     allowNull: false,
 				},
-                //닉네임
                 nick: {
-					type:Sequelize.STRING(100),
-                    allowNull: false, 
-				},
+   				     type: Sequelize.STRING(15),
+        			allowNull: false,
+      			},
                 //성별
                 sexual: {
-					type:Sequelize.STRING(2),
+					type:Sequelize.STRING(5),
                     allowNull: false,
 				},
 				schoolName:{
 					type: Sequelize.STRING(20),
                     allowNull: false,
-                    unique: true,
 				}
             },{
 				sequelize,

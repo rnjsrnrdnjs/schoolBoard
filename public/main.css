@@ -1,7 +1,7 @@
 html,
 body {
+	padding-top: 15%;
     margin: 0;
-    padding: 0;
     height: 100%;
 }
 .btn {
@@ -18,6 +18,12 @@ body {
     vertical-align: top;
     font-size: 15px;
 	box-shadow: 2px 2px 2px 2px #FFD9E4;
+}
+.btn2{
+	text-decoration: none;
+    cursor: pointer;
+    color: #828282;
+    font-size: 0.5em;
 }
 input [type='text'],
 input[type='email'],
@@ -79,28 +85,6 @@ a{
 .input-group input {
     width: 50%;
 }
-
-#board{
-    background-size: 100% 100%;
-    background-image: url('/board.svg');
-    background-repeat: no-repeat;
-	color:white;
-	position: relative;
-}
-#game{
-    background-size: 100% 100%;
-    background-image: url('/game.jpg');
-    background-repeat: no-repeat;
-	color:#FFE146;
-	position: relative;
-}
-#manito{
-    background-size: 100% 100%;
-    background-image: url('/manito.svg');
-    background-repeat: no-repeat;
-	color:	#FF8E99;
-	position: relative;
-}
 #loginImg{
 	width:100%;
 	height:30%;
@@ -116,4 +100,42 @@ a{
 	font-size:1em;
 	text-shadow: 2px 4px 2px #FFD9E4;
 	padding:5px;
+}
+header{
+  position: fixed;
+  top: 0;
+  /* width: 100% */
+  left: 0;
+  right: 0;
+  background: white;
+  border-bottom:2px solid #FFF0F5;
+}
+footer{
+  position: fixed;
+  top: 90%;
+  left: 0;
+  right: 0;
+	height:10%;
+  background: white;
+  border-top:2px solid #FFF0F5;
+  box-shadow: 1px 1px 0px 0px #FFDCE1 inset;
+  display:block;
+}
+#hdImg{
+	width:20%;
+	display: inline;
+	float:left;
+}
+#hdFont{
+	color:#FF7A85;
+	font-size:1.5em;
+	float:left;
+	padding:3vh 0px 0px 0px;
+	font-weight:bold;
+	text-shadow: 3px 6px 3px #FFD9E4;
+	display: inline;
+}
+.footerTd{
+	width:20vw; 
+	text-align:center;
 }

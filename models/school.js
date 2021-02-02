@@ -4,13 +4,20 @@ module.exports = class School extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-				info:{
-					type:Sequelize.STRING(200),
+				name:{
+					type:Sequelize.STRING(20),
+					allowNull:false,
+				}, 
+    			schoolCode: {
+					type:Sequelize.STRING(30),
+					allowNull:false,
+					unique:true,
+				},
+    			address:{
+					type:Sequelize.STRING(40),
+					allowNull:false,
 				},
 				level:{
-					type:Sequelize.STRING(200),
-				},
-				location:{
 					type:Sequelize.STRING(200),
 				},
             },{

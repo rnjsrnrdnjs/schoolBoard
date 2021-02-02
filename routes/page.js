@@ -1,6 +1,6 @@
 const express=require('express');
 const {isLoggedIn ,isNotLoggedIn }=require('./middlewares');
-const {Post,School}=require('../models');
+const {Post,School,User}=require('../models');
 const router=express.Router();
 
 router.use((req,res,next)=>{
@@ -21,21 +21,24 @@ router.get('/join',isNotLoggedIn,(req,res,next)=>{
 });
 
 router.get('/main',isLoggedIn,async(req,res,next)=>{
+	/*
 	try{
-		const posts = await Post.findALL({
+		const posts = await Post.findAll({
 			include:{
 				model:School,
-				attributes:[],
+				attributes:['name'],
 			},
 			order:[['createdAt','DESC']],
 		});
 		res.render('main/main',{
-			post:posts,
+			board:posts,
 		});
 	}catch(err){
 		console.log(err);
 		next(err);
 	}
+	*/
+	res.render('main/main');
 });
 router.get('/school',isLoggedIn,(req,res,next)=>{
 	res.render('school/school');
