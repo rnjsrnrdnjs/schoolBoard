@@ -8,17 +8,12 @@ module.exports = class School extends Sequelize.Model {
 					type:Sequelize.STRING(20),
 					allowNull:false,
 				}, 
-    			schoolCode: {
-					type:Sequelize.STRING(30),
-					allowNull:false,
-					unique:true,
-				},
     			address:{
 					type:Sequelize.STRING(40),
 					allowNull:false,
 				},
 				level:{
-					type:Sequelize.STRING(200),
+					type:Sequelize.INTEGER,
 				},
             },{
 				sequelize,
@@ -36,6 +31,5 @@ module.exports = class School extends Sequelize.Model {
     static associate(db) {
 		db.School.hasMany(db.User);
 		db.School.hasMany(db.Post);
-
 	}
 };

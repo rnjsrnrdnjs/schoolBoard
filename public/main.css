@@ -1,6 +1,6 @@
 html,
 body {
-	padding-top: 15%;
+	padding-bottom: 80vh;
     margin: 0;
     height: 100%;
 }
@@ -24,6 +24,11 @@ body {
     cursor: pointer;
     color: #828282;
     font-size: 0.5em;
+}
+.btn3{
+	text-decoration: none;
+    cursor: pointer;
+    color: #a79c8e;
 }
 input [type='text'],
 input[type='email'],
@@ -62,9 +67,8 @@ input[type="radio"]:checked + span#w{
   background:#FF848F;
   color:#fff;
 }
-a{
-	text-decoration : none;
-}
+a{text-decoration : none;}
+
 .container {
     width: 100%;
     height: 100%;
@@ -102,11 +106,9 @@ a{
 	padding:5px;
 }
 header{
-  position: fixed;
-  top: 0;
-  /* width: 100% */
-  left: 0;
-  right: 0;
+	width:100%;
+	height:8%;
+	margin-bottom:2%;
   background: white;
   border-bottom:2px solid #FFF0F5;
 }
@@ -121,8 +123,14 @@ footer{
   box-shadow: 1px 1px 0px 0px #FFDCE1 inset;
   display:block;
 }
+@media screen and (min-width: 800px) {
+    footer {
+        width: 800px;
+        margin: 0 auto;
+    }
+}
 #hdImg{
-	width:20%;
+	width:30%;
 	display: inline;
 	float:left;
 }
@@ -139,3 +147,43 @@ footer{
 	width:20vw; 
 	text-align:center;
 }
+.big{
+	border-radius:20px;
+	border:2px solid #FABCBC;
+	border-right:3px solid #FABCBC;
+	border-bottom:3px solid #FABCBC;
+	margin: 0% 0% 3vh 10%;
+	width:80%;
+	box-shadow: 8px 4px 4px #6e6e6e;
+}
+.small{
+	font-weight: 550;
+	font-size:0.8em;
+	width:75vw;
+	height:5vh;
+}
+.f1{
+	background-size:100% 100%;
+	background-image:url(/f1.svg);
+}
+.f2{
+	background-size:100% 100%;
+	background-image:url(/f2.svg);
+}
+.f3{
+	background-size:100% 100%;
+	background-image:url(/f3.svg);
+}
+.f4{
+	background-size:100% 100%;
+	background-image:url(/f4.svg);
+}
+.f5{
+	background-size:100% 100%;
+	background-image:url(/f5.svg);
+}
+.f6{
+	background-size:100% 100%;
+	background-image:url(/f6.svg);
+}
+

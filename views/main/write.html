@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block content %}
 <header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
@@ -7,7 +8,24 @@
 </header>
 
 
+	<a href="/write"><i class="fas fa-pencil-alt"></i> 글작성 </a>
 
+<div>
+          <form id="twit-form" action="/post" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+              <textarea id="twit" name="content" maxlength="140"></textarea>
+            </div>
+            <div class="img-preview">
+              <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+              <input id="img-url" type="hidden" name="url">
+            </div>
+            <div>
+              <label id="img-label" for="img">사진 업로드</label>
+              <input id="img" type="file" accept="image/*">
+              <button id="twit-btn" type="submit" class="btn">짹짹</button>
+            </div>
+          </form>
+        </div>
 
 
 
@@ -69,3 +87,10 @@
         </tr>
     </table>
 </footer>
+
+
+
+
+
+{% endblock %}
+{% block script %} {% endblock %}

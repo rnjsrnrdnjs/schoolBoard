@@ -4,7 +4,7 @@ const multer=require('multer');
 const path=require('path');
 const fs=require('fs');
 
-const {Post,School}=require('../models');
+const {Post,School,User}=require('../models');
 const router=express.Router();
 
 try{
@@ -35,12 +35,13 @@ router.post('/img',isLoggedIn,upload.single('img'),(req,res)=>{
 const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
   try {
-    console.log(req.user);
     const post = await Post.create({
       content: req.body.content,
       img: req.body.url,
-      SchoolId: req.school.id,
+      UserId: req.user.id,
+	  SchoolId:req.user.SchoolId,
     });
+	  
   } catch (error) {
     console.error(error);
     next(error);

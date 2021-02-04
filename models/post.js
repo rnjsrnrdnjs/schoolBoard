@@ -28,5 +28,7 @@ module.exports = class Post extends Sequelize.Model {
 
     static associate(db) {
 		db.Post.belongsTo(db.School);
+		db.Post.hasMany(db.Comment);
+		db.Post.belongsTo(db.User);
 	}
 };

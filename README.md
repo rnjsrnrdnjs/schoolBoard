@@ -9,3 +9,6 @@ https://fontawesome.com/
 
 테이블 변경시 컬럼값 변경을 위해
 table 을 지우고 다시만들기.
+
+컬럼
+show columns from 테이블명
