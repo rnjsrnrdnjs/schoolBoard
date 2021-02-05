@@ -1,6 +1,6 @@
 html,
 body {
-	padding-bottom: 80vh;
+	padding-bottom: 100vh;
     margin: 0;
     height: 100%;
 }
@@ -26,9 +26,16 @@ body {
     font-size: 0.5em;
 }
 .btn3{
+	padding:6%;
 	text-decoration: none;
     cursor: pointer;
-    color: #a79c8e;
+    color: #aa9b8e;
+}
+.btn4{
+	padding:6%;
+	text-decoration: none;
+    cursor: pointer;
+    color: #828282;
 }
 input [type='text'],
 input[type='email'],
@@ -114,7 +121,7 @@ header{
 }
 footer{
   position: fixed;
-  top: 90%;
+  bottom: 0%;
   left: 0;
   right: 0;
 	height:10%;
@@ -149,12 +156,12 @@ footer{
 }
 .big{
 	border-radius:20px;
-	border:2px solid #FABCBC;
-	border-right:3px solid #FABCBC;
-	border-bottom:3px solid #FABCBC;
+	border:1px solid #FABCBC;
+	border-right:2px solid #FABCBC;
+	border-bottom:2px solid #FABCBC;
 	margin: 0% 0% 3vh 10%;
 	width:80%;
-	box-shadow: 8px 4px 4px #6e6e6e;
+	box-shadow: 6px 3px 3px #6e6e6e;
 }
 .small{
 	font-weight: 550;
@@ -167,8 +174,6 @@ footer{
 	background-image:url(/f1.svg);
 }
 .f2{
-	background-size:100% 100%;
-	background-image:url(/f2.svg);
 }
 .f3{
 	background-size:100% 100%;
@@ -186,4 +191,21 @@ footer{
 	background-size:100% 100%;
 	background-image:url(/f6.svg);
 }
-
+.title{
+	padding-left:15%;
+	padding-top:5%;
+	padding-bottom:5%;
+	color:#464646;
+	font-size:1.5em;
+	font-weight:bold;
+}
+.boardIcon{
+	color:#f8ecc9;
+	width:11vw;
+	text-align:center;
+}
+.boardFont{
+	text-align:center;
+	font-size:0.7em;
+	color:#8B6331;
+}

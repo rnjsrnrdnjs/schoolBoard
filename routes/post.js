@@ -41,7 +41,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
       UserId: req.user.id,
 	  SchoolId:req.user.SchoolId,
     });
-	  
+	 res.redirect('/board/free');
   } catch (error) {
     console.error(error);
     next(error);

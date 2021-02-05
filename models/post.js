@@ -4,6 +4,10 @@ module.exports = class Post extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
+				category: {
+                    type: Sequelize.STRING(10),
+                    allowNull: false,
+                },
                 content: {
                     type: Sequelize.STRING(140),
                     allowNull: false,
@@ -11,7 +15,12 @@ module.exports = class Post extends Sequelize.Model {
                 img: {
                     type: Sequelize.STRING(200),
                     allowNull: true,
-                },
+                },/*
+				like:{
+                    type: Sequelize.INTEGER,
+                    allowNull: true,
+					defalut:0,
+				}*/
             },
             {
                 sequelize,
