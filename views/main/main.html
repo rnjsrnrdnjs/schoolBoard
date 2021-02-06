@@ -21,31 +21,122 @@
 		<tbody>
 				<tr class="small">
 					
-					<td ><a href="/board/free" class="btn3" >자유 게시판 </a></td> <td> <a href="/board/free" class="btn4">11</a> </td>
+					<td ><a href="/board/free" class="btn3" >자유 게시판 </a></td> <td> <a href="/board/free" class="btn4">
+					{% if free %} 
+						{% if free.length>10 %}
+						{{worry.content.substr(0,10)}}...
+						{% else %}
+						{{free.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a> </td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/worry" class="btn3">고민 게시판</a> </td> <td><a href="/board/worry" class="btn4"> 22</a></td>
+					<td><a href="/board/worry" class="btn3">고민 게시판</a> </td> <td><a href="/board/worry" class="btn4"> {% if worry %} 
+						{% if worry.length>10 %}
+						{{wory.content.substr(0,10)}}...
+						{% else %}
+						{{worry.content}}
+						{% endif %}
+										{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/study" class="btn3">공부 게시판</a> </td> <td> <a href="/board/study" class="btn4">333</a></td>
+					<td><a href="/board/study" class="btn3">공부 게시판</a> </td> <td> <a href="/board/study" class="btn4">					
+					{% if study %} 
+						{% if study.length>10 %}
+						{{study.content.substr(0,10)}}...
+						{% else %}
+						{{study.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/love" class="btn3">짝사랑 게시판</a> </td> <td><a href="/board/love" class="btn3"></a> </td>
+					<td><a href="/board/love" class="btn3">짝사랑 게시판</a> </td> <td><a href="/board/love" class="btn4">
+					{% if love %} 
+						{% if love.length>10 %}
+						{{love.content.substr(0,10)}}...
+						{% else %}
+						{{love.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/food" class="btn3">음식 게시판</a> </td> <td> <a href="/board/food" class="btn3"></a></td>
+					<td><a href="/board/food" class="btn3">음식 게시판</a> </td> <td> <a href="/board/food" class="btn4">
+					{% if food %} 
+						{% if food.length>10 %}
+						{{food.content.substr(0,10)}}...
+						{% else %}
+						{{food.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/beauty" class="btn3">뷰티 게시판</a> </td> <td><a href="/board/beauty" class="btn3"></a></td>
+					<td><a href="/board/beauty" class="btn3">뷰티 게시판</a> </td> <td><a href="/board/beauty" class="btn4">
+										{% if beauty %} 
+						{% if beauty.length>10 %}
+						{{beauty.content.substr(0,10)}}...
+						{% else %}
+						{{beauty.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/fashion" class="btn3">패션 게시판</a> </td> <td><a href="/board/fashion" class="btn3"></a> </td>
+					<td><a href="/board/fashion" class="btn3">패션 게시판</a> </td> <td><a href="/board/fashion" class="btn4">
+					{% if fashion %} 
+						{% if fashion.length>10 %}
+						{{fashion.content.substr(0,10)}}...
+						{% else %}
+						{{fashion.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/music" class="btn3">음악 게시판</a> </td> <td><a href="/board/music" class="btn3"></a> </td>
+					<td><a href="/board/music" class="btn3">음악 게시판</a> </td> <td><a href="/board/music" class="btn4"> 
+					{% if music %} 
+						{% if music.length>10 %}
+						{{music.content.substr(0,10)}}...
+						{% else %}
+						{{music.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 				<tr class="small">
-					<td><a href="/board/blame" class="btn3">뒷담 게시판</a> </td> <td><a href="/board/blame" class="btn3"></a> </td>
+					<td><a href="/board/blame" class="btn3">뒷담 게시판</a> </td> <td><a href="/board/blame" class="btn4"> 
+					{% if blame %} 
+						{% if blame.length>10 %}
+						{{blame.content.substr(0,10)}}...
+						{% else %}
+						{{blame.content}}
+						{% endif %}
+					{% else %}
+					작성된 글이 없습니다.
+					{% endif %}
+					</a></td>
 				</tr>
 		</tbody>
 	</table>
@@ -56,9 +147,59 @@
 			</tr>
 		</thead>
 		<tbody>
+				{% for posts in hot %}
 				<tr class="small">
-					<td>뒷담 게시판 </td> <td> </td>
+					<td>
+					<div class="writen">
+	<div class="writenHead">
+    {% if posts.User.sexual==='man' %}
+		<i class="fas fa-mars btn5" style="color:blue;"></i>
+	{% else %}
+		<i class="fas fa-venus btn5" style="color:red;" ></i>
+	{% endif %}
+		&nbsp;
+		{{posts.User.nick}}
+		
+		<button style="position:absolute; right:5%;">
+			<i class="fas fa-ellipsis-v"></i>
+		</button>
+	</div>
+		<div class="writenTime">			
+		{{posts.createdAt.getFullYear()}}년
+		{{posts.createdAt.getMonth()+1}}월
+		{{posts.createdAt.getDate()}}일
+		{{posts.createdAt.getHours()+9}}시
+		{{posts.createdAt.getMinutes()}}분
+		{{posts.createdAt.getSeconds()}}초
+		</div>
+	<div class="write-title">
+        {{posts.title}}
+	</div>
+	{% if posts.img %}
+    <div class="write-img">
+        <img src="{{posts.img}}"/>
+    </div>
+    {% endif %} 
+    <div class="write-content">
+        {{posts.content}}
+    </div>
+	<div style="text-align:center">
+		<button class="btn2">
+		<i class="fas fa-thumbs-up"></i>
+		{{posts.like}}
+		</button>
+		<button>
+		<i class="fas fa-thumbs-down"></i>
+		{{posts.dislike}}
+		</button>
+		<button>
+		<i class="far fa-comment"></i>
+		</button>
+	</div>
+</div>
+						</td>
 				</tr>
+				{% endfor %}
 		</tbody>
 	</table>
 
@@ -70,7 +211,7 @@
 		</thead>
 		<tbody>
 				<tr class="small">
-					<td>뒷담 게시판 </td> <td> </td>
+					<td>준비중 </td> <td> </td>
 				</tr>
 		</tbody>
 	</table>
@@ -82,7 +223,7 @@
 		</thead>
 		<tbody>
 				<tr class="small">
-					<td>뒷담 게시판 </td> <td> </td>
+					<td>준비중 </td> <td> </td>
 				</tr>
 		</tbody>
 	</table>
@@ -94,7 +235,7 @@
 		</thead>
 		<tbody>
 				<tr class="small">
-					<td>뒷담 게시판 </td> <td> </td>
+					<td>준비중 </td> <td> </td>
 				</tr>
 			
 		</tbody>
@@ -107,16 +248,10 @@
 		</thead>
 		<tbody>
 				<tr class="small">
-					<td>뒷담 게시판 </td> <td> </td>
+					<td>준비중 </td> <td> </td>
 				</tr>
 		</tbody>
-	<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
-			<tr><td>1</td></tr>
+	
 	</table>
 	
 

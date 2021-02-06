@@ -8,6 +8,10 @@ module.exports = class Post extends Sequelize.Model {
                     type: Sequelize.STRING(10),
                     allowNull: false,
                 },
+				title:{
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+				},
                 content: {
                     type: Sequelize.STRING(140),
                     allowNull: false,
@@ -15,12 +19,19 @@ module.exports = class Post extends Sequelize.Model {
                 img: {
                     type: Sequelize.STRING(200),
                     allowNull: true,
-                },/*
+                },
 				like:{
                     type: Sequelize.INTEGER,
+					defalutValue:'0',
                     allowNull: true,
-					defalut:0,
-				}*/
+				},
+				/*
+				dislike:{
+                    type: Sequelize.INTEGER,
+					defalutValue:'0',
+                    allowNull: true,
+				},
+				*/
             },
             {
                 sequelize,

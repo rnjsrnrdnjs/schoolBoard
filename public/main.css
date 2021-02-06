@@ -3,10 +3,10 @@ body {
 	padding-bottom: 100vh;
     margin: 0;
     height: 100%;
+	overflow-x: hidden;
 }
 .btn {
     display: inline-block;
-    padding: 0 5 px;
     text-decoration: none;
     cursor: pointer;
     border-radius: 4px;
@@ -18,6 +18,7 @@ body {
     vertical-align: top;
     font-size: 15px;
 	box-shadow: 2px 2px 2px 2px #FFD9E4;
+	border-radius:10px;
 }
 .btn2{
 	text-decoration: none;
@@ -36,7 +37,16 @@ body {
 	text-decoration: none;
     cursor: pointer;
     color: #828282;
+	text-align:left;
 }
+.btn5{
+	padding:2%;
+	text-decoration: none;
+    cursor: pointer;
+	border:1px solid #a79c8e;
+	border-radius:50%;
+}
+
 input [type='text'],
 input[type='email'],
 input[type='password'],
@@ -209,3 +219,86 @@ footer{
 	font-size:0.7em;
 	color:#8B6331;
 }
+.write-img{text-align:center;}
+.write-img img{
+	max-width:75%;
+}
+.writen{
+	margin:5px;
+	position:relative;
+	left:5%;
+	width:90%;
+	border:1px solid #a79c8e;
+	border-radius:10px;
+}
+.writenHead{
+	padding:10px;
+	font-weight:bold;
+	background-color:#f8ecc9;
+	border-radius:10px 10px 0 0;
+}
+.writenTime{
+	font-size:0.5em;
+	color:#464646;
+	padding-bottom:10px;
+	padding-left:10px;
+	background-color:#f8ecc9;
+	border-radius:0 0 10px 10px;
+}
+.write-none{
+	width:100vw;
+	height:70vh;
+	background-size:100% 100%;
+	background-image:url(tree.svg);
+	text-align:center;
+	color:#fd999a;
+}
+.write-title{
+	margin:10px;
+	font-size:1.2em;
+	font-weight:bold;
+}
+.write-img{
+	margin:5px;
+}
+.write-content{
+	margin:25px;
+	font-size:0.8em;
+	border-top:0.5px solid #44649f;
+	border-left:0.5px solid #44649f;
+	border-right:2px solid #44649f;
+	border-bottom:2px solid #44649f;
+	border-radius:10px;
+	box-shadow: 4px 2px 2px #6e6e6e;
+	min-height:50px;
+}
+#write{
+	 display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #FF98A3;
+    border: 1px solid #FF5675;
+    color: white;
+    height: 37px;
+    line-height: 37px;
+    vertical-align: top;
+    font-size: 15px;
+	box-shadow: 2px 2px 2px 2px #FFD9E4;
+	border-radius:10px;
+}
+#t1{
+	border:none;
+	width:100%;
+}
+#t1:focus {outline:none;}
+#t2{
+	width:100%;
+	height:45vh;
+	border:none;
+}
+#t2:focus {outline:none;}
+input#img{
+	opacity:0;
+}
+

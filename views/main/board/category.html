@@ -7,73 +7,152 @@
     <i class="far fa-bell" style="color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
+<div class="title">
+    {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
+    elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
+    {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
+    %}뒷담 {% endif %}게시판
+    <a href="/write" class="btn3" style=" padding:2%; position: absolute; right: 10vw; font-size: 0.7em; border:1px solid; border-radius:20px; "
+        ><i class="fas fa-pencil-alt"></i> 글작성
+    </a>
+</div>
+<table style="border-top: 1px solid #eb9f9f; border-bottom: 1px solid #eb9f9f; margin-bottom:10px;">
+    <tr>
+        <td class="boardIcon">
+            <a href="/board/free" style="color: inherit;"><i class="fas fa-seedling fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/worry" style="color: inherit;"
+                ><i class="fas fa-sad-tear fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/study" style="color: inherit;"
+                ><i class="fas fa-user-graduate fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/love" style="color: inherit;"><i class="fas fa-heart fa-2x"></i> </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/food" style="color: inherit;"><i class="fas fa-hamburger fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/beauty" style="color: inherit;"
+                ><i class="fas fa-paint-brush fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/fashion" style="color: inherit;"
+                ><i class="fas fa-tshirt fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/music" style="color: inherit;"><i class="fas fa-music fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/board/blame" style="color: inherit;"
+                ><i class="fas fa-fist-raised fa-2x"></i
+            ></a>
+        </td>
+    </tr>
+    <tr>
+        <td class="boardFont"><a href="/board/free" style="color: inherit;">자유</a></td>
+        <td class="boardFont"><a href="/board/worry" style="color: inherit;">고민</a></td>
+        <td class="boardFont"><a href="/board/study" style="color: inherit;">공부</a></td>
+        <td class="boardFont"><a href="/board/love" style="color: inherit;">짝사랑</a></td>
+        <td class="boardFont"><a href="/board/music" style="color: inherit;">음식</a></td>
+        <td class="boardFont"><a href="/board/beauty" style="color: inherit;">뷰티</a></td>
+        <td class="boardFont"><a href="/board/fashion" style="color: inherit;">패션</a></td>
+        <td class="boardFont"><a href="/board/music" style="color: inherit;">음악</a></td>
+        <td class="boardFont"><a href="/board/blame" style="color: inherit;">뒷담</a></td>
+    </tr>
+</table>
 
-	<div class="title">
-			{% if title==='free' %}자유
-			{% elseif title==='worry' %}고민 
-			{% elseif title==='study' %}공부 
-			{% elseif title==='love' %}짝사랑 
-			{% elseif title==='food' %}음식 
-			{% elseif title==='beauty' %}뷰티 
-			{% elseif title==='fashion' %}패션 
-			{% elseif title==='music' %}음악 
-			{% elseif title==='blame' %}뒷담 
-			{% endif %}게시판	<a href="/write" class="btn3" style="position:relative;  left:15vw; font-size:0.7em;"><i class="fas fa-pencil-alt"></i> 글작성 </a>
+{% if category[0].content %} {% for posts in category %}
+<div class="writen">
+	<div class="writenHead">
+    {% if posts.User.sexual==='man' %}
+		<i class="fas fa-mars btn5" style="color:blue;"></i>
+	{% else %}
+		<i class="fas fa-venus btn5" style="color:red;" ></i>
+	{% endif %}
+		&nbsp;
+		{{posts.User.nick}}
+		
+		<button style="position:absolute; right:5%;">
+			<i class="fas fa-ellipsis-v"></i>
+		</button>
+	</div>
+		<div class="writenTime">			
+		{{posts.createdAt.getFullYear()}}년
+		{{posts.createdAt.getMonth()+1}}월
+		{{posts.createdAt.getDate()}}일
+		{{posts.createdAt.getHours()+9}}시
+		{{posts.createdAt.getMinutes()}}분
+		{{posts.createdAt.getSeconds()}}초
 		</div>
-	<table style=" border-top: 1px solid #eb9f9f; border-bottom: 1px solid #eb9f9f;" >
-		<tr>
-			<td class="boardIcon"><a href="/board/free" style="color:inherit"><i class="fas fa-seedling fa-2x" ></i></a></td> <td class="boardIcon"><a href="/board/worry" style="color:inherit"><i class="fas fa-sad-tear fa-2x"></i> </a></td> <td class="boardIcon"><a href="/board/study" style="color:inherit"><i class="fas fa-user-graduate fa-2x"></i> </a></td>
-			<td class="boardIcon"><a href="/board/love" style="color:inherit"><i class="fas fa-heart fa-2x"></i> </a></td> <td class="boardIcon"><a href="/board/food" style="color:inherit"><i class="fas fa-hamburger fa-2x"></i></a> </td> <td class="boardIcon"><a href="/board/beauty" style="color:inherit"><i class="fas fa-paint-brush fa-2x"></i> </a></td>
-			<td class="boardIcon"><a href="/board/fashion" style="color:inherit"><i class="fas fa-tshirt fa-2x" ></i> </a></td> <td class="boardIcon"><a href="/board/music" style="color:inherit"><i class="fas fa-music fa-2x"></i></a> </td> <td class="boardIcon"><a href="/board/blame" style="color:inherit"><i class="fas fa-fist-raised fa-2x"></i></a></td>
-		</tr>	
-		<tr>
-			<td class="boardFont"><a href="/board/free" style="color:inherit">자유</a></td> <td class="boardFont"><a href="/board/worry" style="color:inherit">고민</a></td> <td class="boardFont"><a href="/board/study" style="color:inherit">공부</a></td> <td class="boardFont"><a href="/board/love" style="color:inherit">짝사랑</a></td><td class="boardFont"><a href="/board/music" style="color:inherit">음식</a></td><td class="boardFont"><a href="/board/beauty" style="color:inherit">뷰티</a></td><td class="boardFont"><a href="/board/fashion" style="color:inherit">패션</a> </td><td class="boardFont"><a href="/board/music" style="color:inherit">음악</a></td><td class="boardFont"><a href="/board/blame" style="color:inherit">뒷담</a></td>
-		</tr>
-	</table>
-
+	<div class="write-title">
+        {{posts.title}}
+	</div>
+	{% if posts.img %}
+    <div class="write-img">
+        <img src="{{posts.img}}"/>
+    </div>
+    {% endif %} 
+    <div class="write-content">
+        {{posts.content}}
+    </div>
+	<div style="text-align:center">
+		<button class="btn2">
+		<i class="fas fa-thumbs-up"></i>
+		{{posts.like}}
+		</button>
+		<button>
+		<i class="fas fa-thumbs-down"></i>
+		{{posts.dislike}}
+		</button>
+		<button>
+		<i class="far fa-comment"></i>
+		</button>
+	</div>
+</div>
+{% endfor %} {% else %}
+<div class="write-none">
+	<p class="btn3">
+		아직 작성된 글이 없어요.
+	</p>
+		첫번째 글을 작성해 주세요!
 	
-	
-
-<div>
-	
-		//카테고리제목
-		{% if category !== 'undefiend' %}
-			//해당 카테고리 post 
-			{{category}}
-			{{category.content}}
-	
-		{% else %}
-			작성된글이 아직 없습니다.	
-		{% endif %}
-	
-
+</div>
+{% endif %}
 
 <footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
+                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a hreft="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
         </tr>
@@ -107,9 +186,10 @@
     </table>
 </footer>
 
-
-
-
-
+{% endblock %} 
+{% block script %}
+<script>
+	
+	
+</script>
 {% endblock %}
-{% block script %} {% endblock %}

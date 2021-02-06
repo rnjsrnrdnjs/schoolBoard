@@ -8,6 +8,18 @@ module.exports = class Comment extends Sequelize.Model {
                     type: Sequelize.STRING(140),
                     allowNull: false,
                 },
+				like:{
+                    type: Sequelize.INTEGER,
+					defalutValue:'0',
+                    allowNull: true,
+				},
+								/*
+				dislike:{
+                    type: Sequelize.INTEGER,
+					defalutValue:'0',
+                    allowNull: true,
+				},
+				*/
             },
             {
                 sequelize,
