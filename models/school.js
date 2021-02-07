@@ -14,6 +14,7 @@ module.exports = class School extends Sequelize.Model {
 				},
 				level:{
 					type:Sequelize.INTEGER,
+					defalutValue:0,
 				},
             },{
 				sequelize,

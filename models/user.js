@@ -17,6 +17,7 @@ module.exports = class User extends Sequelize.Model {
                 nick: {
    				     type: Sequelize.STRING(15),
         			allowNull: false,
+					unique:true,
       			},
                 //성별
                 sexual: {
@@ -30,7 +31,8 @@ module.exports = class User extends Sequelize.Model {
 				authority:{
 					type: Sequelize.INTEGER,
                     allowNull: true,
-				}
+				},
+				
             },{
 				sequelize,
 				timestamps:false,
@@ -49,6 +51,6 @@ module.exports = class User extends Sequelize.Model {
 		db.User.hasMany(db.Post);
 		db.User.hasMany(db.Chat);
 		db.User.hasMany(db.Comment);
-		
+		db.User.belongsToMany(db.Room,{through:'UserRoom'});
 	}
 };

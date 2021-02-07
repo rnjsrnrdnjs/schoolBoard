@@ -4,19 +4,85 @@
     <div id="hdFont">
         마니또
     </div>
-    <i class="far fa-bell" style="color: black; float: right; padding: 20px 20px;"></i>
+    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
+{% if title==='hot' %}
+
+<div class="title">
+	실시간 인기글 <img src="/fire.svg" style="width:30px;">
+</div>
+{% if hotegory[0].content %} {% for posts in hotegory %}
+<div class="writen" onclick="location.href='/comment/{{posts.id}}';">
+	<div class="writenHead">
+    {% if posts.User.sexual==='man' %}
+		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
+	{% else %}
+		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
+	{% endif %}
+		&nbsp;
+		{{posts.User.nick}}
+		
+		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
+			<i class="fas fa-ellipsis-v"></i>
+		</button>
+	</div>
+		<div class="writenTime">			
+		{{posts.createdAt.getFullYear()}}년
+		{{posts.createdAt.getMonth()+1}}월
+		{{posts.createdAt.getDate()}}일
+		{{posts.createdAt.getHours()+9}}시
+		{{posts.createdAt.getMinutes()}}분
+		{{posts.createdAt.getSeconds()}}초
+		</div>
+	<div class="write-title">
+        {{posts.title}}
+	</div>
+	{% if posts.img %}
+    <div class="write-img">
+        <img src="{{posts.img}}"/>
+    </div>
+    {% endif %} 
+    <div class="write-content">
+        {{posts.content}}
+    </div>
+	<div style="text-align:center">
+		<button class="btn6" style="color:#6EDCDC;" >
+		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
+		{{posts.like}}
+		</button>
+		<button class="btn6" style="color:#FF4646">
+		<i class="fas fa-thumbs-down"></i>
+		{{posts.dislike}}
+		</button>
+		<button class="btn6" style="color:#FF87D2" >
+		<i class="far fa-comment"></i>
+		작성하기 
+		</button>
+	</div>
+</div>
+{% endfor %} {% else %}
+<div class="write-none">
+	<p class="btn3">
+		아직 작성된 글이 없어요.
+	</p>
+		첫번째 글을 작성해 주세요!
+</div>
+{% endif %}
+{% elif title==='used' %}
+
+{% else %}
 <div class="title">
     {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
     elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
     {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
     %}뒷담 {% endif %}게시판
-    <a href="/write" class="btn3" style=" padding:2%; position: absolute; right: 10vw; font-size: 0.7em; border:1px solid; border-radius:20px; "
+	<a href="/write" class="btn3" style=" padding:2%; position: relative; left: 5%; font-size: 0.7em; border:1px solid; border-radius:20px; "
         ><i class="fas fa-pencil-alt"></i> 글작성
     </a>
 </div>
-<table style="border-top: 1px solid #eb9f9f; border-bottom: 1px solid #eb9f9f; margin-bottom:10px;">
+
+<table style="border-top: 2px solid #464545; border-bottom: 2px solid #464545; margin-bottom:10px;">
     <tr>
         <td class="boardIcon">
             <a href="/board/free" style="color: inherit;"><i class="fas fa-seedling fa-2x"></i></a>
@@ -70,17 +136,17 @@
 </table>
 
 {% if category[0].content %} {% for posts in category %}
-<div class="writen">
+<div class="writen" onclick="location.href='/comment/{{posts.id}}';">
 	<div class="writenHead">
     {% if posts.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue;"></i>
+		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
 	{% else %}
-		<i class="fas fa-venus btn5" style="color:red;" ></i>
+		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
 	{% endif %}
 		&nbsp;
 		{{posts.User.nick}}
 		
-		<button style="position:absolute; right:5%;">
+		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
 			<i class="fas fa-ellipsis-v"></i>
 		</button>
 	</div>
@@ -104,16 +170,17 @@
         {{posts.content}}
     </div>
 	<div style="text-align:center">
-		<button class="btn2">
-		<i class="fas fa-thumbs-up"></i>
+		<button class="btn6" style="color:#6EDCDC;" >
+		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
-		<button>
+		<button class="btn6" style="color:#FF4646">
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
-		<button>
+		<button class="btn6" style="color:#FF87D2" >
 		<i class="far fa-comment"></i>
+			작성하기
 		</button>
 	</div>
 </div>
@@ -126,33 +193,35 @@
 	
 </div>
 {% endif %}
+{% endif %}
 
+<wrap>
 <footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
+                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a hreft="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
                 </a>
             </td>
         </tr>
@@ -185,6 +254,7 @@
         </tr>
     </table>
 </footer>
+</wrap>
 
 {% endblock %} 
 {% block script %}

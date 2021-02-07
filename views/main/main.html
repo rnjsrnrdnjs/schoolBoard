@@ -4,13 +4,13 @@
     <div id="hdFont">
         마니또
     </div>
-    <i class="far fa-bell" style="color: black; float: right; padding: 20px 20px;"></i>
+    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
 
 	<!-- 학교 이름 -->
 	<div class="title">
-		{{myschool.name}}
+		{{myschool.name}}<img src="/tree.svg" style="width:50px;">
 	</div>
 	<table class="big f1">
 		<thead>
@@ -140,10 +140,11 @@
 				</tr>
 		</tbody>
 	</table>
+	<a class="ax" href="/board/hot">
 	<table class="big f2">
 		<thead>
 			<tr>
-				<th>실시간 인기글 <img src="fire.svg" style="width:30px"></th>
+				<th>실시간 인기글 <img src="/fire.svg" style="width:30px"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -153,14 +154,14 @@
 					<div class="writen">
 	<div class="writenHead">
     {% if posts.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue;"></i>
+		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
 	{% else %}
-		<i class="fas fa-venus btn5" style="color:red;" ></i>
+		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
 	{% endif %}
 		&nbsp;
 		{{posts.User.nick}}
 		
-		<button style="position:absolute; right:5%;">
+		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
 			<i class="fas fa-ellipsis-v"></i>
 		</button>
 	</div>
@@ -184,25 +185,22 @@
         {{posts.content}}
     </div>
 	<div style="text-align:center">
-		<button class="btn2">
-		<i class="fas fa-thumbs-up"></i>
+		<button class="btn6" style="color:#6EDCDC;" >
+		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
-		<button>
+		<button class="btn6" style="color:#FF4646">
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
-		<button>
-		<i class="far fa-comment"></i>
-		</button>
 	</div>
-</div>
+</div>	
 						</td>
 				</tr>
 				{% endfor %}
 		</tbody>
 	</table>
-
+</a>
 <table class="big f3">
 		<thead>
 			<tr>
@@ -227,19 +225,6 @@
 				</tr>
 		</tbody>
 	</table>
-<table class="big f5">
-		<thead>
-			<tr>
-				<th>중고 장터 </th>
-			</tr>
-		</thead>
-		<tbody>
-				<tr class="small">
-					<td>준비중 </td> <td> </td>
-				</tr>
-			
-		</tbody>
-	</table>
 <table class="big f6">
 		<thead>
 			<tr>
@@ -254,6 +239,8 @@
 	
 	</table>
 	
+
+
 
 
 

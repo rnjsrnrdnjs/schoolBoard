@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User } = require('../models');
+const { Post, School, User,Comment } = require('../models');
 const router = express.Router();
 
 router.use(async (req, res, next) => {
@@ -31,6 +31,7 @@ router.get('/join', isNotLoggedIn, (req, res, next) => {
 });
 router.get('/board/:category', isLoggedIn, async(req, res, next) => {
 	// :category-> req.params.category
+	try{
 	const category=await Post.findAll({
 		where:{
 			category:req.params.category,
@@ -43,13 +44,58 @@ router.get('/board/:category', isLoggedIn, async(req, res, next) => {
 		],
 		order:[['createdAt','DESC']],
 	});
+	const hotegory=await Post.findAll({
+		where:{
+			SchoolId:req.user.SchoolId,
+		},
+		include:[
+			{
+				model:User,
+			}
+		],
+		order:[['like','DESC']],
+	})
 	const title=String(req.params.category);
     res.render(`main/board/category`,{
 		category:category,
+		hotegory:hotegory,
 		title:title,
 	});
+	}catch(err){
+		console.log(err);
+        next(err);
+	}
 });
-
+router.get('/comment/:id', isLoggedIn, async(req, res, next) => {
+	try{
+		const posts=await Post.findOne({
+			where:{
+				id:req.params.id,
+			},
+			include:[{
+				model:User,
+			}],
+		});
+		const comments=await Comment.findAll({
+			include:[{
+				model:Post,
+			}],
+			include:[{
+				model:User,
+			}],
+			where:{
+				PostId:req.params.id,
+			},
+		});
+		res.render(`main/board/comment`,{
+			posts:posts,
+			comments:comments,
+		});
+	}catch(err){
+		console.log(err);
+        next(err);
+	}
+});
 router.get('/write', isLoggedIn, (req, res, next) => {
     res.render('main/write');
 });
@@ -129,7 +175,7 @@ router.get('/main', isLoggedIn, async (req, res, next) => {
 				SchoolId:req.user.SchoolId,
 			},
 			order:[['createdAt','DESC']],
-			limit:3,
+			limit:2,
 		});
         const myschool = await School.findOne({
             include: [

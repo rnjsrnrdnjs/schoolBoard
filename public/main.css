@@ -1,9 +1,9 @@
 html,
 body {
-	padding-bottom: 100vh;
     margin: 0;
     height: 100%;
 	overflow-x: hidden;
+       margin-bottom: 20%;
 }
 .btn {
     display: inline-block;
@@ -43,10 +43,16 @@ body {
 	padding:2%;
 	text-decoration: none;
     cursor: pointer;
-	border:1px solid #a79c8e;
+	border:0;outline:0;
 	border-radius:50%;
 }
-
+.btn6{
+	background-color:white;
+	border:0px;
+	padding:3%;
+	text-decoration: none;
+    cursor: pointer;
+}
 input [type='text'],
 input[type='email'],
 input[type='password'],
@@ -56,7 +62,7 @@ input[type='schoolName'],
 textarea,
 input[type='search'] {
     border-radius: 4px;
-    height: 17px;
+    height: 32px;
     padding: 5px;
     border: 3px solid #969696;
 }
@@ -85,7 +91,8 @@ input[type="radio"]:checked + span#w{
   color:#fff;
 }
 a{text-decoration : none;}
-
+.ax:visited { color: inherit; text-decoration: none;}
+.ax:hover {  color: inherit; text-decoration: none}
 .container {
     width: 100%;
     height: 100%;
@@ -129,12 +136,13 @@ header{
   background: white;
   border-bottom:2px solid #FFF0F5;
 }
+wrap{
+}
 footer{
   position: fixed;
   bottom: 0%;
-  left: 0;
-  right: 0;
-	height:10%;
+  height:10%;
+  width:100%;
   background: white;
   border-top:2px solid #FFF0F5;
   box-shadow: 1px 1px 0px 0px #FFDCE1 inset;
@@ -185,10 +193,6 @@ footer{
 }
 .f2{
 }
-.f3{
-	background-size:100% 100%;
-	background-image:url(/f3.svg);
-}
 .f4{
 	background-size:100% 100%;
 	background-image:url(/f4.svg);
@@ -205,19 +209,20 @@ footer{
 	padding-left:15%;
 	padding-top:5%;
 	padding-bottom:5%;
-	color:#464646;
+	color:#957745;
 	font-size:1.5em;
 	font-weight:bold;
+	text-shadow:2px 1px 1px black;
 }
 .boardIcon{
-	color:#f8ecc9;
+	color:#ACCCC4;
 	width:11vw;
 	text-align:center;
 }
 .boardFont{
 	text-align:center;
 	font-size:0.7em;
-	color:#8B6331;
+	color:#C4BCB8;
 }
 .write-img{text-align:center;}
 .write-img img{
@@ -271,6 +276,7 @@ footer{
 	border-radius:10px;
 	box-shadow: 4px 2px 2px #6e6e6e;
 	min-height:50px;
+	padding:5px;
 }
 #write{
 	 display: inline-block;
@@ -301,4 +307,11 @@ footer{
 input#img{
 	opacity:0;
 }
-
+#Wcomment{
+	border:1px solid black;
+	border-radius:10px;
+	position:relative;
+	left:5%;
+	width:90%;
+	height:50px;
+}

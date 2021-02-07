@@ -3,8 +3,9 @@ const {isLoggedIn ,isNotLoggedIn }=require('./middlewares');
 const multer=require('multer');
 const path=require('path');
 const fs=require('fs');
+const {sequelize}=require('../models');
 
-const {Post,School,User}=require('../models');
+const {Post,School,User,Comment}=require('../models');
 const router=express.Router();
 
 try{
@@ -35,14 +36,15 @@ router.post('/img',isLoggedIn,upload.single('img'),(req,res)=>{
 const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
   try {
-	  console.log(req.body.url);
     const post = await Post.create({
 	  title:req.body.title,
 	  category:req.body.category,
       content: req.body.content,
       img: req.body.url,
 	  like:0,
-	//dislike:0,
+	  dislike:0,
+	  likeChk:req.user.id,
+	  dislikeChk:req.user.id,
       UserId: req.user.id,
 	  SchoolId:req.user.SchoolId,
     });
@@ -52,6 +54,107 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
     next(error);
   }
 });
-
+router.post('/comment',isLoggedIn,async(req,res,next)=>{
+	try{
+		const Pid=await req.body.Pid;
+		const comment=await Comment.create({
+			content:req.body.content,
+			like:0,
+			dislike:0,
+			UserId:req.user.id,
+			PostId:Pid,
+			likeChk:req.user.id,
+	  		dislikeChk:req.user.id,
+		});	
+		res.redirect(`/comment/${Pid}`);
+	}catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/comment/like/:id',isLoggedIn,async(req,res,next)=>{
+	try{
+		const chk=await Comment.findOne({
+			where:{
+				id:req.body.Cid,	
+			},
+		});
+		if(chk.dislikeChk==req.user.id){
+			Comment.increment({like: 1}, { where: { id:req.body.Cid, } });
+			Comment.increment({likeChk: 1}, { where: { id:req.body.Cid, } });
+		}
+		else {
+			Comment.decrement({like: 1}, { where: { id:req.body.Cid, } });
+			Comment.decrement({likeChk: 1}, { where: { id:req.body.Cid, } });
+		}
+		res.redirect(`/comment/${req.params.id}`);
+	}catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/comment/dislike/:id',isLoggedIn,async(req,res,next)=>{
+	try{
+		const chk=await Comment.findOne({
+			where:{
+				id:req.body.Cid,	
+			},
+		});
+		if(chk.dislikeChk==req.user.id){
+			Comment.increment({dislike: 1}, { where: { id:req.body.Cid, } });
+			Comment.increment({dislikeChk: 1}, { where: { id:req.body.Cid, } });
+		}
+		else {
+			Comment.decrement({dislike: 1}, { where: { id:req.body.Cid, } });
+			Comment.decrement({dislikeChk: 1}, { where: { id:req.body.Cid, } });
+		}
+		res.redirect(`/comment/${req.params.id}`);
+	}catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/post/like/:id',isLoggedIn,async(req,res,next)=>{
+	try{
+		const chk=await Post.findOne({
+			where:{
+				id:req.params.id,	
+			},
+		});
+		if(chk.dislikeChk==req.user.id){
+			Post.increment({like: 1}, { where: { id:req.params.id, } });
+			Post.increment({likeChk: 1}, { where: { id:req.params.id, } });
+		}
+		else {
+			Post.decrement({like: 1}, { where: { id:req.params.id, } });
+			Post.decrement({likeChk: 1}, { where: { id:req.params.id, } });
+		}
+		res.redirect(`/comment/${req.params.id}`);
+	}catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/post/dislike/:id',isLoggedIn,async(req,res,next)=>{
+	try{
+		const chk=await Post.findOne({
+			where:{
+				id:req.params.id,	
+			},
+		});
+		if(chk.dislikeChk==req.user.id){
+			Post.increment({dislike: 1}, { where: { id:req.params.id, } });
+			Post.increment({dislikeChk: 1}, { where: { id:req.params.id, } });
+		}
+		else {
+			Post.decrement({dislike: 1}, { where: { id:req.params.id, } });
+			Post.decrement({dislikeChk: 1}, { where: { id:req.params.id, } });
+		}
+		res.redirect(`/comment/${req.params.id}`);
+	}catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 module.exports=router;
