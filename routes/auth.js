@@ -13,8 +13,9 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const exUser = await User.findOne({ where: { email } });
     const exUser2 = await User.findOne({ where: { nick } });
     if (exUser || exUser2) {
-      return res.redirect('/join?error=exist');
+        return res.redirect('/join?error=exist');
     }
+	  
     const hash = await bcrypt.hash(password, 12);
 	const sname=await School.findOne({
 		where:{name:schoolName},

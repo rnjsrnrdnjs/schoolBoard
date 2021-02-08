@@ -10,9 +10,9 @@
 
 
 
-<div style="position:relative; top:8%;right:30%;"> 		
-	<a href="/main/free" class="btn" stlye="left:10%; margin-top:20%; display:inline;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
-	<div style=" font-weight:bold; display:inline;">
+<div style="position:relative; top:5%;right:30%;"> 		
+	<a href="/main/free" class="btn" stlye="left:10%; margin-top:3%; display:inline;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
+	<div style=" font-weight:bold; display:inline; margin-left:10px;">
 		글쓰기
 	</div>
 </div>
@@ -20,7 +20,7 @@
 	<form  action="/post" method="post" enctype="multipart/form-data">
 
 <div id="writePost">
-	<div style="position:relative; top:10%; left:40%;">
+	<div style="position:relative; top:3%; left:40%;">
 		<select id="write" name="category" style="display:inline;" require>
         <option value="free">자유 게시판</option>
         <option value="worry">고민 게시판</option>
@@ -35,18 +35,18 @@
 	<button id="write-btn" type="submit" class="btn" >완료</button>
 	</div>
 
-	<div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block; margin-top:8%;">
+	<div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
 		<textarea id="t1" name="title" maxlength="20" style="height:15%;" placeholder="제목" require></textarea>
     </div>
     <div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
 		<textarea id="t2" name="content" maxlength="1000"placeholder="여기에 내용을 입력해주세요"  require></textarea>
     </div>
-	    <label id="img-label" for="img" class="btn" stlye="position:absolute; left:40%;">사진 선택</label>
+	    <label id="img-label" for="img" class="btn" stlye="text-align:center;">사진 선택</label>
 	    <div class="img-preview" style="margin:5px; text-align:center;">
-        <img id="img-preview" src="" style="display: none;" width="70%" alt="미리보기" />
+        <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
         <input id="img-url" type="hidden" name="url" />
     	 </div>
-        <input id="img" type="file" accept="image/*"  />
+        <input id="img"  stlye="text-align:center;" type="file" accept="image/*"  />
 </div>
 </form>
 

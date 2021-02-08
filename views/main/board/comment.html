@@ -17,9 +17,25 @@
 		&nbsp;
 		{{posts.User.nick}}
 		
-		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
-			<i class="fas fa-ellipsis-v"></i>
-		</button>
+		<label for="toggle" style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;"><i class="fas fa-ellipsis-v"></i></label>
+		<input type="checkbox" id="toggle" >
+		<ul id="menu">
+			{% if posts.UserId === user.id %}
+			<li><form action="/delete/post/{{posts.id}}" method="post">
+					<button type="submit">
+						글 삭제하기
+				</button>
+				</form></li>
+			{% endif %}
+			{% if posts.UserId !== user.id %}
+				<li><form action="" method="">
+					<button type="submit">
+						메시지 보내기
+				</button>
+				</form></li>
+			{% endif %}
+		</ul>
+		
 	</div>
 		<div class="writenTime">			
 		{{posts.createdAt.getFullYear()}}년
@@ -74,6 +90,7 @@
 		</form>
 {% for comment in comments %}
 	 <div class="write-content">
+		 <div class="writenHead">
 		  {% if comment.User.sexual==='man' %}
 		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
 	{% else %}
@@ -81,7 +98,36 @@
 	{% endif %}
 		&nbsp;
 		{{comment.User.nick}}
+			 <label for="toggle2" class ="btn6" style=" right:25%; background-color:white;border:1px solid #a79c8e; border-radius:40%;"><i class="fas fa-ellipsis-v"></i></label>
+		<input type="checkbox" id="toggle2" >
+		<ul id="menu2">
+			{% if comment.UserId === user.id %}
+			<li><form action="/delete/comment/{{comment.id}}" method="post">
+				<input type="hidden" name="Pid" value="{{posts.id}}" >
+				<button type="submit">
+						글 삭제하기
+				</button>
+				</form></li>
+			{% endif %}
+			{% if comment.UserId !== user.id %}
+				<li><form action="" method="">
+					<button type="submit">
+						메시지 보내기
+				</button>
+				</form></li>
+			{% endif %}
+		</ul>
+		 </div>
+		 		
 		 
+		 <div class="writenTime">			
+		{{comment.createdAt.getFullYear()}}년
+		{{comment.createdAt.getMonth()+1}}월
+		{{comment.createdAt.getDate()}}일
+		{{comment.createdAt.getHours()+9}}시
+		{{comment.createdAt.getMinutes()}}분
+		{{comment.createdAt.getSeconds()}}초
+		</div>
 		 <div>
 			{{comment.content}}	
 		<form action="/post/comment/like/{{posts.id}}" method="post">

@@ -48,7 +48,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
       UserId: req.user.id,
 	  SchoolId:req.user.SchoolId,
     });
-	res.redirect(`/board/${req.body.category}`);
+	res.redirect(`/main/${req.body.category}`);
   } catch (error) {
     console.error(error);
     next(error);
@@ -79,13 +79,13 @@ router.post('/comment/like/:id',isLoggedIn,async(req,res,next)=>{
 				id:req.body.Cid,	
 			},
 		});
-		if(chk.dislikeChk==req.user.id){
-			Comment.increment({like: 1}, { where: { id:req.body.Cid, } });
-			Comment.increment({likeChk: 1}, { where: { id:req.body.Cid, } });
+		if(chk.likeChk==req.user.id){
+			await Comment.increment({like: 1}, { where: { id:req.body.Cid, } });
+			await Comment.increment({likeChk: 1}, { where: { id:req.body.Cid, } });
 		}
 		else {
-			Comment.decrement({like: 1}, { where: { id:req.body.Cid, } });
-			Comment.decrement({likeChk: 1}, { where: { id:req.body.Cid, } });
+			await Comment.decrement({like: 1}, { where: { id:req.body.Cid, } });
+			await Comment.decrement({likeChk: 1}, { where: { id:req.body.Cid, } });
 		}
 		res.redirect(`/comment/${req.params.id}`);
 	}catch (error) {
@@ -101,12 +101,12 @@ router.post('/comment/dislike/:id',isLoggedIn,async(req,res,next)=>{
 			},
 		});
 		if(chk.dislikeChk==req.user.id){
-			Comment.increment({dislike: 1}, { where: { id:req.body.Cid, } });
-			Comment.increment({dislikeChk: 1}, { where: { id:req.body.Cid, } });
+			await Comment.increment({dislike: 1}, { where: { id:req.body.Cid, } });
+			await Comment.increment({dislikeChk: 1}, { where: { id:req.body.Cid, } });
 		}
 		else {
-			Comment.decrement({dislike: 1}, { where: { id:req.body.Cid, } });
-			Comment.decrement({dislikeChk: 1}, { where: { id:req.body.Cid, } });
+			await Comment.decrement({dislike: 1}, { where: { id:req.body.Cid, } });
+			await Comment.decrement({dislikeChk: 1}, { where: { id:req.body.Cid, } });
 		}
 		res.redirect(`/comment/${req.params.id}`);
 	}catch (error) {
@@ -121,13 +121,13 @@ router.post('/post/like/:id',isLoggedIn,async(req,res,next)=>{
 				id:req.params.id,	
 			},
 		});
-		if(chk.dislikeChk==req.user.id){
-			Post.increment({like: 1}, { where: { id:req.params.id, } });
-			Post.increment({likeChk: 1}, { where: { id:req.params.id, } });
+		if(chk.likeChk==req.user.id){
+			await Post.increment({like: 1}, { where: { id:req.params.id, } });
+			await Post.increment({likeChk: 1}, { where: { id:req.params.id, } });
 		}
 		else {
-			Post.decrement({like: 1}, { where: { id:req.params.id, } });
-			Post.decrement({likeChk: 1}, { where: { id:req.params.id, } });
+			await Post.decrement({like: 1}, { where: { id:req.params.id, } });
+			await Post.decrement({likeChk: 1}, { where: { id:req.params.id, } });
 		}
 		res.redirect(`/comment/${req.params.id}`);
 	}catch (error) {
@@ -143,12 +143,12 @@ router.post('/post/dislike/:id',isLoggedIn,async(req,res,next)=>{
 			},
 		});
 		if(chk.dislikeChk==req.user.id){
-			Post.increment({dislike: 1}, { where: { id:req.params.id, } });
-			Post.increment({dislikeChk: 1}, { where: { id:req.params.id, } });
+			await Post.increment({dislike: 1}, { where: { id:req.params.id, } });
+			await Post.increment({dislikeChk: 1}, { where: { id:req.params.id, } });
 		}
 		else {
-			Post.decrement({dislike: 1}, { where: { id:req.params.id, } });
-			Post.decrement({dislikeChk: 1}, { where: { id:req.params.id, } });
+			await Post.decrement({dislike: 1}, { where: { id:req.params.id, } });
+			await Post.decrement({dislikeChk: 1}, { where: { id:req.params.id, } });
 		}
 		res.redirect(`/comment/${req.params.id}`);
 	}catch (error) {
@@ -156,5 +156,6 @@ router.post('/post/dislike/:id',isLoggedIn,async(req,res,next)=>{
     next(error);
   }
 });
+
 
 module.exports=router;

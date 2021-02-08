@@ -7,11 +7,81 @@
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
+<div class="title">
+		{{school.name}}<img src="/tree.svg" style="width:50px;">
+    {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
+    elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
+    {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
+    %}뒷담 {% endif %}게시판
+	
+</div>
+<!--
+<a href="/write" class="btn3" style=" padding:2%; position: relative; left: 60%; font-size: 0.7em; border:1px solid; border-radius:20px; "
+        ><i class="fas fa-pencil-alt"></i> 글작성
+    </a>
+<a href="/main/{{title}}/hot" class="btn3" style=" padding:2%;font-size: 0.5em; border:1px solid; border-radius:20px; color:red; "
+        ><i class="fab fa-hotjar"></i> 인기순
+    </a>
+-->
+<table style=" border-top: 2px solid #464545; border-bottom: 2px solid #464545; margin-bottom:10px;">
+    <tr>
+        <td class="boardIcon">
+            <a href="/main/free" style="color: inherit;"><i class="fas fa-seedling fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/worry" style="color: inherit;"
+                ><i class="fas fa-sad-tear fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/study" style="color: inherit;"
+                ><i class="fas fa-user-graduate fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/love" style="color: inherit;"><i class="fas fa-heart fa-2x"></i> </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/food" style="color: inherit;"><i class="fas fa-hamburger fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/beauty" style="color: inherit;"
+                ><i class="fas fa-paint-brush fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/fashion" style="color: inherit;"
+                ><i class="fas fa-tshirt fa-2x"></i>
+            </a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/music" style="color: inherit;"><i class="fas fa-music fa-2x"></i></a>
+        </td>
+        <td class="boardIcon">
+            <a href="/main/blame" style="color: inherit;"
+                ><i class="fas fa-fist-raised fa-2x"></i
+            ></a>
+        </td>
+    </tr>
+    <tr>
+        <td class="boardFont"><a href="/main/free" style="color: inherit;">자유</a></td>
+        <td class="boardFont"><a href="/main/worry" style="color: inherit;">고민</a></td>
+        <td class="boardFont"><a href="/main/study" style="color: inherit;">공부</a></td>
+        <td class="boardFont"><a href="/main/love" style="color: inherit;">짝사랑</a></td>
+        <td class="boardFont"><a href="/main/music" style="color: inherit;">음식</a></td>
+        <td class="boardFont"><a href="/main/beauty" style="color: inherit;">뷰티</a></td>
+        <td class="boardFont"><a href="/main/fashion" style="color: inherit;">패션</a></td>
+        <td class="boardFont"><a href="/main/music" style="color: inherit;">음악</a></td>
+        <td class="boardFont"><a href="/main/blame" style="color: inherit;">뒷담</a></td>
+    </tr>
+</table>
+<!--
 {% if title==='hot' %}
 
 <div class="title">
 	실시간 인기글 <img src="/fire.svg" style="width:30px;">
 </div>
+
 {% if hotegory[0].content %} {% for posts in hotegory %}
 <div class="writen" onclick="location.href='/comment/{{posts.id}}';">
 	<div class="writenHead">
@@ -72,68 +142,8 @@
 {% elif title==='used' %}
 
 {% else %}
-<div class="title">
-    {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
-    elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
-    {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
-    %}뒷담 {% endif %}게시판
-	<a href="/write" class="btn3" style=" padding:2%; position: relative; left: 5%; font-size: 0.7em; border:1px solid; border-radius:20px; "
-        ><i class="fas fa-pencil-alt"></i> 글작성
-    </a>
-</div>
+-->
 
-<table style="border-top: 2px solid #464545; border-bottom: 2px solid #464545; margin-bottom:10px;">
-    <tr>
-        <td class="boardIcon">
-            <a href="/board/free" style="color: inherit;"><i class="fas fa-seedling fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/worry" style="color: inherit;"
-                ><i class="fas fa-sad-tear fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/study" style="color: inherit;"
-                ><i class="fas fa-user-graduate fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/love" style="color: inherit;"><i class="fas fa-heart fa-2x"></i> </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/food" style="color: inherit;"><i class="fas fa-hamburger fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/beauty" style="color: inherit;"
-                ><i class="fas fa-paint-brush fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/fashion" style="color: inherit;"
-                ><i class="fas fa-tshirt fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/music" style="color: inherit;"><i class="fas fa-music fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/board/blame" style="color: inherit;"
-                ><i class="fas fa-fist-raised fa-2x"></i
-            ></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="boardFont"><a href="/board/free" style="color: inherit;">자유</a></td>
-        <td class="boardFont"><a href="/board/worry" style="color: inherit;">고민</a></td>
-        <td class="boardFont"><a href="/board/study" style="color: inherit;">공부</a></td>
-        <td class="boardFont"><a href="/board/love" style="color: inherit;">짝사랑</a></td>
-        <td class="boardFont"><a href="/board/music" style="color: inherit;">음식</a></td>
-        <td class="boardFont"><a href="/board/beauty" style="color: inherit;">뷰티</a></td>
-        <td class="boardFont"><a href="/board/fashion" style="color: inherit;">패션</a></td>
-        <td class="boardFont"><a href="/board/music" style="color: inherit;">음악</a></td>
-        <td class="boardFont"><a href="/board/blame" style="color: inherit;">뒷담</a></td>
-    </tr>
-</table>
 
 {% if category[0].content %} {% for posts in category %}
 <div class="writen" onclick="location.href='/comment/{{posts.id}}';">
@@ -193,8 +203,9 @@
 	
 </div>
 {% endif %}
+<!--
 {% endif %}
-
+-->
 <wrap>
 <footer>
     <table>
