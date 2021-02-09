@@ -7,158 +7,52 @@
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
-<div class="title">
+
+<div class="title" style="margin-bottom:4%;">
 		{{school.name}}<img src="/tree.svg" style="width:50px;">
     {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
     elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
     {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
     %}뒷담 {% endif %}게시판
-	
 </div>
-<!--
-<a href="/write" class="btn3" style=" padding:2%; position: relative; left: 60%; font-size: 0.7em; border:1px solid; border-radius:20px; "
+<div style="margin-bottom: 10px;margin-top: 10px;">
+	<select class="btn7 bar" onchange="if(this.value) location.href=(this.value);" stlye="border:none; float:left;" >
+		<option selected>게시판 선택</option>
+		<option value="/main/free">&#xf4d8 자유</option>
+		<option value="/main/worry">&#xf5b4 고민</option>
+		<option value="/main/study">&#xf501 공부</option>
+		<option value="/main/love">&#xf004 짝사랑</option>
+		<option value="/main/food">&#xf805 음식</option>
+		<option value="/main/beauty">&#xf0d0 뷰티</option>
+		<option value="/main/fashion">&#xf553 패션</option>
+		<option value="/main/music">&#xf001 음악</option>
+		<option value="/main/blame">&#xf255 뒷담</option>
+</select>
+<a href="/write" class="btn7" style=" border-radius:20px; position:relative; left:24%;"
         ><i class="fas fa-pencil-alt"></i> 글작성
     </a>
-<a href="/main/{{title}}/hot" class="btn3" style=" padding:2%;font-size: 0.5em; border:1px solid; border-radius:20px; color:red; "
+<a href="/main/{{title}}/hot" class="btn7" style="border-radius:20px; position:relative; left:26%;"
         ><i class="fab fa-hotjar"></i> 인기순
     </a>
--->
-<table style=" border-top: 2px solid #464545; border-bottom: 2px solid #464545; margin-bottom:10px;">
-    <tr>
-        <td class="boardIcon">
-            <a href="/main/free" style="color: inherit;"><i class="fas fa-seedling fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/worry" style="color: inherit;"
-                ><i class="fas fa-sad-tear fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/study" style="color: inherit;"
-                ><i class="fas fa-user-graduate fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/love" style="color: inherit;"><i class="fas fa-heart fa-2x"></i> </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/food" style="color: inherit;"><i class="fas fa-hamburger fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/beauty" style="color: inherit;"
-                ><i class="fas fa-paint-brush fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/fashion" style="color: inherit;"
-                ><i class="fas fa-tshirt fa-2x"></i>
-            </a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/music" style="color: inherit;"><i class="fas fa-music fa-2x"></i></a>
-        </td>
-        <td class="boardIcon">
-            <a href="/main/blame" style="color: inherit;"
-                ><i class="fas fa-fist-raised fa-2x"></i
-            ></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="boardFont"><a href="/main/free" style="color: inherit;">자유</a></td>
-        <td class="boardFont"><a href="/main/worry" style="color: inherit;">고민</a></td>
-        <td class="boardFont"><a href="/main/study" style="color: inherit;">공부</a></td>
-        <td class="boardFont"><a href="/main/love" style="color: inherit;">짝사랑</a></td>
-        <td class="boardFont"><a href="/main/music" style="color: inherit;">음식</a></td>
-        <td class="boardFont"><a href="/main/beauty" style="color: inherit;">뷰티</a></td>
-        <td class="boardFont"><a href="/main/fashion" style="color: inherit;">패션</a></td>
-        <td class="boardFont"><a href="/main/music" style="color: inherit;">음악</a></td>
-        <td class="boardFont"><a href="/main/blame" style="color: inherit;">뒷담</a></td>
-    </tr>
-</table>
-<!--
-{% if title==='hot' %}
-
-<div class="title">
-	실시간 인기글 <img src="/fire.svg" style="width:30px;">
 </div>
 
-{% if hotegory[0].content %} {% for posts in hotegory %}
-<div class="writen" onclick="location.href='/comment/{{posts.id}}';">
-	<div class="writenHead">
-    {% if posts.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
-	{% else %}
-		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
-	{% endif %}
-		&nbsp;
-		{{posts.User.nick}}
-		
-		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
-			<i class="fas fa-ellipsis-v"></i>
-		</button>
-	</div>
-		<div class="writenTime">			
-		{{posts.createdAt.getFullYear()}}년
-		{{posts.createdAt.getMonth()+1}}월
-		{{posts.createdAt.getDate()}}일
-		{{posts.createdAt.getHours()+9}}시
-		{{posts.createdAt.getMinutes()}}분
-		{{posts.createdAt.getSeconds()}}초
-		</div>
-	<div class="write-title">
-        {{posts.title}}
-	</div>
-	{% if posts.img %}
-    <div class="write-img">
-        <img src="{{posts.img}}"/>
-    </div>
-    {% endif %} 
-    <div class="write-content">
-        {{posts.content}}
-    </div>
-	<div style="text-align:center">
-		<button class="btn6" style="color:#6EDCDC;" >
-		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
-		{{posts.like}}
-		</button>
-		<button class="btn6" style="color:#FF4646">
-		<i class="fas fa-thumbs-down"></i>
-		{{posts.dislike}}
-		</button>
-		<button class="btn6" style="color:#FF87D2" >
-		<i class="far fa-comment"></i>
-		작성하기 
-		</button>
-	</div>
-</div>
-{% endfor %} {% else %}
-<div class="write-none">
-	<p class="btn3">
-		아직 작성된 글이 없어요.
-	</p>
-		첫번째 글을 작성해 주세요!
-</div>
-{% endif %}
-{% elif title==='used' %}
-
-{% else %}
--->
-
+	
 
 {% if category[0].content %} {% for posts in category %}
 <div class="writen" onclick="location.href='/comment/{{posts.id}}';">
-	<div class="writenHead">
-    {% if posts.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
-	{% else %}
-		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
-	{% endif %}
+	<div class="writeBG" style="display:block; margin:5px;">
+			<div class="writenHead">
 		&nbsp;
-		{{posts.User.nick}}
+		<!-- 학교 이름 추가
+		{% if posts.User.profile !== undifined %}
+		<img src="blank-profile.svg" style="width:30px; border-radius:50px;">
+	{% else %}
 		
-		<button style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;">
-			<i class="fas fa-ellipsis-v"></i>
-		</button>
+	{% endif %}-->
+		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">
+		<select class="btn7"style="color:black;border:none; position:relative; left:70%;">
+		</select>
+		<span style=" position:relative;right:20px;">{{posts.User.nick}}</span>
 	</div>
 		<div class="writenTime">			
 		{{posts.createdAt.getFullYear()}}년
@@ -168,18 +62,20 @@
 		{{posts.createdAt.getMinutes()}}분
 		{{posts.createdAt.getSeconds()}}초
 		</div>
-	<div class="write-title">
-        {{posts.title}}
-	</div>
+			</div>
+
 	{% if posts.img %}
     <div class="write-img">
         <img src="{{posts.img}}"/>
     </div>
     {% endif %} 
-    <div class="write-content">
+    <div class="write-title">
+        {{posts.title}}
+	</div>
+	<div class="write-content">
         {{posts.content}}
     </div>
-	<div style="text-align:center">
+	<div style="text-align:center;">
 		<button class="btn6" style="color:#6EDCDC;" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
@@ -188,7 +84,7 @@
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
-		<button class="btn6" style="color:#FF87D2" >
+		<button class="btn6" style="color:#8c8c8c" >
 		<i class="far fa-comment"></i>
 			작성하기
 		</button>
@@ -203,9 +99,7 @@
 	
 </div>
 {% endif %}
-<!--
-{% endif %}
--->
+
 <wrap>
 <footer>
     <table>
@@ -269,8 +163,4 @@
 
 {% endblock %} 
 {% block script %}
-<script>
-	
-	
-</script>
 {% endblock %}

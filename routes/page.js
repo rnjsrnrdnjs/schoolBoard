@@ -143,7 +143,7 @@ router.get('/main/:category/hot', isLoggedIn, async (req, res, next) => {
             ],
             where: { name: req.user.schoolName },
     });
-	const hotegory=await Post.findAll({
+	const category=await Post.findAll({
 		where:{
 			SchoolId:req.user.SchoolId,
 			category:req.params.category,
@@ -157,7 +157,7 @@ router.get('/main/:category/hot', isLoggedIn, async (req, res, next) => {
 	})
 	const title=String(req.params.category);
     res.render(`main/board/category`,{
-		hotegory:hotegory,
+		category:category,
 		title:title,
 		myschool:myschool,
 	});

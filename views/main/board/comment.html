@@ -6,36 +6,44 @@
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
-<br>
-	<div class="writen">
-	<div class="writenHead">
-    {% if posts.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
-	{% else %}
-		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
-	{% endif %}
+
+
+<div class="writen" style="margin-top:15%;">
+	<div class="writeBG" style="display:block; margin:5px;">
+			<div class="writenHead">
 		&nbsp;
-		{{posts.User.nick}}
+		<!-- 학교 이름 추가
+		{% if posts.User.profile !== undifined %}
+		<img src="blank-profile.svg" style="width:30px; border-radius:50px;">
+	{% else %}
 		
-		<label for="toggle" style="position:absolute; right:5%; background-color:white;border:1px solid #a79c8e; border-radius:40%;"><i class="fas fa-ellipsis-v"></i></label>
-		<input type="checkbox" id="toggle" >
-		<ul id="menu">
-			{% if posts.UserId === user.id %}
-			<li><form action="/delete/post/{{posts.id}}" method="post">
-					<button type="submit">
+	{% endif %}-->
+		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
+				{% if posts.UserId === user.id %}
+			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 54%;">
+				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
 						글 삭제하기
 				</button>
-				</form></li>
+				</form>
+		<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 54%;">
+				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
+						글 수정하기
+				</button>
+				</form>
+				
 			{% endif %}
 			{% if posts.UserId !== user.id %}
-				<li><form action="" method="">
-					<button type="submit">
+				<form action="" method="" style="display:inline; position:relative; left:57%; ">
+					<button type="submit" class="btn7" style="font-size:0.3em;   width: 30%">
 						메시지 보내기
 				</button>
-				</form></li>
+				</form>
 			{% endif %}
-		</ul>
-		
+		<span style=" position:relative;left:-30%;">{{posts.User.nick}}</span>
+		<i class="fas fa-caret-down" style="float:right;"></i>
+			
+			
+	
 	</div>
 		<div class="writenTime">			
 		{{posts.createdAt.getFullYear()}}년
@@ -45,79 +53,81 @@
 		{{posts.createdAt.getMinutes()}}분
 		{{posts.createdAt.getSeconds()}}초
 		</div>
-	<div class="write-title">
-        {{posts.title}}
-	</div>
+			</div>
+
 	{% if posts.img %}
     <div class="write-img">
         <img src="{{posts.img}}"/>
     </div>
     {% endif %} 
-    <div class="write-content">
+    <div class="write-title">
+        {{posts.title}}
+	</div>
+	<div class="write-content">
         {{posts.content}}
     </div>
 	<div style="text-align:center">
 		
-		<form action="/post/post/like/{{posts.id}}" method="post">
+		<form action="/post/post/like/{{posts.id}}" method="post" style="display:inline;">
 		<button class="btn6" style="color:#6EDCDC;" type="submit" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
 		</form>
 		
-		<form action="/post/post/dislike/{{posts.id}}" method="post">
+		<form action="/post/post/dislike/{{posts.id}}" method="post" style="display:inline;">
 		<button class="btn6" style="color:#FF4646;" type="submit" >
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
 		</form>
-		
-		<button class="btn6" style="color:#FF87D2" >
+		<button class="btn6" style="color:#8c8c8c" style="display:inline;">
 		<i class="far fa-comment"></i>
 			{{comments.length}}
 		</button>
 	</div>
-</div>	
-<form action="/post/comment" method="post">
+</div>
+
+
+
+
+
+
+<form action="/post/comment" method="post"  >
 			<input type="hidden" name="Pid" value="{{posts.id}}" >
-			<input  id="Wcomment"name="content" placeholder="댓글을 입력하세요."  maxlength="140" required>
-			<button type="submit" class="btn6" >
+			<input  id="Wcomment"name="content" placeholder="댓글을 입력하세요."  maxlength="140" style="display:inline;margin-bottom:10px;" required>
+			<button class="btn" type="submit"  style="display:inline; width:30%; height:50px; margin-top :5px;">
 				<div>
 					<img src="/tree.svg" style="width:30px;">
 					작성
 				</div>
 			</button>
-		</form>
+</form>
+
+
 {% for comment in comments %}
 	 <div class="write-content">
 		 <div class="writenHead">
-		  {% if comment.User.sexual==='man' %}
-		<i class="fas fa-mars btn5" style="color:blue; background-color:white;"></i>
-	{% else %}
-		<i class="fas fa-venus btn5" style="color:red; background-color:white;" ></i>
-	{% endif %}
-		&nbsp;
-		{{comment.User.nick}}
-			 <label for="toggle2" class ="btn6" style=" right:25%; background-color:white;border:1px solid #a79c8e; border-radius:40%;"><i class="fas fa-ellipsis-v"></i></label>
-		<input type="checkbox" id="toggle2" >
-		<ul id="menu2">
-			{% if comment.UserId === user.id %}
-			<li><form action="/delete/comment/{{comment.id}}" method="post">
-				<input type="hidden" name="Pid" value="{{posts.id}}" >
-				<button type="submit">
+			 
+			 
+		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
+				{% if comment.UserId === user.id %}
+			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 65%;">
+				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
 						글 삭제하기
 				</button>
-				</form></li>
+				</form>
+				
 			{% endif %}
 			{% if comment.UserId !== user.id %}
-				<li><form action="" method="">
-					<button type="submit">
+				<form action="" method="" style="display:inline; position:relative; left:70%; ">
+					<button type="submit" class="btn7" style="font-size:0.3em;   width: 15%">
 						메시지 보내기
 				</button>
-				</form></li>
+				</form>
 			{% endif %}
-		</ul>
-		 </div>
+		<span style=" position:relative;left:-15%;">{{comment.User.nick}}</span>
+		<i class="fas fa-caret-down" style="float:right;"></i>
 		 		
 		 
 		 <div class="writenTime">			
@@ -128,16 +138,17 @@
 		{{comment.createdAt.getMinutes()}}분
 		{{comment.createdAt.getSeconds()}}초
 		</div>
-		 <div>
+		 <div style="width:80%;">
 			{{comment.content}}	
-		<form action="/post/comment/like/{{posts.id}}" method="post">
+		</div>
+		<form action="/post/comment/like/{{posts.id}}" method="post" style="display:inline;">
 		<input type="hidden" name="Cid" value="{{comment.id}}" >
 		<button class="btn6" style="color:#6EDCDC;" type="submit" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{comment.like}}
 		</button>
 		</form>
-		<form action="/post/comment/dislike/{{posts.id}}" method="post">
+		<form action="/post/comment/dislike/{{posts.id}}" method="post" style="display:inline;">
 		<input type="hidden" name="Cid" value="{{comment.id}}" >
 		<button class="btn6" style="color:#FF4646;" type="submit">
 		<i class="fas fa-thumbs-down"></i>
@@ -148,6 +159,18 @@
 		 </div>
 	</div>
 {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <wrap>
