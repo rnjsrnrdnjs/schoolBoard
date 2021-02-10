@@ -2,7 +2,7 @@
 <header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
-        마니또
+        <a href="/main" class="ax">마니또</a>
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
@@ -16,8 +16,8 @@
     %}뒷담 {% endif %}게시판
 </div>
 <div style="margin-bottom: 10px;margin-top: 10px;">
-	<select class="btn7 bar" onchange="if(this.value) location.href=(this.value);" stlye="border:none; float:left;" >
-		<option selected>게시판 선택</option>
+	<select class="btn7 bar" onchange="if(this.value) location.href=(this.value);" style="border:1px solid #282828; float:left;font-weight:bold; box-shadow:2px 1px 1px #282828;" >
+		<option selected >게시판 선택</option>
 		<option value="/main/free">&#xf4d8 자유</option>
 		<option value="/main/worry">&#xf5b4 고민</option>
 		<option value="/main/study">&#xf501 공부</option>
@@ -28,10 +28,10 @@
 		<option value="/main/music">&#xf001 음악</option>
 		<option value="/main/blame">&#xf255 뒷담</option>
 </select>
-<a href="/write" class="btn7" style=" border-radius:20px; position:relative; left:24%;"
+<a href="/write" class="btn7" style=" border-radius:20px; position:relative; left:24%; box-shadow:2px 1px 1px #282828;"
         ><i class="fas fa-pencil-alt"></i> 글작성
     </a>
-<a href="/main/{{title}}/hot" class="btn7" style="border-radius:20px; position:relative; left:26%;"
+<a href="/main/{{title}}/hot" class="btn7" style="border-radius:20px; position:relative; left:26%; box-shadow:2px 1px 1px #282828;"
         ><i class="fab fa-hotjar"></i> 인기순
     </a>
 </div>
@@ -40,7 +40,7 @@
 
 {% if category[0].content %} {% for posts in category %}
 <div class="writen" onclick="location.href='/comment/{{posts.id}}';">
-	<div class="writeBG" style="display:block; margin:5px;">
+	<div class="writeBG" style="display:block;">
 			<div class="writenHead">
 		&nbsp;
 		<!-- 학교 이름 추가
@@ -50,9 +50,7 @@
 		
 	{% endif %}-->
 		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">
-		<select class="btn7"style="color:black;border:none; position:relative; left:70%;">
-		</select>
-		<span style=" position:relative;right:20px;">{{posts.User.nick}}</span>
+		<span style=" position:relative;left:10px;">{{posts.User.nick}}</span>
 	</div>
 		<div class="writenTime">			
 		{{posts.createdAt.getFullYear()}}년
@@ -86,7 +84,7 @@
 		</button>
 		<button class="btn6" style="color:#8c8c8c" >
 		<i class="far fa-comment"></i>
-			작성하기
+			댓글보기
 		</button>
 	</div>
 </div>
@@ -100,6 +98,8 @@
 </div>
 {% endif %}
 
+<div class="push">
+</div>
 <wrap>
 <footer>
     <table>

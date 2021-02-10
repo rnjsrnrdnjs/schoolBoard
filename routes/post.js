@@ -36,6 +36,32 @@ router.post('/img',isLoggedIn,upload.single('img'),(req,res)=>{
 const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
   try {
+	  if(req.body.Pid){
+		  if(req.body.url){
+			  const post=await Post.update({
+			  title:req.body.title,
+	  			category:req.body.category,
+      			content: req.body.content,
+      			img: req.body.url,
+		  },{
+			where:{
+				id:req.body.Pid,
+			},
+		  });
+		  }
+		  else{
+		  const post=await Post.update({
+			  title:req.body.title,
+	  			category:req.body.category,
+      			content: req.body.content,
+		  },{
+			where:{
+				id:req.body.Pid,
+			},
+		  });
+		  }
+	  }
+	  else{
     const post = await Post.create({
 	  title:req.body.title,
 	  category:req.body.category,
@@ -48,6 +74,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
       UserId: req.user.id,
 	  SchoolId:req.user.SchoolId,
     });
+	 }
 	res.redirect(`/main/${req.body.category}`);
   } catch (error) {
     console.error(error);

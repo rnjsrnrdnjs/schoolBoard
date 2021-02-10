@@ -2,7 +2,7 @@
 <header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
-        마니또
+        <a href="/main" class="ax">마니또</a>
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
@@ -18,7 +18,7 @@
 </div>
 
 	<form  action="/post" method="post" enctype="multipart/form-data">
-
+	<input type="hidden" name="Pid" value="{{post.id}}">
 <div id="writePost">
 	<div style="position:relative; top:3%; left:40%;">
 		<select id="write" name="category" style="display:inline;" require>
@@ -36,14 +36,18 @@
 	</div>
 
 	<div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
-		<textarea id="t1" name="title" maxlength="20" style="height:15%;" placeholder="제목" require></textarea>
+		<textarea id="t1" name="title" maxlength="20" style="height:15%;" placeholder="제목" required>{% if post %}{{post.title}}{% endif %}</textarea>
     </div>
     <div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
-		<textarea id="t2" name="content" maxlength="1000"placeholder="여기에 내용을 입력해주세요"  require></textarea>
+		<textarea id="t2" name="content" maxlength="1000"placeholder="여기에 내용을 입력해주세요"  required>{% if post %}{{post.content}}{% endif %}</textarea>
     </div>
-	    <label id="img-label" for="img" class="btn" stlye="text-align:center;">사진 선택</label>
+	    <label id="img-label" for="img" class="btn">사진 선택</label>
 	    <div class="img-preview" style="margin:5px; text-align:center;">
+		{% if post.img %}
+			<img id="img-preview" src="{{post.img}}" width="50%"alt="미리보기">
+		{% else %}
         <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
+		{% endif %}
         <input id="img-url" type="hidden" name="url" />
     	 </div>
         <input id="img"  stlye="text-align:center;" type="file" accept="image/*"  />
@@ -52,7 +56,8 @@
 
 
 
-
+<div class="push">
+</div>
 <wrap>
 <footer>
     <table>

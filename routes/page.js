@@ -67,6 +67,20 @@ router.get('/comment/:id', isLoggedIn, async(req, res, next) => {
 router.get('/write', isLoggedIn, (req, res, next) => {
     res.render('main/write');
 });
+router.get('/update/:Pid', isLoggedIn, async(req, res, next) => {
+	try{
+		
+		const post=await Post.findOne({
+			where:{id:req.params.Pid,},
+		})
+	    res.render('main/write',{
+			post:post,
+		});
+	}catch(err){
+		console.log(err);
+		next(err);
+	}
+});
 router.get('/main', isLoggedIn, async (req, res, next) => {
    try{
 	   const myschool = await School.findOne({

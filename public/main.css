@@ -2,8 +2,7 @@ html,
 body {
     margin: 0;
     height: 100%;
-	overflow-x: hidden;
-       margin-bottom: 20%;
+	box-sizing: border-box;
 }
 .btn {
     display: inline-block;
@@ -144,24 +143,22 @@ header{
   background: white;
   border-bottom:2px solid #FFF0F5;
 }
+.push{
+	height:10%;
+}
 wrap{
 }
 footer{
-  position: fixed;
+  position:fixed;
+  left:0px; 
   bottom: 0%;
   height:10%;
   width:100%;
   background: white;
   border-top:2px solid #FFF0F5;
   box-shadow: 1px 1px 0px 0px #FFDCE1 inset;
-  display:block;
 }
-@media screen and (min-width: 800px) {
-    footer {
-        width: 800px;
-        margin: 0 auto;
-    }
-}
+
 #hdImg{
 	width:30%;
 	display: inline;
@@ -233,8 +230,11 @@ footer{
 	border-radius:0px 0px 8px 8px;
 }
 .writeBG{
+	background-color:#defff9;
 	background-size:100% 100%;
-	background-image:url(/cocktails.svg);
+	background-image:url(/ice.svg);
+	border-bottom:1px solid #828282;
+	border-radius:0px 0px 10px 10px;
 }
 .write-none{
 	width:100vw;
@@ -252,11 +252,11 @@ footer{
 .write-img{
 }
 .write-content{
-	margin:5px;
 	font-size:0.8em;
-	min-height:30px;
-	padding:2px;
+	padding:10px;
+	word-break:break-all;
 }
+
 #write{
 	 display: inline-block;
     text-decoration: none;
@@ -293,18 +293,7 @@ input#img{
 	width:65%;
 	height:50px;
 }
-//
-#menu{margin:0; padding:0; list-style:none;display:inline;} 
-#menu li {display:inline;}
-#menu, #toggle {display:none;} 
-#toggle:checked + #menu{display: inline;}
-
-#menu2{margin:0; padding:0; list-style:none;display:inline;} 
-#menu2 li {display:inline;}
-#menu2, #toggle2 {display:none;} 
-#toggle2:checked + #menu2{display: inline;}
-//
-.bar{width:100px; height:25px; margin:10px;font-family: "Font Awesome 5 Free"; font-weight:500; }
+.bar{width:110px; height:25px;font-family: "Font Awesome 5 Free"; font-weight:500; }
 .bar option{font-family: "Font Awesome 5 Free"; font-weight:900;}
 
 

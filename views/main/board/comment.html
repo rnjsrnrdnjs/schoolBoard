@@ -2,14 +2,14 @@
 <header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
-        마니또
+        <a href="/main" class="ax">마니또</a>
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
 
 <div class="writen" style="margin-top:15%;">
-	<div class="writeBG" style="display:block; margin:5px;">
+	<div class="writeBG" style="display:block;">
 			<div class="writenHead">
 		&nbsp;
 		<!-- 학교 이름 추가
@@ -20,27 +20,26 @@
 	{% endif %}-->
 		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
 				{% if posts.UserId === user.id %}
-			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 54%;">
-				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
-						글 삭제하기
+			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 60%;">
+				<button class="btn7" type="submit" style="width:15%;font-size:1em; border:none; background-color:	#defff9;">
+						<i class="fas fa-trash-alt"></i>
 				</button>
 				</form>
-		<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 54%;">
-				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
-						글 수정하기
+		<a href="/update/{{posts.id}}" style="display:inline; position:relative;left: 54%;">
+				<button class="btn7" type="submit" style="width:15%;font-size:1em; border:none; background-color:	#defff9">
+						<i class="far fa-edit"></i>
 				</button>
-				</form>
+				</a>
 				
 			{% endif %}
 			{% if posts.UserId !== user.id %}
 				<form action="" method="" style="display:inline; position:relative; left:57%; ">
-					<button type="submit" class="btn7" style="font-size:0.3em;   width: 30%">
-						메시지 보내기
+					<button type="submit" class="btn7" style="font-size:1em; border:none;  width: 30%">
+						<i class="far fa-heart"></i>메시지
 				</button>
 				</form>
 			{% endif %}
 		<span style=" position:relative;left:-30%;">{{posts.User.nick}}</span>
-		<i class="fas fa-caret-down" style="float:right;"></i>
 			
 			
 	
@@ -106,28 +105,28 @@
 
 
 {% for comment in comments %}
-	 <div class="write-content">
+	 <div class="write-content" style="border-top:1px solid #828282; border-bottom:0.5px solid #828282;">
 		 <div class="writenHead">
 			 
 			 
 		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
 				{% if comment.UserId === user.id %}
-			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 65%;">
-				<button class="btn7" type="submit" style="width:15%;font-size:0.3em;">
-						글 삭제하기
+			<form action="/delete/comment/{{comment.id}}" method="post" style="display:inline; position:relative;left: 75%;">
+				<input type="hidden" name="Pid" value="{{posts.id}}">
+				<button class="btn7" type="submit" style="width:20%;font-size:1em; border:none;">
+						<i class="fas fa-trash-alt"></i>
 				</button>
 				</form>
 				
 			{% endif %}
 			{% if comment.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; left:70%; ">
-					<button type="submit" class="btn7" style="font-size:0.3em;   width: 15%">
-						메시지 보내기
+				<form action="" method="" style="display:inline; position:relative; left:67%; ">
+					<button type="submit" class="btn7" style="font-size:1em; border:none;  width: 20%">
+						<i class="far fa-heart"></i>메시지
 				</button>
 				</form>
 			{% endif %}
-		<span style=" position:relative;left:-15%;">{{comment.User.nick}}</span>
-		<i class="fas fa-caret-down" style="float:right;"></i>
+		<span style=" position:relative;left:-20%;">{{comment.User.nick}}</span>
 		 		
 		 
 		 <div class="writenTime">			
@@ -138,7 +137,7 @@
 		{{comment.createdAt.getMinutes()}}분
 		{{comment.createdAt.getSeconds()}}초
 		</div>
-		 <div style="width:80%;">
+		 <div class="write-content">
 			{{comment.content}}	
 		</div>
 		<form action="/post/comment/like/{{posts.id}}" method="post" style="display:inline;">
@@ -172,7 +171,8 @@
 
 
 
-
+<div class="push">
+</div>
 <wrap>
 <footer>
     <table>

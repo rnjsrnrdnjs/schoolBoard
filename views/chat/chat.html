@@ -1,4 +1,75 @@
 {% extends 'layout.html' %} {% block content %}
+<header>
+    <img src="/manito.svg" id="hdImg" />
+    <div id="hdFont">
+        <a href="/main" class="ax">마니또</a>
+    </div>
+    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
+</header>
 
-{% endblock %}
-{% block script %} {% endblock %}
+
+
+
+<div class="push">
+</div>
+<wrap>
+<footer>
+    <table>
+        <tr>
+            <td class="footerTd">
+                <a href="/main">
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat">
+                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a hreft="/game">
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school">
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting">
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="footerTd">
+                <a href="/main" class="btn2">
+                    게시판
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat" class="btn2">
+                    채팅
+                </a>
+            </td>
+            <td class="footerTd">
+                <a hreft="/game" class="btn2">
+                    게임
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school" class="btn2">
+                    학급정보
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting" class="btn2">
+                    설정
+                </a>
+            </td>
+        </tr>
+    </table>
+</footer>
+</wrap>
+{% endblock %} {% block script %} {% endblock %}
