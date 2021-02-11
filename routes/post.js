@@ -1,9 +1,12 @@
 const express=require('express');
-const {isLoggedIn ,isNotLoggedIn }=require('./middlewares');
+const {isLoggedIn ,isNotLoggedIn ,search}=require('./middlewares');
 const multer=require('multer');
 const path=require('path');
 const fs=require('fs');
 const {sequelize}=require('../models');
+
+const neis = require('../neis/neis');
+const SchoolType = require('../neis/types/SchoolType');
 
 const {Post,School,User,Comment}=require('../models');
 const router=express.Router();
@@ -183,6 +186,52 @@ router.post('/post/dislike/:id',isLoggedIn,async(req,res,next)=>{
     next(error);
   }
 });
+router.post('/join/:find', isNotLoggedIn, async(req, res, next) => {
+	try{
+	    res.render('join',{
+			find:req.params.find,
+			code:req.body.code,
+		});
+	}catch(err){
+		console.log(err);
+		next(err);
+	}
+});
 
 
+router.post('/school/search', isNotLoggedIn, async(req, res, next) => {
+	try{
+		const result=await neis.searchSchool(req.body.schoolname);
+		result.forEach(async(school)=>{
+			const find=await School.findOne({
+				where:{
+					code:school.code,
+				},
+			});
+			if(find===null){
+				const detail=await neis.createSchool(neis.REGION[school.edu], school.code,school.kind).getSchoolDetail();
+				await School.create({
+				edu:neis.REGION[detail.edu],
+				code:detail.code,
+				kind:detail.kind,
+				name:detail.name,
+				addr:detail.addr,
+				tellNum:detail.tellNum,
+				homepage:detail.homepage,
+				coeduScNm:detail.coeduScNm,
+				fondScNm:detail.fondScNm,
+				teacherCnt:detail.teacherCnt,
+				level:0,
+				});
+			}
+		})
+		
+	    res.render('findSchool',{
+			result:result,
+		});
+	}catch(err){
+		console.log(err);
+		next(err);
+	}
+});
 module.exports=router;

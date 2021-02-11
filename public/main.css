@@ -3,6 +3,7 @@ body {
     margin: 0;
     height: 100%;
 	box-sizing: border-box;
+	
 }
 .btn {
     display: inline-block;
@@ -146,19 +147,15 @@ header{
 .push{
 	height:10%;
 }
-wrap{
-}
 footer{
+  width:inherit;
   position:fixed;
-  left:0px; 
   bottom: 0%;
   height:10%;
-  width:100%;
   background: white;
   border-top:2px solid #FFF0F5;
   box-shadow: 1px 1px 0px 0px #FFDCE1 inset;
 }
-
 #hdImg{
 	width:30%;
 	display: inline;

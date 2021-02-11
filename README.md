@@ -1,5 +1,9 @@
 익명 게시판을 만드는중입니다.
 
+학교정보, 학교검색, 급식 조회, 학사 일정은 아래의 nnnlog님의 오픈소스를
+이용하였습니다. 감사합니다!!!
+https://github.com/nnnlog/neis
+
 //웹 폰트 아이콘 주소
 https://fontawesome.com/
 

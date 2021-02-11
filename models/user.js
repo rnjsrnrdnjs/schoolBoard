@@ -24,16 +24,24 @@ module.exports = class User extends Sequelize.Model {
 					type:Sequelize.STRING(5),
                     allowNull: false,
 				},
-				schoolName:{
-					type: Sequelize.STRING(20),
+				edu:{
+					type: Sequelize.STRING(50),
                     allowNull: false,
 				},
-				authority:{
-					type: Sequelize.INTEGER,
-                    allowNull: true,
+				code:{
+					type: Sequelize.STRING(50),
+                    allowNull: false,
 				},
-				
-            },{
+				kind:{
+					type: Sequelize.STRING(50),
+                    allowNull: false,
+				},
+				schoolName:{
+					type: Sequelize.STRING(50),
+                    allowNull: false,
+				},
+			},
+			{
 				sequelize,
 				timestamps:false,
 				underscored:false,

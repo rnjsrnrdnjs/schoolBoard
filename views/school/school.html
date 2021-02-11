@@ -6,13 +6,69 @@
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
+<div class="title" style="margin-bottom:4%;">
+		{{school.name}}<img src="/tree.svg" style="width:50px;">
+		학급 정보
+</div>
 
 
+<!-- <-   월 선택 ->  -->
+	{% if schoolDiary %}	
+		<div>
+		학사일정
+		</div>
+		{% set cnt=0 %}
+		{% for diary in schoolDiary %}
+			<div>
+				{{diary.month}} {{diary.day}} {{diary.diary}}
+			</div>
+		{% endfor %}
+	{% endif %}
+	{% if schoolMeal %}
+		<div>
+		급식정보
+		</div>
+		{% for meal in schoolMeal %}
+			<div>
+			조식-{{meal.breakfast}}
+			</div>
+			<div>
+			중식-{{meal.lunch}}
+			</div>
+			<div>
+			석식-{{meal.dinner}}
+			</div>
+		{% endfor %}
+	{% endif %}
 
+
+	{% if school %}
+		<div>
+		학교이름-{{school.name}}
+		</div>
+		<div>
+		학교주소-{{school.addr}}
+		</div>
+		<div>
+		학교번호-{{school.tellNum}}
+		</div>
+		<div>
+		학교홈페이지-{{school.homepage}}
+		</div>
+		<div>
+		{{school.coeduScNm}} 학교
+		</div>
+		<div>
+		{{school.fondScNm}} 학교
+		</div>
+		<div>
+		선생님수-{{school.teacherCnt}}
+		</div>
+		
+	{% endif %}
 
 <div class="push">
 </div>
-<wrap>
 <footer>
     <table>
         <tr>
@@ -27,7 +83,7 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a hreft="/game">
+                <a href="/game">
                     <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
                 </a>
             </td>
@@ -54,7 +110,7 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a hreft="/game" class="btn2">
+                <a href="/game" class="btn2">
                     게임
                 </a>
             </td>
@@ -71,5 +127,4 @@
         </tr>
     </table>
 </footer>
-</wrap>
 {% endblock %} {% block script %} {% endblock %}

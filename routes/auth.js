@@ -4,11 +4,13 @@ const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const User = require('../models/user');
 const School = require('../models/school');
+const neis = require('../neis/neis');
+const SchoolType = require('../neis/types/SchoolType');
 
 const router = express.Router();
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { email, password , nick, sexual, schoolName} = req.body;
+  const { email, password , nick, sexual,code} = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
     const exUser2 = await User.findOne({ where: { nick } });
@@ -18,16 +20,20 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 	  
     const hash = await bcrypt.hash(password, 12);
 	const sname=await School.findOne({
-		where:{name:schoolName},
+		where:{code:code},
 	})
     const u=await User.create({
       email,
       password: hash,
 	  nick,
 	  sexual,
-	  schoolName,
+	  edu:neis.REGION[sname.edu],
+	  code:sname.code,
+	  kind:sname.kind,
 	  authority:0,
+	  schoolName:sname.name,
 	  SchoolId:sname.id, 
+		
     });
 	  
     return res.redirect('/');

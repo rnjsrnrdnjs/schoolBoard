@@ -25,7 +25,14 @@
 		
     <p></p>
     <div class="input_group">
-        <input id="schoolName" type="schoolName" name="schoolName"  placeholder="학교 선택" required />
+		{% if find %}
+	        <input id="schoolName" type="schoolName" name="schoolName"  value="{{find}}" onkeypress="return false;" required />
+		    <input type="hidden" name="code" value="{{code}}">
+			<a href="/findSchool" class="btn7"><i class="fas fa-search-location"></i>학교선택</a>
+		{% else %}
+	        <input id="schoolName" type="schoolName" name="schoolName"  placeholder="버튼을 눌러주세요--->" onkeypress="return false;" required />
+			<a href="/findSchool" class="btn7"><i class="fas fa-search-location"></i>학교선택</a>
+		{% endif %}
     </div>
 		<p>
 		</p>

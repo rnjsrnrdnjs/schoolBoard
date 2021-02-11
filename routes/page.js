@@ -3,6 +3,8 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { Post, School, User,Comment } = require('../models');
 const router = express.Router();
 const {sequelize}=require('../models');
+const neis = require('../neis/neis');
+const SchoolType = require('../neis/types/SchoolType');
 
 
 router.use(async (req, res, next) => {
@@ -21,7 +23,7 @@ router.use(async (req, res, next) => {
     }
     next();
 });
-// 이미 로그인 되어있을때 / 처리
+
 router.get('/',isNotLoggedIn, (req, res, next) => {
     res.render('load');
 });
@@ -31,7 +33,9 @@ router.get('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/join', isNotLoggedIn, (req, res, next) => {
     res.render('join');
 });
-
+router.get('/findSchool', isNotLoggedIn, (req, res, next) => {
+    res.render('findSchool');
+});
 router.get('/comment/:id', isLoggedIn, async(req, res, next) => {
 	try{
 		const posts=await Post.findOne({
@@ -180,8 +184,37 @@ router.get('/main/:category/hot', isLoggedIn, async (req, res, next) => {
         next(err);
 	}
 });
-router.get('/school', isLoggedIn, (req, res, next) => {
-    res.render('school/school');
+router.get('/school', isLoggedIn, async(req, res, next) => {
+	try{
+		const today=new Date();
+		const year=today.getFullYear();
+		const month=today.getMonth()+1;
+		
+		const school=await School.findOne({
+			where:{
+				id:res.locals.school.id,
+			},
+		});
+		const schoolDiary=[];
+         await neis.createSchool(neis.REGION[school.edu], school.code,school.kind).getDiary(month, year-1).then((list) => {
+            for (let day of Object.keys(list)) {
+				schoolDiary.push({month:month,day:day,diary:list[day].join(", ")});
+            }
+        });
+		const schoolMeal =[];
+		await neis.createSchool(neis.REGION[school.edu], school.code,school.kind).getMeal(year-1, month).then((d) => {
+        d.forEach((meal) => {
+			schoolMeal.push({breakfast:neis.removeAllergy(meal.breakfast).replace("&amp;"," "),lunch:neis.removeAllergy(meal.lunch).replace("&amp;"," "),dinner:neis.removeAllergy(meal.dinner).replace("&amp;"," ")});
+    	    });
+	    });
+	    res.render('school/school',{
+			schoolDiary:schoolDiary,
+			schoolMeal:schoolMeal,
+		});
+	}catch(err){
+		console.log(err);
+		next(err);
+	}
 });
 
 router.get('/setting', isLoggedIn, (req, res, next) => {
