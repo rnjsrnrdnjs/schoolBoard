@@ -4,14 +4,14 @@ module.exports = class Room extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-				content: {
-                    type: Sequelize.STRING(140),
-                    allowNull: true,
-                },
-                img: {
-                    type: Sequelize.STRING(200),
-                    allowNull: true,
-                },
+				title:{
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+				},
+				owner:{
+                    type: Sequelize.STRING(15),
+                    allowNull: false,
+				},
             },{
 				sequelize,
                 timestamps: false,
@@ -27,6 +27,6 @@ module.exports = class Room extends Sequelize.Model {
 
     static associate(db) {
 		db.Room.hasMany(db.Chat);
-		db.Room.belongsToMany(db.User,{through:'UserRoom'});
+		db.Room.belongsTo(db.School);
 	}
 };

@@ -40,6 +40,10 @@ module.exports = class User extends Sequelize.Model {
 					type: Sequelize.STRING(50),
                     allowNull: false,
 				},
+				profile: {
+                    type: Sequelize.STRING(200),
+                    allowNull: true,
+                },
 			},
 			{
 				sequelize,
@@ -57,8 +61,6 @@ module.exports = class User extends Sequelize.Model {
     static associate(db) {
 		db.User.belongsTo(db.School);
 		db.User.hasMany(db.Post);
-		db.User.hasMany(db.Chat);
 		db.User.hasMany(db.Comment);
-		db.User.belongsToMany(db.Room,{through:'UserRoom'});
 	}
 };

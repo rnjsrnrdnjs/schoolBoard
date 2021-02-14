@@ -8,7 +8,7 @@ const {sequelize}=require('../models');
 const neis = require('../neis/neis');
 const SchoolType = require('../neis/types/SchoolType');
 
-const {Post,School,User,Comment}=require('../models');
+const {Post,School,User,Comment,Room,Chat}=require('../models');
 const router=express.Router();
 
 try{
@@ -32,11 +32,39 @@ const upload=multer({
 });
 
 router.post('/img',isLoggedIn,upload.single('img'),(req,res)=>{
-	console.log(req.file+"!@#!@#!@#");
 	res.json({url:`/img/${req.file.filename}`});
 });
 
 const upload2 = multer();
+router.post('/profile/img',isLoggedIn, upload.single('img'), async (req, res, next) => {
+  try {
+	  const filename='img/'+req.file.filename;
+    await User.update({
+		profile:filename,
+	},{
+		where: {id: req.user.id},
+	});	
+	  res.render('setting/setting');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.post('/room/:id/img',isLoggedIn, upload.single('img'), async (req, res, next) => {
+  try {
+	  console.log(req.file.filename);
+    const chat = await Chat.create({
+      RoomId: req.params.id,
+      user: req.user.nick,
+      img: req.file.filename,
+	});	
+    req.app.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+    res.send('ok');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
   try {
 	  if(req.body.Pid){
@@ -201,13 +229,14 @@ router.post('/join/:find', isNotLoggedIn, async(req, res, next) => {
 
 router.post('/school/search', isNotLoggedIn, async(req, res, next) => {
 	try{
-		const result=await neis.searchSchool(req.body.schoolname);
+		const result=await neis.searchSchool(req.body.schoolname,req.body.region);
 		result.forEach(async(school)=>{
 			const find=await School.findOne({
 				where:{
 					code:school.code,
 				},
-			});
+			})
+			console.log(1);
 			if(find===null){
 				const detail=await neis.createSchool(neis.REGION[school.edu], school.code,school.kind).getSchoolDetail();
 				await School.create({
@@ -225,8 +254,7 @@ router.post('/school/search', isNotLoggedIn, async(req, res, next) => {
 				});
 			}
 		})
-		
-	    res.render('findSchool',{
+	    await res.render('findSchool',{
 			result:result,
 		});
 	}catch(err){
@@ -234,4 +262,35 @@ router.post('/school/search', isNotLoggedIn, async(req, res, next) => {
 		next(err);
 	}
 });
+
+router.post('/schoolMake', isLoggedIn, async(req, res, next) => {
+	try{
+		const newRoom=await Room.create({
+			title:req.body.title,
+			owner:res.locals.user.nick,
+			SchoolId:res.locals.school.id,
+		});
+		const io=req.app.get('io');
+		io.of('/room').emit('newRoom',newRoom);
+		res.redirect(`/room/${newRoom.id}`);
+	}catch(err){
+		console.error(error);
+		next(error);
+	}
+});
+router.post('/room/:id/chat', isLoggedIn, async(req, res, next) => {
+	try{
+		const chat=await Chat.create({
+			user:req.user.nick,
+			RoomId:req.params.id,
+			chat:req.body.chat,
+		});
+		req.app.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+  		 res.send('ok');
+	}catch(err){
+		console.error(error);
+		next(error);
+	}
+});
+
 module.exports=router;

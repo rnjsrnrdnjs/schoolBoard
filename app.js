@@ -14,6 +14,7 @@ const postRouter=require('./routes/post');
 const deleteRouter=require('./routes/delete');
 const {sequelize} =require('./models');
 const passportConfig=require('./passport');
+const webSocket=require('./socket');
 
 const app=express();
 passportConfig();
@@ -23,6 +24,16 @@ nunjucks.configure('views',{
 	express:app,
 	watch:true,
 });
+const sessionMiddleware=session({
+	resave:false,
+	saveUninitialized:false,
+	secret:process.env.COOKIE_SECRET,
+	cookie:{
+		httpOnly:true,
+		secure:false,
+	},
+});
+
 sequelize.sync({force:false})
 	.then(()=>{
 	console.log('데이터베이스 연결 성공');
@@ -37,15 +48,7 @@ app.use('/img',express.static(path.join(__dirname,'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-	resave:false,
-	saveUninitialized:false,
-	secret:process.env.COOKIE_SECRET,
-	cookie:{
-		httpOnly:true,
-		secure:false,
-	},
-}));
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,6 +71,8 @@ app.use((err,req,res,next)=>{
 	res.render('error');
 });
 
-app.listen(app.get('port'),()=>{
+const server=app.listen(app.get('port'),()=>{
 	console.log(app.get('port'),'번 포트에서 대기중');
 });
+
+webSocket(server,app,sessionMiddleware);

@@ -99,6 +99,7 @@ input[type="radio"]:checked + span#w{
   color:#fff;
 }
 a{text-decoration : none;}
+.ax { color: inherit; text-decoration: none;}
 .ax:visited { color: inherit; text-decoration: none;}
 .ax:hover {  color: inherit; text-decoration: none}
 .container {
@@ -191,7 +192,7 @@ footer{
 }
 .title{
 	color:#323232;
-	font-size:0.8em;
+	font-size:1.2em;
 	font-weight:bold;
 	text-shadow:2px 1px 1px #FAB7B7;
 }
@@ -212,8 +213,8 @@ footer{
 .writen{
 	box-sizing: border-box;
 	width:100%;
-	border-top:2px solid #828282;
-	border-bottom:1px solid #828282;
+	border-top:1px solid #c8c8c8;
+	border-bottom:0.5px solid #c8c8c8;
 }
 .writenHead{
 	width:100%;
@@ -226,12 +227,27 @@ footer{
 	padding-bottom:10px;
 	border-radius:0px 0px 8px 8px;
 }
-.writeBG{
-	background-color:#defff9;
+.imgBG{
 	background-size:100% 100%;
-	background-image:url(/ice.svg);
-	border-bottom:1px solid #828282;
+}
+.writeBG{
+	background-color:#fafffd;
+	background-size:100% 100%;
+	background-image:url(/cherry.svg);
+	border-bottom:1px solid #c8c8c8;
 	border-radius:0px 0px 10px 10px;
+}
+.boardBG{
+	background-size:100% 100%;
+	/*background-image:url(/boardBG.svg);*/
+	border-top:1px solid #c8c8c8;
+	border-bottom:1px solid #c8c8c8;
+	border-radius:10px;
+}
+.settingBG{
+	background-size:100% 100%;
+	background-image:url(/settingBG.svg);
+	/*border-radius:10px;*/
 }
 .write-none{
 	width:100vw;
@@ -290,9 +306,48 @@ input#img{
 	width:65%;
 	height:50px;
 }
+.comment{
+	border-top:1px solid #c8c8c8;
+	border-bottom:0.5px solid #c8c8c8;
+	
+}
 .bar{width:110px; height:25px;font-family: "Font Awesome 5 Free"; font-weight:500; }
 .bar option{font-family: "Font Awesome 5 Free"; font-weight:900;}
 
 
 
 
+.mine { text-align: right; }
+.system { text-align: center; }
+.mine img, .other img {
+  max-width: 300px;
+  display: inline-block;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+.mine div:first-child, .other div:first-child { font-size: 12px; }
+.mine div:last-child, .other div:last-child {
+  display: inline-block;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 2px 5px;
+  max-width: 300px;
+}
+#exit-btn { position: absolute; top: 20px; right: 20px; }
+#chat-list { height: 500px; overflow: auto; padding: 5px; }
+#chat-form { text-align: right; }
+label[for='gif'], #chat, #chat-form [type='submit'] {
+  display: inline-block;
+  height: 30px;
+  vertical-align: top;
+}
+label[for='gif'] { cursor: pointer; padding: 5px; }
+#gif { display: none; }
+/*
+table, table th, table td {
+  text-align: center;
+  border: 1px solid silver;
+  border-collapse: collapse;
+}
+*/

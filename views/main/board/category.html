@@ -1,37 +1,17 @@
 {% extends 'layout.html' %} {% block content %}
-<header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
-        <a href="/main" class="ax">마니또</a>
-    </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
-</header>
 
-
-<div class="title" style="margin-bottom:4%;">
-		{{school.name}}<img src="/tree.svg" style="width:50px;">
-    {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
+<div style="margin-bottom: 10px;margin-top: 10px;" >
+	<span style="font-weight:bold;
+	text-shadow:2px 1px 1px #FAB7B7; padding-left:20px;">
+	 {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study' %}공부 {%
     elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif title==='beauty' %}뷰티
     {% elseif title==='fashion' %}패션 {% elseif title==='music' %}음악 {% elseif title==='blame'
     %}뒷담 {% endif %}게시판
-</div>
-<div style="margin-bottom: 10px;margin-top: 10px;">
-	<select class="btn7 bar" onchange="if(this.value) location.href=(this.value);" style="border:1px solid #282828; float:left;font-weight:bold; box-shadow:2px 1px 1px #282828;" >
-		<option selected >게시판 선택</option>
-		<option value="/main/free">&#xf4d8 자유</option>
-		<option value="/main/worry">&#xf5b4 고민</option>
-		<option value="/main/study">&#xf501 공부</option>
-		<option value="/main/love">&#xf004 짝사랑</option>
-		<option value="/main/food">&#xf805 음식</option>
-		<option value="/main/beauty">&#xf0d0 뷰티</option>
-		<option value="/main/fashion">&#xf553 패션</option>
-		<option value="/main/music">&#xf001 음악</option>
-		<option value="/main/blame">&#xf255 뒷담</option>
-</select>
-<a href="/write" class="btn7" style=" border-radius:20px; position:relative; left:24%; box-shadow:2px 1px 1px #282828;"
-        ><i class="fas fa-pencil-alt"></i> 글작성
+	</span>
+<a href="/write" class="btn7" style=" border-radius:20px; position:relative; float:right; box-shadow:2px 1px 1px #282828;"
+        ><i class="fas fa-pencil-alt"></i>글작성
     </a>
-<a href="/main/{{title}}/hot" class="btn7" style="border-radius:20px; position:relative; left:26%; box-shadow:2px 1px 1px #282828;"
+<a href="/main/{{title}}/hot" class="btn7" style="border-radius:20px;  position:relative;float:right; box-shadow:2px 1px 1px #282828;"
         ><i class="fab fa-hotjar"></i> 인기순
     </a>
 </div>
@@ -49,7 +29,7 @@
 	{% else %}
 		
 	{% endif %}-->
-		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">
+		<img src="/{{posts.User.profile}}" style="padding-top:5px;width:30px; height:30px; border-radius:50px;">
 		<span style=" position:relative;left:10px;">{{posts.User.nick}}</span>
 	</div>
 		<div class="writenTime">			
@@ -63,8 +43,8 @@
 			</div>
 
 	{% if posts.img %}
-    <div class="write-img">
-        <img src="{{posts.img}}"/>
+    <div class="write-img" >
+        <img src="{{posts.img}}" style="max-height:300px; width:auto; height:auto; max-width:100%;"/>
     </div>
     {% endif %} 
     <div class="write-title">
@@ -73,16 +53,16 @@
 	<div class="write-content">
         {{posts.content}}
     </div>
-	<div style="text-align:center;">
-		<button class="btn6" style="color:#6EDCDC;" >
+	<div style="text-align:center; background-color:#fff2f4; border-top:1px solid #c8c8c8;">
+		<button class="btn6" style="color:#6EDCDC;background-color:#fff2f4;" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
-		<button class="btn6" style="color:#FF4646">
+		<button class="btn6" style="color:#FF4646;background-color:#fff2f4;">
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
-		<button class="btn6" style="color:#8c8c8c" >
+		<button class="btn6" style="color:#8c8c8c;background-color:#fff2f4;" >
 		<i class="far fa-comment"></i>
 			댓글보기
 		</button>
@@ -105,7 +85,7 @@
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color:#FF5675"></i>
                 </a>
             </td>
             <td class="footerTd">
@@ -131,7 +111,7 @@
         </tr>
         <tr>
             <td class="footerTd">
-                <a href="/main" class="btn2">
+                <a href="/main" class="btn2" style="color:#FF5675">
                     게시판
                 </a>
             </td>

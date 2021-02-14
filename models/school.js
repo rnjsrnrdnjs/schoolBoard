@@ -65,5 +65,6 @@ module.exports = class School extends Sequelize.Model {
     static associate(db) {
 		db.School.hasMany(db.User);
 		db.School.hasMany(db.Post);
+		db.School.hasOne(db.Room);
 	}
 };

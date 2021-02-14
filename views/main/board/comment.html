@@ -8,7 +8,7 @@
 </header>
 
 
-<div class="writen" style="margin-top:15%;">
+<div class="writen" style="margin-top:10%;">
 	<div class="writeBG" style="display:block;">
 			<div class="writenHead">
 		&nbsp;
@@ -18,28 +18,28 @@
 	{% else %}
 		
 	{% endif %}-->
-		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
+		<img src="/{{posts.User.profile}}" style="width:30px; height:30px; border-radius:50px;padding-top:5px;">	
+		<span>{{posts.User.nick}}</span>
 				{% if posts.UserId === user.id %}
-			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative;left: 60%;">
-				<button class="btn7" type="submit" style="width:15%;font-size:1em; border:none; background-color:	#defff9;">
+			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
+				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
 						<i class="fas fa-trash-alt"></i>
 				</button>
 				</form>
-		<a href="/update/{{posts.id}}" style="display:inline; position:relative;left: 54%;">
-				<button class="btn7" type="submit" style="width:15%;font-size:1em; border:none; background-color:	#defff9">
+		<a href="/update/{{posts.id}}" style="display:inline; position:relative; float:right; right:40px;">
+				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
 						<i class="far fa-edit"></i>
 				</button>
 				</a>
 				
 			{% endif %}
 			{% if posts.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; left:57%; ">
-					<button type="submit" class="btn7" style="font-size:1em; border:none;  width: 30%">
+				<form action="" method="" style="display:inline; position:relative; float:right; right:40px;">
+					<button type="submit" class="btn7" style="font-size:1em; border:none;  background-color:inherit;">
 						<i class="far fa-heart"></i>메시지
 				</button>
 				</form>
 			{% endif %}
-		<span style=" position:relative;left:-30%;">{{posts.User.nick}}</span>
 			
 			
 	
@@ -65,22 +65,22 @@
 	<div class="write-content">
         {{posts.content}}
     </div>
-	<div style="text-align:center">
+	<div style="text-align:center;background-color:#fff2f4;border-top:1px solid #c8c8c8;">
 		
 		<form action="/post/post/like/{{posts.id}}" method="post" style="display:inline;">
-		<button class="btn6" style="color:#6EDCDC;" type="submit" >
+		<button class="btn6" style="color:#6EDCDC;background-color:#fff2f4;" type="submit" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
 		</form>
 		
 		<form action="/post/post/dislike/{{posts.id}}" method="post" style="display:inline;">
-		<button class="btn6" style="color:#FF4646;" type="submit" >
+		<button class="btn6" style="color:#FF4646;background-color:#fff2f4;" type="submit" >
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
 		</form>
-		<button class="btn6" style="color:#8c8c8c" style="display:inline;">
+		<button class="btn6" style="color:#8c8c8c;background-color:#fff2f4;" style="display:inline;">
 		<i class="far fa-comment"></i>
 			{{comments.length}}
 		</button>
@@ -103,15 +103,13 @@
 			</button>
 </form>
 
-
 {% for comment in comments %}
-	 <div class="write-content" style="border-top:1px solid #828282; border-bottom:0.5px solid #828282;">
+	 <div class="write-content comment">
 		 <div class="writenHead">
-			 
-			 
-		<img src="/blank-profile.svg" style="width:30px; border-radius:50px;">	
+		<img src="/{{comment.User.profile}}" style="width:30px; height:30px;border-radius:50px;">	
+		<span >{{comment.User.nick}}</span>
 				{% if comment.UserId === user.id %}
-			<form action="/delete/comment/{{comment.id}}" method="post" style="display:inline; position:relative;left: 75%;">
+			<form action="/delete/comment/{{comment.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
 				<input type="hidden" name="Pid" value="{{posts.id}}">
 				<button class="btn7" type="submit" style="width:20%;font-size:1em; border:none;">
 						<i class="fas fa-trash-alt"></i>
@@ -120,13 +118,12 @@
 				
 			{% endif %}
 			{% if comment.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; left:67%; ">
+				<form action="" method="" style="display:inline; position:relative; float:right; right:40px; ">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;  width: 20%">
 						<i class="far fa-heart"></i>메시지
 				</button>
 				</form>
 			{% endif %}
-		<span style=" position:relative;left:-20%;">{{comment.User.nick}}</span>
 		 		
 		 
 		 <div class="writenTime">			
@@ -178,7 +175,7 @@
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color:#FF5675"></i>
                 </a>
             </td>
             <td class="footerTd">
@@ -204,7 +201,7 @@
         </tr>
         <tr>
             <td class="footerTd">
-                <a href="/main" class="btn2">
+                <a href="/main" class="btn2" style="color:#FF5675">
                     게시판
                 </a>
             </td>

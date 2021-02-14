@@ -1,13 +1,14 @@
 {% extends 'layout.html' %} {% block content %}
-	<img src="/manito.svg" id ="loginImg">
+<div style=" height:100%;">
+		<img src="/manito.svg" id ="loginImg">
 <form id="loginForm" action="/auth/login" method="post">
 	<div style="text-align:center";>
 		    <div class="input_group">
-        <input id="email" type="email" name="email" placeholder="이메일" required autofocus />
+        <input id="email" type="email" name="email" placeholder="이메일" style="width:90% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa " required autofocus />
     </div>
     <p></p>
     <div class="input_group">
-        <input id="password" type="password" name="password" placeholder="비밀번호" required />
+        <input id="password" type="password" name="password" placeholder="비밀번호" style="width:90% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa "required />
     </div>
     <p></p>
     <a id="lose" href="/lose">비밀번호를 잃어버리셨나요?</a>
@@ -15,5 +16,7 @@
     <button id="loginBtn" type="submit" class="btn">로그인</button>
 			</div>
 </form>
+	</div>
+
 {% endblock %}
 {% block script %} {% endblock %}

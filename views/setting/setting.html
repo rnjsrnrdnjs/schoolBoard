@@ -1,68 +1,185 @@
 {% extends 'layout.html' %} {% block content %}
-<header>
+<header style="margin-bottom:11%">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
+    <i
+        class="far fa-bell"
+        style="vertical-align: middle; color: black; float: right; padding: 20px 20px;"
+    ></i>
 </header>
-<div class="title" style="margin-bottom:4%;">
-		{{user.nick}}<img src="/tree.svg" style="width:50px;">
-		설정
+            <a
+                href="/auth/logout"
+                class="btn"
+                style="position: relative; float: right;"
+            >
+                로그아웃
+            </a>
+
+<div   style="width:40%;float: left;">
+    <div>
+        <div style="margin-bottom: 5px; margin-left: 5px; background-color: white;">
+            <span style="color: #828282; font-weight: bold;">
+                닉네임 -
+            </span>
+            <span style="color: #282828; font-weight: bold; font-size: 1.1em;">{{user.nick}} </span>
+        </div>
+        <img class="imgBG"
+            src="/{{user.profile}}"
+            style="
+				   border:2px solid #e3e3ff;
+				   height:50px;
+                width: 50px;
+                border-radius: 50px;
+                margin: 5px;
+                background-color: white;
+                padding: 20px;
+            "
+        />
+    </div>
+    <div>
+        <form action="" method="post" style="height: 40px;">
+            <button
+                type="submit"
+                style="
+                    background-color: #e3e3ff;
+                    height: 40px;
+                    border: none;
+                    border-top: 1px solid #d2d2d2;
+                    border-bottom: 0.5px solid #d2d2d2;
+                    width: 100%;
+                    color: #828282;
+                    margin: 5px;
+                "
+            >
+                닉네임 변경
+            </button>
+        </form>
+    </div>
+    <div>
+			<label  for="img" style="
+                   display:inline-block;	
+					font-size:0.9em;
+				    text-align:center;
+					background-color: #e3e3ff;
+				   width:100%;
+                    height: 40px;
+                    border: none;
+                    border-top: 1px solid #d2d2d2;
+                    border-bottom: 0.5px solid #d2d2d2;
+                    color: #828282;
+                    margin: 5px;
+                ">사진 변경</label>
+    	    <input id="img"  style="text-align:center;width:0%;" type="file" accept="image/*"  />
+    </div>
+    <div>
+        <form action="/" method="get" style="height: 40px;">
+            <button
+                type="submit"
+                style="
+                    background-color: #e3e3ff;
+                    height: 40px;
+                    border: none;
+                    border-top: 0.5px solid #d2d2d2;
+                    border-bottom: 0.5px solid #d2d2d2;
+                    width: 100%;
+                    color: #828282;
+                    margin: 5px;
+                "
+            >
+                내가쓴글
+            </button>
+        </form>
+    </div>
+    <div>
+        <form action="/" method="post" style="height: 40px;">
+            <button
+                style="
+                    background-color: #e3e3ff;
+                    height: 40px;
+                    border: none;
+                    border-top: 0.5px solid #d2d2d2;
+                    border-bottom: 0.5px solid #d2d2d2;
+                    width: 100%;
+                    color: #828282;
+                    margin: 5px;
+                "
+            >
+                내가쓴 댓글
+            </button>
+        </form>
+    </div>
+
+    <div>
+            <button
+                onclick="removeCheck()"
+                style="
+					color:#FF4646;
+					text-align:center;
+					font-size:0.8em;
+                    background-color: #e3e3ff;
+                    height: 40px;
+                    border: none;
+                    border-top: 0.5px solid #d2d2d2;
+                    border-bottom: 1px solid #d2d2d2;
+                    width: 100%;
+                    margin: 5px;
+                "
+            >
+                회원탈퇴
+            </button>
+    </div>
 </div>
-<div>
-	로그아웃
-</div>
-<div>
-	닉네임 변경	
-</div>
-<div>
-	프로필 이미지 변경
-</div>
-<div>
-	회원 탈퇴
-</div>
-<div>
-	앱 정보
+<div class="settingBG" style="float:right; width:60%; height:40%; top:-20%;"></div>
+
+<div style="background-color: #c8c8c8; font-size: 0.8em; margin-top: 10px;clear: both;">
+    <div style="text-align: center;">앱 정보</div>
+    <div>1인개발자로 처음부터 끝까지 혼자 만든 앱입니다..</div>
+    <div>처음 만든 앱이라 오류가 생길시 연락바랍니다.</div>
+    <div style="margin-bottom: 10px;">잘부탁드립니다.</div>
+    <div>개발자 github - <a href="https://github.com/rnjsrnrdnjs">github.com/rnjsrnrdnjs</a></div>
+    <div>학급정보 api 오픈소스 - <a href="https://github.com/nnnlog/neis"> nnnlog</a></div>
+    <div>그림 제공 - <a href="https://pixabay.com/"> 픽사베이</a></div>
+    <div>아이콘 제공1 - <a href="https://fontawesome.com/"> 폰트어썸</a></div>
+    <div>
+        아이콘 제작자2 <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+        <a href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a>
+    </div>
+    <div>
+        아이콘 제작자3
+        <a href="https://www.flaticon.com/kr/authors/smashicons" title="Smashicons">Smashicons</a>
+        from <a href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a>
+    </div>
 </div>
 
-<div>
-	내가쓴글
-</div>
-<div>
-	내가 쓴댓글
-</div>
-
-
-<div class="push">
-</div>
-<wrap>
+<div class="push"></div>
 <footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
+                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a hreft="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #ff5675;"></i>
                 </a>
             </td>
         </tr>
@@ -88,12 +205,39 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a href="/setting" class="btn2">
+                <a href="/setting" class="btn2" style="color: #ff5675;">
                     설정
                 </a>
             </td>
         </tr>
     </table>
 </footer>
-</wrap>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %}
+<script>
+    function removeCheck() {
+		const chk=confirm('정말 탈퇴하시겠습니까?');
+		if(chk==true){
+        	axios.delete('/auth/destroy');
+        	location.href = '/';	
+		}
+		else{
+			return false;
+		}
+    }
+	if (document.getElementById('img')) {
+      document.getElementById('img').addEventListener('change', function(e) {
+        const formData = new FormData();
+        console.log(this, this.files);
+        formData.append('img', this.files[0]);
+        axios.post('/post/profile/img', formData)
+          .then((res) => {
+			location.reload();	
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
+    }
+	
+</script>
+{% endblock %}

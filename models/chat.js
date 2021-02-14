@@ -4,8 +4,12 @@ module.exports = class Chat extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-				content: {
-                    type: Sequelize.STRING(140),
+				user: {
+                    type: Sequelize.STRING(15),
+                    allowNull: false,
+                },
+				chat: {
+                    type: Sequelize.STRING(200),
                     allowNull: true,
                 },
                 img: {
@@ -26,6 +30,6 @@ module.exports = class Chat extends Sequelize.Model {
     }
 
     static associate(db) {
-		db.Chat.belongsTo(db.User);
+		db.Chat.belongsTo(db.Room);
 	}
 };
