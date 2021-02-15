@@ -22,6 +22,51 @@ router.use(async (req, res, next) => {
     }
     next();
 });
+
+router.get('/mypost', isLoggedIn, async (req, res, next) => {
+	try{
+		const category=await Post.findAll({
+			where:{
+				UserId:req.user.id,
+			},
+			include: [
+                {
+                    model: User,
+                },
+            ],
+			order: [['createdAt', 'DESC']],
+		});
+		res.render(`main/board/category`,{
+			category:category,			
+		});
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+router.get('/mycomment', isLoggedIn, async (req, res, next) => {
+	try{
+		const comments=await Comment.findAll({
+			where:{
+				UserId:req.user.id,
+			},
+			include: [
+                {
+                    model: User,
+                },
+            ],
+			order: [['createdAt', 'DESC']],
+		});
+		res.render('setting/mycomment',{
+			comments:comments,
+		});
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+
 router.get('/schoolTalk', isLoggedIn, async (req, res, next) => {
     try {
         const rooms = await Room.findAll({
