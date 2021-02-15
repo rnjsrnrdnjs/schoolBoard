@@ -54,6 +54,7 @@ router.post('/room/:id/img',isLoggedIn, upload.single('img'), async (req, res, n
   try {
 	  console.log(req.file.filename);
     const chat = await Chat.create({
+	  UserId:req.user.id,
       RoomId: req.params.id,
       user: req.user.nick,
       img: req.file.filename,
@@ -282,6 +283,7 @@ router.post('/room/:id/chat', isLoggedIn, async(req, res, next) => {
 	try{
 		const chat=await Chat.create({
 			user:req.user.nick,
+			UserId:req.user.id,
 			RoomId:req.params.id,
 			chat:req.body.chat,
 		});

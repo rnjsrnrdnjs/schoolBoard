@@ -1,47 +1,56 @@
 {% extends 'layout.html' %} {% block content %}
-<header>
+<header style="margin-bottom:11%;">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
-<div class="title" style="margin-bottom:4%;">
-		{{school.name}}<img src="/tree.svg" style="width:50px;">
-		학급 정보
+
+	<div>
+        <span style="width:14%;"><label onclick="prevCalendar()"><</label></span>
+		<span style="width:14%;" id="tbCalendarYM">yyyy년 m월</span>
+        <span style="width:14%;"><label onclick="nextCalendar()">>
+        </label></span>
+	</div>
+
+	<table id="calendar" style="text-align:center;width:100%;">
+		<tr>
+		</tr>
+    <tr>
+		<td style="width:14%;"><font color ="#FF4646">Sun</font></td>
+        <td style="width:14%;">Mon</td>
+        <td style="width:14%;">Tue</td>
+        <td style="width:14%;">Wed</td>
+        <td style="width:14%;">Tur</td>
+        <td style="width:14%;">Fri</td>
+		<td style="width:14%;"><font color ="#00AFFF">Sat</font></td>
+    </tr> 
+</table>
+<div id="showSchedule" style="width:100%; height:200px; border:1px solid grey;">
+	 
+</div>
+		
+<!-- <-   월 선택 ->  -->
+<div style="display:none;">
+		{% for diary in schoolDiary %}
+			<div id="{{diary.day}}">
+				{{diary.diary}}
+			</div>
+		{% endfor %}
+</div>	
+<div>
+<div style="display:none;">
+		{% for meal in schoolMeal %}
+			<div id="{{meal.day}}">
+			<p>조식-{{meal.breakfast}}</p>
+			<p>중식-{{meal.lunch}}</p>
+			<p>석식-{{meal.dinner}}</p>
+			</div>
+		{% endfor %}
 </div>
 
-
-<!-- <-   월 선택 ->  -->
-	{% if schoolDiary %}	
-		<div>
-		학사일정
-		</div>
-		{% set cnt=0 %}
-		{% for diary in schoolDiary %}
-			<div>
-				{{diary.month}} {{diary.day}} {{diary.diary}}
-			</div>
-		{% endfor %}
-	{% endif %}
-	{% if schoolMeal %}
-		<div>
-		급식정보
-		</div>
-		{% for meal in schoolMeal %}
-			<div>
-			조식-{{meal.breakfast}}
-			</div>
-			<div>
-			중식-{{meal.lunch}}
-			</div>
-			<div>
-			석식-{{meal.dinner}}
-			</div>
-		{% endfor %}
-	{% endif %}
-
-
+<div>
 	{% if school %}
 		<div>
 		학교이름-{{school.name}}
@@ -66,6 +75,7 @@
 		</div>
 		
 	{% endif %}
+</div>
 
 <div class="push">
 </div>
@@ -127,4 +137,76 @@
         </tr>
     </table>
 </footer>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %}
+<script>
+	 var today = new Date();
+        var date = new Date();
+        function prevCalendar() {
+         today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+         buildCalendar();
+        }
+        function nextCalendar() {
+             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+             buildCalendar();
+        }
+        function buildCalendar(){
+            var doMonth = new Date(today.getFullYear(),today.getMonth(),1);
+            var lastDate = new Date(today.getFullYear(),today.getMonth()+1,0);
+            var tbCalendar = document.getElementById("calendar");
+            var tbCalendarYM = document.getElementById("tbCalendarYM");
+             tbCalendarYM.innerHTML = today.getFullYear()+"년" + (today.getMonth() + 1) + "월"; 
+ 
+            while (tbCalendar.rows.length > 2) {
+                  tbCalendar.deleteRow(tbCalendar.rows.length-1);
+             }
+             var row = null;
+             row = tbCalendar.insertRow();
+             var cnt = 0;
+            // 1일이 시작되는 칸을 맞추어 줌
+             for (let i=0; i<doMonth.getDay(); i++) {
+                  cell = row.insertCell();
+                  cnt = cnt + 1;
+             }
+            /*달력 출력*/
+             for (let i=1; i<=lastDate.getDate(); i++) { 
+             //1일부터 마지막 일까지 돌림
+                  cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+                  cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+				  cell.style.height=30+"px";
+				  cell.id=i;
+				  let getDay=document.getElementById(i);
+				  getDay.addEventListener('click',()=>{
+					const mealdiv=document.createElement('');
+					const meal=document.getElementById("m"+i);
+					const showSchedule=document.getElementById('showSchedule');
+					showSchedule.innerHTML=meal.innerHTML; 
+				  },false);
+                  cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
+              if (cnt % 7 == 1) {/*일요일 계산*/
+                  //1주일이 7일 이므로 일요일 구하기
+                  //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
+                cell.innerHTML = "<font color=#F79DC2>" + i
+                //1번째의 cell에만 색칠
+            }    
+              if (cnt%7 == 0){/* 1주일이 7일 이므로 토요일 구하기*/
+                  //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
+                  cell.innerHTML = "<font color=skyblue>" + i
+                  //7번째의 cell에만 색칠
+                   row = calendar.insertRow();
+                   //토요일 다음에 올 셀을 추가
+              }
+              /*오늘의 날짜에 노란색 칠하기*/
+              if (today.getFullYear() == date.getFullYear()
+                 && today.getMonth() == date.getMonth()
+                 && i == date.getDate()) {
+                  cell.bgColor = "#edfff8";//셀의 배경색을 노랑으로 
+               }
+             }
+        }
+	window.onload=()=>{
+		buildCalendar();
+	}
+	
+	//https://jerryjerryjerry.tistory.com/26 님의 코드를 사용하였습니다.
+</script>
+{% endblock %}

@@ -39,7 +39,8 @@
         />
     </div>
     <div>
-        <form action="" method="post" style="height: 40px;">
+        <form action="/auth/overlap/change" method="post" >
+			<input type="text" name="nick" maxlength="15" style="width:95%; height:37px; border:1px solid #d2d2d2; margin-left:5px;" placeholder="변경할 닉네임" required>
             <button
                 type="submit"
                 style="
@@ -50,7 +51,7 @@
                     border-bottom: 0.5px solid #d2d2d2;
                     width: 100%;
                     color: #828282;
-                    margin: 5px;
+                    margin: 5px 5px 0px 5px;
                 "
             >
                 닉네임 변경
@@ -70,7 +71,7 @@
                     border-top: 1px solid #d2d2d2;
                     border-bottom: 0.5px solid #d2d2d2;
                     color: #828282;
-                    margin: 5px;
+                    margin: 0 5px 0 5px;
                 ">사진 변경</label>
     	    <input id="img"  style="text-align:center;width:0%;" type="file" accept="image/*"  />
     </div>

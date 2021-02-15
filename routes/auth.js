@@ -9,15 +9,37 @@ const SchoolType = require('../neis/types/SchoolType');
 
 const router = express.Router();
 
-router.get('/overlap/change/:nick', isLoggedIn, async (req, res, next) => {
+router.post('/overlap/change', isLoggedIn, async (req, res, next) => {
 	try{
 		const user=await User.findOne({
-			where:{nick:req.params.nick},
+			where:{nick:req.body.nick},
 		});
 		if(user){
 			return res.redirect(`/setting?nickError=중복된 닉네임 입니다.`);
 		}
-		return res.redirect(`/setting?nickError=사용가능한 닉네임 입니다.`);
+		await Chat.update({
+			user:req.body.nick,
+		},{
+			where:{
+				user:req.user.nick,
+			}
+		})
+		await User.update({
+			nick:req.body.nick,
+		},{
+			where:{
+				id:req.user.id,
+			}
+		});
+		return res.redirect('/setting');
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+router.get('/overlap/join', isNotLoggedIn, async (req, res, next) => {
+	try{
+		return res.redirect(`/join?nickError=닉네임을 입력해주세요`);
 	}catch(err){
 		console.error(err);
 		next(err);

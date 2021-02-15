@@ -269,20 +269,24 @@ router.get('/school', isLoggedIn, async (req, res, next) => {
             .getDiary(month, year - 1)
             .then((list) => {
                 for (let day of Object.keys(list)) {
-                    schoolDiary.push({ month: month, day: day, diary: list[day].join(', ') });
+					console.log(day);
+                    schoolDiary.push({ month: month, day:"d"+day, diary: list[day].join(', ') });
                 }
             });
         const schoolMeal = [];
+		let i=0;
         await neis
             .createSchool(neis.REGION[school.edu], school.code, school.kind)
             .getMeal(year - 1, month)
             .then((d) => {
                 d.forEach((meal) => {
                     schoolMeal.push({
+						day:"m"+i,
                         breakfast: neis.removeAllergy(meal.breakfast).replace('&amp;', ' '),
                         lunch: neis.removeAllergy(meal.lunch).replace('&amp;', ' '),
                         dinner: neis.removeAllergy(meal.dinner).replace('&amp;', ' '),
                     });
+					i++;
                 });
             });
         res.render('school/school', {
