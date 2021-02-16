@@ -252,8 +252,57 @@ router.get('/main/:category/hot', isLoggedIn, async (req, res, next) => {
         next(err);
     }
 });
+router.get('/school/:today', isLoggedIn, async (req, res, next) => {
+    try {
+		const day=await new Date(parseInt(req.params.today));
+		const year=await day.getFullYear();
+		const month=await day.getMonth() + 1;
+		
+		 const school = await School.findOne({
+            where: {
+                id: res.locals.school.id,
+            },
+        });
+        const schoolDiary = [];
+        await neis
+            .createSchool(neis.REGION[school.edu], school.code, school.kind)
+            .getDiary(month, year - 1)
+            .then((list) => {
+                for (let day of Object.keys(list)) {
+					console.log(day);
+                    schoolDiary.push({ month: month, day:"d"+day, diary: list[day].join(', ') });
+                }
+            });
+        const schoolMeal = [];
+		let i=0;
+        await neis
+            .createSchool(neis.REGION[school.edu], school.code, school.kind)
+            .getMeal(year - 1, month,refresh=true)
+            .then((d) => {
+                d.forEach((meal) => {
+                    schoolMeal.push({
+						day:"m"+i,
+                        breakfast: neis.removeAllergy(meal.breakfast).replace('&amp;',' '),
+                        lunch: neis.removeAllergy(meal.lunch).replace('&amp;',' '),
+                        dinner: neis.removeAllergy(meal.dinner).replace('&amp;',' '),
+                    });
+					i++;
+                });
+            });
+        await res.render('school/school', {
+            schoolDiary: schoolDiary,
+            schoolMeal: schoolMeal,
+        });
+	}
+	catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
 router.get('/school', isLoggedIn, async (req, res, next) => {
     try {
+		
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -269,7 +318,6 @@ router.get('/school', isLoggedIn, async (req, res, next) => {
             .getDiary(month, year - 1)
             .then((list) => {
                 for (let day of Object.keys(list)) {
-					console.log(day);
                     schoolDiary.push({ month: month, day:"d"+day, diary: list[day].join(', ') });
                 }
             });
@@ -289,7 +337,7 @@ router.get('/school', isLoggedIn, async (req, res, next) => {
 					i++;
                 });
             });
-        res.render('school/school', {
+        await res.render('school/school', {
             schoolDiary: schoolDiary,
             schoolMeal: schoolMeal,
         });

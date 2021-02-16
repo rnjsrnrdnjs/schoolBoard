@@ -7,11 +7,16 @@
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
-	<div>
-        <span style="width:14%;"><label onclick="prevCalendar()"><</label></span>
+
+<div style=" font-weight:bold; font-size:0.8em; text-align:center;padding-bottom:5px; color:#FF8E99">
+	달력을 클릭하여 학사일정, 급식을 확인해보세요!
+</div>
+<div id="showSchedule">
+</div>
+<div id="selectDate">
+        <span style="width:14%; float:left"><label onclick="prevCalendar()"><i class="fas fa-angle-double-left"></i></label></span>
 		<span style="width:14%;" id="tbCalendarYM">yyyy년 m월</span>
-        <span style="width:14%;"><label onclick="nextCalendar()">>
-        </label></span>
+        <span style="width:14%; float:right"><label onclick="nextCalendar()"><i class="fas fa-angle-double-right"></i></label></span>
 	</div>
 
 	<table id="calendar" style="text-align:center;width:100%;">
@@ -27,10 +32,6 @@
 		<td style="width:14%;"><font color ="#00AFFF">Sat</font></td>
     </tr> 
 </table>
-<div id="showSchedule" style="width:100%; height:200px; border:1px solid grey;">
-	 
-</div>
-		
 <!-- <-   월 선택 ->  -->
 <div style="display:none;">
 		{% for diary in schoolDiary %}
@@ -39,19 +40,21 @@
 			</div>
 		{% endfor %}
 </div>	
-<div>
 <div style="display:none;">
 		{% for meal in schoolMeal %}
 			<div id="{{meal.day}}">
-			<p>조식-{{meal.breakfast}}</p>
-			<p>중식-{{meal.lunch}}</p>
-			<p>석식-{{meal.dinner}}</p>
+				<div>{{meal.breakfast}}</div>
+				<div>{{meal.lunch}}</div>
+				<div>{{meal.dinner}}</div>
 			</div>
 		{% endfor %}
 </div>
 
-<div>
+
+
+<div style="margin-top:100px;background-color:#ededed;">
 	{% if school %}
+		<div style="text-align:center; font-weight:bold;"> 학교 정보</div>
 		<div>
 		학교이름-{{school.name}}
 		</div>
@@ -62,7 +65,7 @@
 		학교번호-{{school.tellNum}}
 		</div>
 		<div>
-		학교홈페이지-{{school.homepage}}
+		학교홈페이지-<a class="ax" style="color:blue;" href="{{school.homepage}}">{{school.homepage}}</a>
 		</div>
 		<div>
 		{{school.coeduScNm}} 학교
@@ -140,14 +143,22 @@
 {% endblock %} {% block script %}
 <script>
 	 var today = new Date();
+	 var para = document.location.href.split('/')[document.location.href.split('/').length-1];
+	 if(para!=='school'){
+		 today=new Date(parseInt(para));
+	 }
         var date = new Date();
         function prevCalendar() {
          today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-         buildCalendar();
+			const getT=today.getTime();
+	        location.href=`/school/${getT}`;
+			buildCalendar();
         }
         function nextCalendar() {
              today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-             buildCalendar();
+			const getT=today.getTime();
+			location.href=`/school/${getT}`;
+            buildCalendar();
         }
         function buildCalendar(){
             var doMonth = new Date(today.getFullYear(),today.getMonth(),1);
@@ -176,10 +187,105 @@
 				  cell.id=i;
 				  let getDay=document.getElementById(i);
 				  getDay.addEventListener('click',()=>{
-					const mealdiv=document.createElement('');
-					const meal=document.getElementById("m"+i);
+					 const tooday=today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+i+"일 정보";
+					const titleDay=document.createElement('div');
+					  titleDay.textContent=tooday;
+					 titleDay.style.fontSize=1.5+"em";
+					  titleDay.style.paddingLeft=20+"%";
+					  
+					  //di  mi
 					const showSchedule=document.getElementById('showSchedule');
-					showSchedule.innerHTML=meal.innerHTML; 
+					while ( showSchedule.hasChildNodes() ) { showSchedule.removeChild( showSchedule.firstChild ); }
+					showSchedule.appendChild(titleDay);	
+					  
+					if(document.getElementById("d"+i)){
+						const diarydiv=document.createElement('div');
+						const diaryTitle=document.createElement('div');
+						const pdd=document.createElement('div');
+						pdd.textContent='----------------------- \n';
+						diaryTitle.textContent='학사일정 \n';
+						
+						const diary=document.getElementById("d"+i);
+						diarydiv.textContent=diary.textContent;
+	
+						
+						showSchedule.appendChild(diaryTitle);
+						showSchedule.appendChild(diarydiv);
+						showSchedule.appendChild(pdd);
+					}
+					
+					const mealdiv=document.createElement('div');
+					const meal=document.getElementById("m"+i);
+					let mealTitle=document.createElement('div');
+					mealTitle.textContent='급식정보 \n';
+					mealdiv.appendChild(mealTitle);
+					
+					const pdd1=document.createElement('div');
+					pdd1.textContent='----------------------- \n';
+					mealdiv.appendChild(pdd1);
+					 
+					const breakfast=document.createElement('div');
+					breakfast.innerHTML='조식정보 \n';
+					mealdiv.appendChild(breakfast);
+					const mplit1=meal.childNodes[1].innerHTML.split('\n'); 
+					if(mplit1[0]==""){
+						const none=document.createElement('div');
+						none.innerHTML='메뉴가 없습니다!\n';
+						mealdiv.appendChild(none);
+					}
+					else{
+					 mplit1.forEach(function(m1){
+						 const mContent=document.createElement('div');
+						 mContent.innerHTML=m1+'\n';
+						 mealdiv.appendChild(mContent);
+					 }) 
+				    }
+					const pdd2=document.createElement('div');
+					pdd2.textContent='----------------------- \n';
+					mealdiv.appendChild(pdd2);
+  
+					  
+					 const lunch=document.createElement('div');
+					lunch.innerHTML='중식정보 \n';
+					mealdiv.appendChild(lunch); 
+					const mplit3=meal.childNodes[3].innerHTML.split('\n'); 
+					if(mplit3[0]==""){
+						const none=document.createElement('div');
+						none.innerHTML='메뉴가 없습니다!\n';
+						mealdiv.appendChild(none);
+					}
+					else{
+					 mplit3.forEach(function(m3){
+						 const mContent=document.createElement('div');
+						 mContent.innerHTML=m3+'\n';
+						 mealdiv.appendChild(mContent);
+					 }) 
+					}
+					const pdd3=document.createElement('div');
+					pdd3.textContent='----------------------- \n';
+					mealdiv.appendChild(pdd3);
+  
+					  const dinner=document.createElement('div');
+					dinner.innerHTML='석식정보 \n';
+					mealdiv.appendChild(dinner); 
+					const mplit5=meal.childNodes[5].innerHTML.split('\n'); 
+					  if(mplit5[0]==""){
+						const none=document.createElement('div');
+						none.innerHTML='메뉴가 없습니다!\n';
+						mealdiv.appendChild(none);
+					  }
+					  else{
+					 mplit5.forEach(function(m5){
+						 const mContent=document.createElement('div');
+						 mContent.innerHTML=m5+'\n';
+						 mealdiv.appendChild(mContent);
+					 }) 
+					  }
+					showSchedule.appendChild(mealdiv);
+					  
+					  
+					  
+					  
 				  },false);
                   cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
               if (cnt % 7 == 1) {/*일요일 계산*/
@@ -190,7 +296,7 @@
             }    
               if (cnt%7 == 0){/* 1주일이 7일 이므로 토요일 구하기*/
                   //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                  cell.innerHTML = "<font color=skyblue>" + i
+                  cell.innerHTML = "<font color=#69b8ff>" + i
                   //7번째의 cell에만 색칠
                    row = calendar.insertRow();
                    //토요일 다음에 올 셀을 추가
@@ -205,6 +311,10 @@
         }
 	window.onload=()=>{
 		buildCalendar();
+		var pick=today.getDate();
+		if(document.getElementById(`${pick}`)){
+			document.getElementById(`${pick}`).click();
+		}
 	}
 	
 	//https://jerryjerryjerry.tistory.com/26 님의 코드를 사용하였습니다.
