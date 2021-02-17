@@ -91,7 +91,13 @@ router.get('/room/:id', isLoggedIn,async (req, res, next) => {
         if (!room) {
             return res.redirect('/?error=존재하지 않는 방입니다.');
         }
+		if(room.password && room.password!==req.query.password){
+			return res.redirect('/?error=비밀번호가 틀렸습니다.');
+		}
         const chats = await Chat.findAll({
+			include:[{
+				model:User,
+			}],
             where: {
                 RoomId: req.params.id,
             },

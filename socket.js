@@ -29,8 +29,7 @@ module.exports = (server, app) => {
         const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
        
 		 const currentRoom = socket.adapter.rooms.get(roomId);
-			const userCount = currentRoom ? currentRoom.size : 0;
-			console.log(userCount);
+		const userCount = currentRoom ? currentRoom.size : 0;
            
 		
 		socket.join(roomId);

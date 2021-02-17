@@ -190,7 +190,8 @@
 					 const tooday=today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+i+"일 정보";
 					const titleDay=document.createElement('div');
 					  titleDay.textContent=tooday;
-					 titleDay.style.fontSize=1.5+"em";
+					 titleDay.style.fontSize=2+"em";
+					  
 					  titleDay.style.paddingLeft=20+"%";
 					  
 					  //di  mi
@@ -202,7 +203,8 @@
 						const diarydiv=document.createElement('div');
 						const diaryTitle=document.createElement('div');
 						const pdd=document.createElement('div');
-						pdd.textContent='----------------------- \n';
+						pdd.style.color="#57E9E1";
+						pdd.textContent='---------------------------- \n';
 						diaryTitle.textContent='학사일정 \n';
 						
 						const diary=document.getElementById("d"+i);
@@ -221,7 +223,8 @@
 					mealdiv.appendChild(mealTitle);
 					
 					const pdd1=document.createElement('div');
-					pdd1.textContent='----------------------- \n';
+						pdd1.style.color="#57E9E1";
+					  pdd1.textContent='---------------------------- \n';
 					mealdiv.appendChild(pdd1);
 					 
 					const breakfast=document.createElement('div');
@@ -241,7 +244,8 @@
 					 }) 
 				    }
 					const pdd2=document.createElement('div');
-					pdd2.textContent='----------------------- \n';
+						pdd2.style.color="#57E9E1";
+					pdd2.textContent='---------------------------- \n';
 					mealdiv.appendChild(pdd2);
   
 					  
@@ -262,7 +266,8 @@
 					 }) 
 					}
 					const pdd3=document.createElement('div');
-					pdd3.textContent='----------------------- \n';
+						pdd3.style.color="#57E9E1";
+					  pdd3.textContent='---------------------------- \n';
 					mealdiv.appendChild(pdd3);
   
 					  const dinner=document.createElement('div');
@@ -282,16 +287,12 @@
 					 }) 
 					  }
 					showSchedule.appendChild(mealdiv);
-					  
-					  
-					  
-					  
 				  },false);
                   cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
               if (cnt % 7 == 1) {/*일요일 계산*/
                   //1주일이 7일 이므로 일요일 구하기
                   //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=#F79DC2>" + i
+                cell.innerHTML = "<font color=#FF3232>" + i
                 //1번째의 cell에만 색칠
             }    
               if (cnt%7 == 0){/* 1주일이 7일 이므로 토요일 구하기*/
@@ -314,6 +315,9 @@
 		var pick=today.getDate();
 		if(document.getElementById(`${pick}`)){
 			document.getElementById(`${pick}`).click();
+		}
+		else{
+			document.getElementById('1').click();
 		}
 	}
 	

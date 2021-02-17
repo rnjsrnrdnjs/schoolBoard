@@ -270,10 +270,11 @@ router.post('/schoolMake', isLoggedIn, async(req, res, next) => {
 			title:req.body.title,
 			owner:res.locals.user.nick,
 			SchoolId:res.locals.school.id,
+			password:req.body.password,
 		});
 		const io=req.app.get('io');
 		io.of('/room').emit('newRoom',newRoom);
-		res.redirect(`/room/${newRoom.id}`);
+		res.redirect(`/room/${newRoom.id}?password=${req.body.password}`);
 	}catch(err){
 		console.error(error);
 		next(error);

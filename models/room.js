@@ -12,6 +12,10 @@ module.exports = class Room extends Sequelize.Model {
                     type: Sequelize.STRING(15),
                     allowNull: false,
 				},
+				password:{
+                    type: Sequelize.STRING(15),
+                    allowNull: true,
+				}
             },{
 				sequelize,
                 timestamps: false,
