@@ -52,9 +52,9 @@
 
 
 
-<div style="margin-top:100px;background-color:#ededed;">
+<div style="margin-top:60px;background-color:#282828; color:white; font-size:0.8em;">
 	{% if school %}
-		<div style="text-align:center; font-weight:bold;"> 학교 정보</div>
+		<div style="text-align:center; font-weight:bold; font-size:1.3em;border-bottom:1px solid white;"> 학교 정보</div>
 		<div>
 		학교이름-{{school.name}}
 		</div>
@@ -65,7 +65,7 @@
 		학교번호-{{school.tellNum}}
 		</div>
 		<div>
-		학교홈페이지-<a class="ax" style="color:blue;" href="{{school.homepage}}">{{school.homepage}}</a>
+		학교홈페이지-<a class="ax" href="{{school.homepage}}">{{school.homepage}}</a>
 		</div>
 		<div>
 		{{school.coeduScNm}} 학교

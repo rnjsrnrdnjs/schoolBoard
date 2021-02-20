@@ -64,10 +64,8 @@ module.exports = class User extends Sequelize.Model {
 		db.User.hasMany(db.Chat);
 		db.User.hasMany(db.Comment);
 		db.User.hasMany(db.Room);
-		/*
-		db.User.belongsToMany(db.Post,{
-			through:'Like',
-		});
-		*/
+		db.User.hasMany(db.RoomAll);
+		db.User.hasMany(db.ChatAll);
+		
 	}
 };

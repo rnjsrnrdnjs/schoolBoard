@@ -20,6 +20,7 @@ const {
     Clike,
     Cdlike,
     RoomList,
+	RoomAll,RoomAllList,ChatAll,
 } = require('../models');
 const router = express.Router();
 
@@ -90,6 +91,32 @@ router.post('/room/:id/img', isLoggedIn, upload.single('img'), async (req, res, 
         next(error);
     }
 });
+router.post('/roomAll/:id/img', isLoggedIn, upload.single('img'), async (req, res, next) => {
+    try {
+        const chat = await ChatAll.create({
+            UserId: req.user.id,
+            RoomAllId: req.params.id,
+            user: req.user.nick,
+            img: req.file.filename,
+        });
+        const chat2 = await ChatAll.findOne({
+            where: {
+                id: chat.id,
+            },
+            include: [
+                {
+                    model: User,
+                },
+            ],
+        });
+        req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
+        res.send('ok');
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
     try {
         if (req.body.Pid) {
@@ -274,7 +301,7 @@ router.post('/join/:find', isNotLoggedIn, async (req, res, next) => {
             code: req.body.code,
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         next(err);
     }
 });
@@ -288,7 +315,6 @@ router.post('/school/search', isNotLoggedIn, async (req, res, next) => {
                     code: school.code,
                 },
             });
-            console.log(1);
             if (find === null) {
                 const detail = await neis
                     .createSchool(neis.REGION[school.edu], school.code, school.kind)
@@ -312,7 +338,7 @@ router.post('/school/search', isNotLoggedIn, async (req, res, next) => {
             result: result,
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         next(err);
     }
 });
@@ -335,7 +361,6 @@ router.post('/schoolMake', isLoggedIn, async (req, res, next) => {
                 model: User,
             },
         });
-        console.log(dataRoom);
         await RoomList.create({
             UserId: req.user.id,
             RoomId: newRoom.id,
@@ -348,6 +373,38 @@ router.post('/schoolMake', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+router.post('/allMake', isLoggedIn, async (req, res, next) => {
+    try {
+        const newRoom = await RoomAll.create({
+            title: req.body.title,
+            owner: res.locals.user.nick,
+            password: req.body.password,
+            UserId: req.user.id,
+            cnt: 1,
+        });
+        const dataRoom = await RoomAll.findOne({
+            where: {
+                id: newRoom.id,
+            },
+            include: {
+                model: User,
+            },
+        });
+        await RoomAllList.create({
+            UserId: req.user.id,
+            RoomAllId: newRoom.id,
+        });
+        const io = req.app.get('io');
+        io.of('/roomAll').emit('newRoom', dataRoom);
+        res.redirect(`/roomAll/${newRoom.id}?password=${req.body.password}`);
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
+
 router.post('/room/:id/chat', isLoggedIn, async (req, res, next) => {
     try {
         const chat = await Chat.create({
@@ -373,6 +430,34 @@ router.post('/room/:id/chat', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+router.post('/roomAll/:id/chat', isLoggedIn, async (req, res, next) => {
+    try {
+        const chat = await ChatAll.create({
+            user: req.user.nick,
+            UserId: req.user.id,
+            RoomAllId: req.params.id,
+            chat: req.body.chat,
+        });
+        const chat2 = await ChatAll.findOne({
+            where: {
+                id: chat.id,
+            },
+            include: [
+                {
+                    model: User,
+                },
+            ],
+        });
+        req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
+        res.send('ok');
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
+
 router.post('/room/:id/getout', isLoggedIn, async (req, res, next) => {
     try {
         const io = req.app.get('io');
@@ -396,6 +481,34 @@ router.post('/room/:id/getout', isLoggedIn, async (req, res, next) => {
 			},
         });
         await res.redirect('/schoolTalk');
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
+router.post('/roomAll/:id/getout', isLoggedIn, async (req, res, next) => {
+    try {
+        const io = req.app.get('io');
+        await ChatAll.create({
+            user: 'system',
+            chat: `${req.user.nick} 님이 나가셨습니다.`,
+            UserId: req.user.id,
+            RoomAllId: req.params.id,
+        });
+        io.of('/chatAll')
+            .to(req.params.id)
+            .emit('exit', {
+                user: 'system',
+                chat: `${req.user.nick} 님이 나가셨습니다.`,
+            });
+        await RoomAll.decrement({ cnt: 1 }, { where: { id: req.params.id } });
+        await RoomAllList.destroy({
+			where:{
+            UserId: req.user.id,
+            RoomAllId: req.params.id,
+			},
+        });
+        await res.redirect('/allTalk');
     } catch (err) {
         console.error(error);
         next(error);

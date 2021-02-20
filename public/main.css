@@ -401,7 +401,7 @@ input#img{
 }
 
 .mine { text-align: right; }
-.system { text-align: center; }
+.system { border:1px solid #d2d2d2; border-radius:5px;margin:5px; background-color:#fffafc; ;text-align: center; }
 .mine img, .other img {
   max-width:70%;
   display: inline-block;

@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<header style="margin-bottom:20%;">
+<header style="margin-bottom:11%;">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
@@ -7,19 +7,21 @@
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
-랜덤채팅- https://m.blog.naver.com/sexyback8034/221508523626
-마니또 생각좀 더해볼것
+<fieldset style="    box-sizing: border-box; width:100%; text-align:center; border:none; height:60%;" class="makeBG">
+    <legend style="padding-top:10%; font-weight:bold;">채팅방 생성</legend>
+    <form action="/post/allMake" method="post">
+       <div>
+        <input style="width:50%; height:42px; border:1px solid #ffdbde; margin-bottom:10px;" type="text" name="title" placeholder="방 제목(최대 20글자)" required autofocus>
+      </div>
+	  <div>
+		<input style="width:50%; height:20px; border:1px solid #ffdbde; margin-bottom:10px;" type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
+	  </div>
+      <div>
+        <button class="btn" type="submit">생성</button>
+      </div>
+    </form>
+  </fieldset>
 
-<div style="width:100%; height:400px; 	font-weight:bold;">
-		<div onclick="location.href='/manitoTalk';" id="c1" style="width:49%; height:200px; display:inline-block;"> 마니또
-		</div>
-		<div onclick="location.href='/randomTalk';" id="c2" style="width:49%; height:200px; display:inline-block;"> 랜덤 채팅
-		</div>
-		<div onclick="location.href='/schoolTalk';" id="c3" style="width:49%; height:200px; display:inline-block;"> 학교 채팅방
-		</div>
-		<div onclick="location.href='/allTalk';" id="c4" style="width:49%; height:200px; display:inline-block;"> 모두의 채팅방
-		</div>
-</div>
 
 
 <div class="push">

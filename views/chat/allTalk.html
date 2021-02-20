@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">모두의 채팅방</span>
+<span style="position:relative; float:right; padding:10px;"><a class="btn" href="/allMake">채팅방 생성</a></span>
+
+<fieldset style="border:none; border-top:1px solid #fcebef; margin-top:10%;">
+  <legend style="font-size:0.8em; color:#FF5675;">채팅방 목록</legend>
+  <table  id="roomList">
+    <thead style="font-size:0.8em;">
+    <tr>
+      <th style="width:20%;">만든이</th>
+      <th style="width:35%;">방 제목</th>
+	  <th style="width:15%;">종류</th>	
+	  <th style="width:15%;">인원수</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for room in rooms %}
+      <tr data-id="{{room.id}}" class="roomCall">
+        <td style="width:20%;"><img src="{{room.User.profile}}" style="width:20px; border-radius:50px;"> {{room.owner}}</td>
+        <td style="width:35%;">{{room.title}}</td>
+		<td style="width:15%;">{{'비밀방' if room.password else '공개방'}}</td>
+        <td style="width:15%;">{{room.cnt}}</td>
+        <td style="width:15%;">
+          <button 
+		    data-password="{{'true' if room.password else 'false'}}"
+            data-id="{{room.id}}"
+            class="join-btn"
+          >입장
+          </button>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="error-message">{{error}}</div>
+</fieldset>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io.connect('https://schoolboard-raidd.run.goorm.io/roomAll', { // 네임스페이스
+    path: '/socket.io',
+  });
+
+  socket.on('newRoom', function (data) { // 새 방 이벤트 시 새 방 생성
+    const tr = document.createElement('tr');
+	tr.classList.add('roomCall');
+    let td = document.createElement('td');
+    td = document.createElement('td');
+    td.innerHTML = `<img src=${data.User.profile} style="width:20px; border-radius:50px;"> `+ data.owner;
+	td.style.width=20+"%";
+    tr.appendChild(td);
+    td = document.createElement('td');
+	td.textContent = data.title;
+	td.style.width=35+"%";
+    tr.appendChild(td);
+	td=document.createElement('td');
+	td.textContent=data.password?'비밀방':'공개방';
+	td.style.width=15+"%";
+	tr.appendChild(td);
+	td=document.createElement('td');
+	td.textContent=data.cnt;
+	td.style.width=15+"%";
+	tr.appendChild(td);
+    td = document.createElement('td');
+	td.style.width=15+"%";
+    const button = document.createElement('button');
+    button.textContent = '입장';
+	button.dataset.password=data.password?'true':'false';
+    button.dataset.id = data.id;
+    button.addEventListener('click', addBtnEvent);
+	button.classList.add('join-btn');
+    td.appendChild(button);
+    tr.appendChild(td);
+    tr.dataset.id = data.id;
+    document.querySelector('table tbody').appendChild(tr); // 화면에 추가
+  });
+
+  socket.on('removeRoom', function (data) { // 방 제거 이벤트 시 id가 일치하는 방 제거
+    document.querySelectorAll('tbody tr').forEach(function (tr) {
+      if (tr.dataset.id === data) {
+        tr.parentNode.removeChild(tr);
+      }
+    });
+  });
+  function addBtnEvent(e) { // 방 입장 클릭 시
+	  if(e.target.dataset.password==='true'){
+		  const password=prompt('비밀번호를 입력하세요');
+		  console.log(e.target.dataset.id);
+		  location.href='/roomAll/'+e.target.dataset.id+'?password='+password;
+	  }else{
+      location.href = '/roomAll/' + e.target.dataset.id;
+	  }
+  }
+  document.querySelectorAll('.join-btn').forEach(function (btn) {
+    btn.addEventListener('click', addBtnEvent);
+  });
+</script>
+
+<div class="push">
+</div>
+<footer>
+    <table>
+        <tr>
+            <td class="footerTd">
+                <a href="/main">
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat">
+                    <i class="fas fa-envelope fa-2x" style="color:#FF5675"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/game">
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school">
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting">
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="footerTd">
+                <a href="/main" class="btn2">
+                    게시판
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat" class="btn2" style="color:#FF5675">
+                    채팅
+                </a>
+            </td>
+            <td class="footerTd">
+                <a hreft="/game" class="btn2">
+                    게임
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school" class="btn2">
+                    학급정보
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting" class="btn2">
+                    설정
+                </a>
+            </td>
+        </tr>
+    </table>
+</footer>
+{% endblock %}
+
+{% block script %}
+<script>
+  window.onload = () => {
+    if (new URL(location.href).searchParams.get('error')) {
+      alert(new URL(location.href).searchParams.get('error'));
+    }
+  };
+</script>
+{% endblock %}
