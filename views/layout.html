@@ -22,6 +22,8 @@
 					console.log(2);
                     alert(new URL(location.href).searchParams.get('nickError'));
                 }
+				if(document.getElementById('showFoot') )
+		    	document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;
             };
         </script>
         {% block script %} {% endblock %}

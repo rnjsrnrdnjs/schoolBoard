@@ -18,14 +18,6 @@ module.exports = class Comment extends Sequelize.Model {
 					defalutValue:0,
                     allowNull: true,
 				},
-				likeChk:{
-					type: Sequelize.INTEGER,
-                    allowNull: false,
-				},
-				dislikeChk:{
-					type: Sequelize.INTEGER,
-                    allowNull: false,
-				}
             },
             {
                 sequelize,
@@ -43,5 +35,7 @@ module.exports = class Comment extends Sequelize.Model {
     static associate(db) {
 		db.Comment.belongsTo(db.Post);
 		db.Comment.belongsTo(db.User);
+		db.Comment.hasMany(db.Clike);
+		db.Comment.hasMany(db.Cdlike);
 	}
 };

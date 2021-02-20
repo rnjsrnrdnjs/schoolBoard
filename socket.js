@@ -1,7 +1,8 @@
 const SocketIO = require('socket.io');
 const axios = require('axios');
+const {Room}=require('./models');
 
-module.exports = (server, app) => {
+module.exports = (server, app,sessionMiddleware) => {
     const io = SocketIO(server, { path: '/socket.io' });
     app.set('io', io);
     const manito = io.of('/manito');
@@ -15,50 +16,23 @@ module.exports = (server, app) => {
 
     room.on('connection', (socket) => {
         console.log('room 네임스페이스에 접속');
+        const req = socket.request;
         socket.on('disconnect', () => {
             console.log('room 네임스페이스에 접속 헤제');
         });
     });
 
-    chat.on('connection', (socket) => {
+    chat.on('connection', async(socket) => {
         console.log('chat 네이스페이스 접속');
         const req = socket.request;
         const {
             headers: { referer },
         } = req;
         const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
-       
-		 const currentRoom = socket.adapter.rooms.get(roomId);
-		const userCount = currentRoom ? currentRoom.size : 0;
-           
-		
 		socket.join(roomId);
-        socket.to(roomId).emit('join', {
-            user: 'system',
-            chat:`새로운 사람이 입장~`,
-        });
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async() => {
             console.log('chat 네이스페이스 접속 해제');
             socket.leave(roomId);
-            const currentRoom = socket.adapter.rooms.get(roomId);
-			const userCount = currentRoom ? currentRoom.size : 0;
-			console.log(userCount);
-            if (userCount === 0) {
-                // 유저가 0명이면 방 삭제
-                axios.delete(`https://schoolboard-raidd.run.goorm.io/room/${roomId}`, {
-                    })
-                    .then(() => {
-                        console.log('방제거 성공');
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            } else {
-                socket.to(roomId).emit('exit', {
-                    user: 'system',
-                    chat:`새로운 사람이 퇴장..ㅜㅜ`
-                });
-            }
         });
     });
 };

@@ -7,6 +7,12 @@ const School = require('./school');
 const Chat =require('./chat');
 const Comment=require('./comment');
 const Room=require('./room');
+const Plike=require('./plike');
+const Pdlike=require('./pdlike');
+const Clike=require('./clike');
+const Cdlike=require('./cdlike');
+const RoomList=require('./roomList');
+
 
 const db = {};
 const sequelize = new Sequelize(
@@ -20,6 +26,11 @@ db.School = School;
 db.Chat=Chat;
 db.Comment=Comment;
 db.Room=Room;
+db.Plike=Plike;
+db.Pdlike=Pdlike;
+db.Clike=Clike;
+db.Cdlike=Cdlike;
+db.RoomList=RoomList;
 
 User.init(sequelize);
 Post.init(sequelize);
@@ -27,6 +38,11 @@ School.init(sequelize);
 Chat.init(sequelize);
 Comment.init(sequelize);
 Room.init(sequelize);
+Plike.init(sequelize);
+Pdlike.init(sequelize);
+Clike.init(sequelize);
+Cdlike.init(sequelize);
+RoomList.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -34,5 +50,12 @@ School.associate(db);
 Chat.associate(db);
 Comment.associate(db);
 Room.associate(db);
+Plike.associate(db);
+Pdlike.associate(db);
+Clike.associate(db);
+Cdlike.associate(db);
+RoomList.associate(db);
+
+
 
 module.exports = db;

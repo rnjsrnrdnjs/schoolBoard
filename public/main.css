@@ -3,9 +3,25 @@ body {
     margin: 0;
     height: 100%;
 	box-sizing: border-box;
-	
 }
+/*body::-webkit-scrollbar { display: none !important;  }*/
+
 .btn {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #FF98A3;
+    border: 1px solid #FF5675;
+    color: white;
+    height: 37px;
+    line-height: 37px;
+    vertical-align: top;
+    font-size: 15px;
+	box-shadow: 2px 2px 2px 2px #FFD9E4;
+	border-radius:10px;
+}
+.join-btn {
     display: inline-block;
     text-decoration: none;
     cursor: pointer;
@@ -249,6 +265,21 @@ footer{
 	background-image:url(/settingBG.svg);
 	/*border-radius:10px;*/
 }
+.makeBG{
+	background-size:100% 100%;
+	background-image:url(/makeBG.svg);
+}
+.talkBG{
+	background-size:100% 100%;
+	background-image:url(/talkBG.svg);
+	width: 90%;
+    height: 80%;
+    overflow: hidden;
+	border:none;
+	border-bottom:1px solid #ffe0e3;
+}
+
+
 .write-none{
 	width:100vw;
 	height:70vh;
@@ -372,7 +403,7 @@ input#img{
 .mine { text-align: right; }
 .system { text-align: center; }
 .mine img, .other img {
-  max-width: 300px;
+  max-width:70%;
   display: inline-block;
   border: 1px solid silver;
   border-radius: 5px;
@@ -386,9 +417,9 @@ input#img{
   padding: 2px 5px;
   max-width: 300px;
 }
-#exit-btn { position: absolute; top: 20px; right: 20px; }
-#chat-list { height: 500px; overflow: auto; padding: 5px; }
-#chat-form { text-align: right; }
+.chat-list { 
+	height: 100%; overflow: auto; padding: 5px; }
+.chat-form { text-align: right; }
 label[for='gif'], #chat, #chat-form [type='submit'] {
   display: inline-block;
   height: 30px;
@@ -396,10 +427,17 @@ label[for='gif'], #chat, #chat-form [type='submit'] {
 }
 label[for='gif'] { cursor: pointer; padding: 5px; }
 #img { display: none; }
-/*
-table, table th, table td {
-  text-align: center;
-  border: 1px solid silver;
+
+
+#roomList{
+	text-align:center;
+	width:100%;
   border-collapse: collapse;
+	border:none;
 }
-*/
+.roomCall{
+	border-top:1px solid #d2d2d2;
+	border-bottom:0.5px solid #d2d2d2;
+	margin:10px;
+	font-size:0.6em;
+}

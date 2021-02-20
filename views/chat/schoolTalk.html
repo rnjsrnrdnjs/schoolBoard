@@ -1,32 +1,29 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
-        <a href="/main" class="ax">마니또</a>
-    </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
-</header>
 
-<h1>{{school.name}} 채팅방</h1>
-<fieldset>
-  <legend>채팅방 목록</legend>
-  <table>
-    <thead>
+<span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">{{school.name}} 채팅방</span>
+<span style="position:relative; float:right; padding:10px;"><a class="btn" href="/schoolMake">채팅방 생성</a></span>
+
+<fieldset style="border:none; border-top:1px solid #fcebef; margin-top:10%;">
+  <legend style="font-size:0.8em; color:#FF5675;">채팅방 목록</legend>
+  <table  id="roomList">
+    <thead style="font-size:0.8em;">
     <tr>
-      <th>방 제목</th>
-	  <th>종류</th>	
-      <th>만든이</th>
+      <th style="width:20%;">만든이</th>
+      <th style="width:35%;">방 제목</th>
+	  <th style="width:15%;">종류</th>	
+	  <th style="width:15%;">인원수</th>
     </tr>
     </thead>
     <tbody>
     {% for room in rooms %}
-      <tr data-id="{{room.id}}">
-        <td>{{room.title}}</td>
-		<td>{{'비밀방' if room.password else '공개방'}}</td>
-        <td >{{room.owner}}</td>
-        <td>
+      <tr data-id="{{room.id}}" class="roomCall">
+        <td style="width:20%;"><img src="{{room.User.profile}}" style="width:20px; border-radius:50px;"> {{room.owner}}</td>
+        <td style="width:35%;">{{room.title}}</td>
+		<td style="width:15%;">{{'비밀방' if room.password else '공개방'}}</td>
+        <td style="width:15%;">{{room.cnt}}</td>
+        <td style="width:15%;">
           <button 
 		    data-password="{{'true' if room.password else 'false'}}"
             data-id="{{room.id}}"
@@ -39,7 +36,6 @@
     </tbody>
   </table>
   <div class="error-message">{{error}}</div>
-  <a href="/schoolMake">채팅방 생성</a>
 </fieldset>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -49,21 +45,32 @@
 
   socket.on('newRoom', function (data) { // 새 방 이벤트 시 새 방 생성
     const tr = document.createElement('tr');
+	tr.classList.add('roomCall');
     let td = document.createElement('td');
-    td.textContent = data.title;
+    td = document.createElement('td');
+    td.innerHTML = `<img src=${data.User.profile} style="width:20px; border-radius:50px;"> `+ data.owner;
+	td.style.width=20+"%";
+    tr.appendChild(td);
+    td = document.createElement('td');
+	td.textContent = data.title;
+	td.style.width=35+"%";
     tr.appendChild(td);
 	td=document.createElement('td');
 	td.textContent=data.password?'비밀방':'공개방';
+	td.style.width=15+"%";
+	tr.appendChild(td);
+	td=document.createElement('td');
+	td.textContent=data.cnt;
+	td.style.width=15+"%";
 	tr.appendChild(td);
     td = document.createElement('td');
-    td.textContent = data.owner;
-    tr.appendChild(td);
-    td = document.createElement('td');
+	td.style.width=15+"%";
     const button = document.createElement('button');
     button.textContent = '입장';
 	button.dataset.password=data.password?'true':'false';
     button.dataset.id = data.id;
     button.addEventListener('click', addBtnEvent);
+	button.classList.add('join-btn');
     td.appendChild(button);
     tr.appendChild(td);
     tr.dataset.id = data.id;
@@ -77,10 +84,10 @@
       }
     });
   });
-
   function addBtnEvent(e) { // 방 입장 클릭 시
 	  if(e.target.dataset.password==='true'){
 		  const password=prompt('비밀번호를 입력하세요');
+		  console.log(e.target.dataset.id);
 		  location.href='/room/'+e.target.dataset.id+'?password='+password;
 	  }else{
       location.href = '/room/' + e.target.dataset.id;

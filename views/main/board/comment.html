@@ -8,7 +8,7 @@
 </header>
 
 
-<div class="writen" style="margin-top:10%;">
+<div class="writen" style="margin-top:11%;">
 	<div class="writeBG" style="display:block;">
 			<div class="writenHead">
 		&nbsp;
@@ -18,8 +18,8 @@
 	{% else %}
 		
 	{% endif %}-->
-		<img src="/{{posts.User.profile}}" style="width:30px; height:30px; border-radius:50px;padding-top:5px;">	
-		<span>{{posts.User.nick}}</span>
+		<img src="/{{posts.User.profile}}" style="padding-top:5px;width:30px; height:30px; border-radius:50px;">	
+		<span style=" position:relative;left:10px;">{{posts.User.nick}}</span>
 				{% if posts.UserId === user.id %}
 			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
 				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">

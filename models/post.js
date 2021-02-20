@@ -31,15 +31,6 @@ module.exports = class Post extends Sequelize.Model {
 					defalutValue:0,
                     allowNull: true,
 				},
-				likeChk:{
-					type: Sequelize.INTEGER,
-                    allowNull: false,
-				},
-				dislikeChk:{
-					type: Sequelize.INTEGER,
-                    allowNull: false,
-				}
-
             },
             {
                 sequelize,
@@ -58,5 +49,7 @@ module.exports = class Post extends Sequelize.Model {
 		db.Post.belongsTo(db.School);
 		db.Post.hasMany(db.Comment);
 		db.Post.belongsTo(db.User);
+		db.Post.hasMany(db.Plike);
+		db.Post.hasMany(db.Pdlike);
 	}
 };

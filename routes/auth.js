@@ -137,6 +137,11 @@ router.delete('/destroy', isLoggedIn, async(req, res) => {
 			  UserId:req.user.id,
 		  }
 	  });
+	  await Room.destroy({
+		  where:{
+			  UserId:req.user.id,
+		  }
+	  });
 	  await Chat.destroy({
 		  where:{
 			  User:req.user.nick,

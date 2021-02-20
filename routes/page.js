@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User, Comment, Chat, Room } = require('../models');
+const { Post, School, User, Comment, Chat, Room,RoomList } = require('../models');
 const router = express.Router();
 const { sequelize } = require('../models');
 const neis = require('../neis/neis');
@@ -73,6 +73,9 @@ router.get('/schoolTalk', isLoggedIn, async (req, res, next) => {
             where: {
                 SchoolId: res.locals.school.id,
             },
+			include:[{
+				model:User,
+			}],
         });
         res.render('chat/schoolTalk', {
             rooms: rooms,
@@ -85,7 +88,9 @@ router.get('/schoolTalk', isLoggedIn, async (req, res, next) => {
 router.get('/room/:id', isLoggedIn,async (req, res, next) => {
     try {
         const room = await Room.findOne({
-            id: req.params.id,
+			where:{
+	            id: req.params.id,
+			},
         });
         const io = req.app.get('io');
         if (!room) {
@@ -94,7 +99,36 @@ router.get('/room/:id', isLoggedIn,async (req, res, next) => {
 		if(room.password && room.password!==req.query.password){
 			return res.redirect('/?error=비밀번호가 틀렸습니다.');
 		}
-        const chats = await Chat.findAll({
+		const user= await User.findOne({
+			where:{
+				id:req.user.id,
+			},
+		})
+		const chk=await RoomList.findOne({
+			where:{
+				RoomId:req.params.id,
+				UserId:req.user.id,
+			},
+		});
+		console.log(chk);
+        if (!chk) {
+			await Chat.create({
+				user:'system',
+				chat:`${req.user.nick} 님이 입장하셨습니다.`,
+				UserId:req.user.id,
+				RoomId:req.params.id,
+			})
+			io.of('/chat').to(req.params.id).emit('join', {
+           		user: 'system',
+            	chat:`${req.user.nick} 님이 입장하셨습니다.`,
+       		 });
+            await Room.increment({ cnt: 1 }, { where: { id: req.params.id } });
+            await RoomList.create({
+                UserId: req.user.id,
+                RoomId: req.params.id,
+            });
+		}
+		 const chats = await Chat.findAll({
 			include:[{
 				model:User,
 			}],
@@ -103,6 +137,7 @@ router.get('/room/:id', isLoggedIn,async (req, res, next) => {
             },
             order: [['createdAt', 'ASC']],
         });
+		
         return res.render('chat/Talk', {
             room,
             title: room.title,

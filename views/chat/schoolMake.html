@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<header>
+<header style="margin-bottom:11%;">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
@@ -7,17 +7,17 @@
     <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
 </header>
 
-<fieldset>
-    <legend>채팅방 생성</legend>
+<fieldset style="    box-sizing: border-box; width:100%; text-align:center; border:none; height:60%;" class="makeBG">
+    <legend style="padding-top:10%; font-weight:bold;">채팅방 생성</legend>
     <form action="/post/schoolMake" method="post">
        <div>
-        <input type="text" name="title" placeholder="방 제목" required autofocus>
+        <input style="width:60%; height:42px; border:1px solid #ffdbde; margin-bottom:10px;" type="text" name="title" placeholder="방 제목(최대 20글자)" required autofocus>
       </div>
 	  <div>
-		<input type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
+		<input style="width:50%; height:20px; border:1px solid #ffdbde; margin-bottom:10px;" type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
 	  </div>
       <div>
-        <button type="submit">생성</button>
+        <button class="btn" type="submit">생성</button>
       </div>
     </form>
   </fieldset>
