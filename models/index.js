@@ -54,7 +54,6 @@ RoomAllList.init(sequelize);
 RoomAll.init(sequelize);
 ChatAll.init(sequelize);
 
-
 User.associate(db);
 Post.associate(db);
 School.associate(db);
@@ -69,6 +68,5 @@ RoomList.associate(db);
 RoomAllList.associate(db);
 RoomAll.associate(db);
 ChatAll.associate(db);
-
 
 module.exports = db;

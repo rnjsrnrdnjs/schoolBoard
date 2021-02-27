@@ -47,6 +47,15 @@ const upload = multer({
 router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     res.json({ url: `/img/${req.file.filename}` });
 });
+router.post('/randomTalk/img', isLoggedIn, upload.single('img'), (req, res) => {
+     try {
+		 return res.json({ url: `/img/${req.file.filename}` });
+  	} catch (error) {
+  	  console.error(error);
+  	  next(error);
+  	}
+});
+
 
 const upload2 = multer();
 router.post('/profile/img', isLoggedIn, upload.single('img'), async (req, res, next) => {
@@ -512,6 +521,46 @@ router.post('/roomAll/:id/getout', isLoggedIn, async (req, res, next) => {
     } catch (err) {
         console.error(error);
         next(error);
+    }
+});
+router.post('/random/readyon', isLoggedIn, async (req, res, next) => {
+    try {
+		console.log('on');
+		await User.update({
+			ramdomState:1,
+		},{
+			where:{
+				id:req.user.id,
+			},
+		});
+		await RoomRandomList.create({
+			UserId:req.user.id,
+		});
+		return res.send('ok');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+router.post('/random/readyoff', isLoggedIn, async (req, res, next) => {
+    try {
+		console.log('off');
+		await User.update({
+			ramdomState:0,
+		},{
+			where:{
+				id:req.user.id,
+			},
+		});
+		await RoomRandomList.destroy({
+			where:{
+				UserId:req.user.id,
+			},
+		});
+		return res.send('ok');
+    } catch (err) {
+        console.error(err);
+        next(err);
     }
 });
 

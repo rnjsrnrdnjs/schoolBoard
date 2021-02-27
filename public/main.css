@@ -278,6 +278,15 @@ footer{
 	border:none;
 	border-bottom:1px solid #ffe0e3;
 }
+.talkBG3{
+	background-size:100% 100%;
+	background-image:url(/talkBG3.svg);
+	width: 90%;
+    height: 80%;
+    overflow: hidden;
+	border:none;
+	border-bottom:1px solid #ffe0e3;
+}
 
 
 .write-none{

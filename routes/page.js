@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll, } = require('../models');
+const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll} = require('../models');
 const router = express.Router();
 const { sequelize } = require('../models');
 const neis = require('../neis/neis');
@@ -100,7 +100,14 @@ router.get('/allTalk', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
-
+router.get('/randomTalk', isLoggedIn, async (req, res, next) => {
+    try {		
+        res.render('chat/randomTalk');
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
 
 
 router.get('/room/:id', isLoggedIn,async (req, res, next) => {

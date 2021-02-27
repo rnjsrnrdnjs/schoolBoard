@@ -1,0 +1,205 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+ <div style="border-bottom:1px solid #ffe0e3;margin-bottom:10px;">
+	 <a style="display: inline-block;" class="btn6" href="/chat" ><i class="fas fa-arrow-left" style="color:#d2d2d2;"></i> </a>
+  <div style="font-weight:bold;font-size:1em; margin:15px;display: inline-block;">랜덤채팅</div>
+
+		 <button class="btn6" id="findMatch" type="submit" style="display:inline-block; float:right; padding-top:15px;position:relative;
+    width: 80px;">
+			 상대찾기
+		 </button>
+	 	 <button class="btn6" id="cancelMatch" type="submit" style="display:none; float:right; padding-top:15px;position:relative;
+    width: 80px;">
+			 요청취소
+		 </button>
+	 	 <button class="btn6" id="reMatch" type="submit" style="display:none; float:right; padding-top:15px;position:relative;
+    width: 80px;">
+			 다시찾기
+		 </button>
+	 	  
+	 
+	 
+	<div style="display:inline-block; float:right; padding-top:15px;position:relative;
+    width: 140px;">
+		접속인원 : 
+		<span id="userCount"></span>
+	 </div> 
+	 
+	 
+</div>
+<fieldset class="talkBG">
+    <div class="chat-list" id="showFoot">
+		<!--
+      {% for chat in chats %}
+        {% if chat.user === user %}
+          <div class="mine">
+            <div ><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;">{{chat.user}}</div>
+            {% if chat.img %}
+              <img src="/img/{{chat.img}}">
+            {% else %}
+              <div style="">{{chat.chat}}</div>
+            {% endif %}
+          </div>
+        {% elif chat.user === 'system' %}
+          <div class="system">
+            <div>{{chat.chat}}</div>
+          </div>
+        {% else %}
+          <div class="other" >
+            <div><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;"> {{chat.user}}</div>
+            {% if chat.img %}
+              <img src="/img/{{chat.img}}">
+            {% else %}
+              <div>{{chat.chat}}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+-->
+    </div>
+  </fieldset>
+  <form action="/chat" class="chat-form" method="post" enctype="multipart/form-data" style='margin-top:10px; text-align:center;'>
+    <label for="img"><i class="far fa-images fa-2x" style="color:skyblue;"></i></label>
+    <input type="file" id="img" name="img" accept="image/*">
+    <input style="width:60%; border:1px solid #d2d2d2;" type="text" id="chat" name="chat">
+    <button type="submit" class="btn">전송</button>
+  </form>
+
+
+
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+	 
+const socket = io.connect('https://schoolboard-raidd.run.goorm.io/roomRandom', {
+      path: '/socket.io',
+    });
+    socket.on('join', function (data) {
+		document.getElementById('userCount').innerHTML=data.userCount;
+    });
+	socket.on('exit', function (data) {
+		document.getElementById('userCount').innerHTML=data.userCount;
+    });
+	socket.on('completeMatch',function(data){
+		let re=document.getElementById('reMatch');
+		let cancel=document.getElementById('cancelMatch');
+		let find=document.getElementById('findMatch');
+		re.style.display="inline-block";
+		find.style.display="none";
+		cancel.style.display="none";
+		const div = document.createElement('div');
+        div.classList.add('system');
+		div.innerHTML='대화가 시작되었습니다.'
+		document.querySelector('.chat-list').appendChild(div);
+		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+		
+	});
+	socket.on('endChat',function(data){
+		const div = document.createElement('div');
+        div.classList.add('system');
+		div.innerHTML='대화가 종료되었습니다.'
+		document.querySelector('.chat-list').appendChild(div);
+		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+	});
+ 	//랜덤요청
+	document.getElementById('findMatch').addEventListener('click',function(){
+		let showFoot = document.getElementById("showFoot"); while ( showFoot.hasChildNodes() ) { showFoot.removeChild( showFoot.firstChild ); }
+		socket.emit('requestRandomChat');
+		let find=document.getElementById('findMatch');
+		let cancel=document.getElementById('cancelMatch');
+		find.style.display="none";
+		cancel.style.display="inline-block";
+		const div = document.createElement('div');
+        div.classList.add('system');
+		div.innerHTML='대화상대를 찾는중입니다.'
+		document.querySelector('.chat-list').appendChild(div);
+		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+	});
+	document.getElementById('cancelMatch').addEventListener('click',function(){
+		socket.emit('cancelRequest');
+		let find=document.getElementById('findMatch');
+		let cancel=document.getElementById('cancelMatch');
+		find.style.display="inline-block";
+		cancel.style.display="none";
+		const div = document.createElement('div');
+        div.classList.add('system');
+		div.innerHTML='요청을 취소하였습니다.'
+		document.querySelector('.chat-list').appendChild(div);
+		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;
+	});
+	document.getElementById('reMatch').addEventListener('click',async function(){		
+		socket.emit('reRequest');
+			let re=document.getElementById('reMatch');
+		let cancel=document.getElementById('cancelMatch');
+		re.style.display="none";
+		cancel.style.display="inline-block";	
+	});
+	socket.on('refind', function (data) {
+		let showFoot = document.getElementById("showFoot"); while ( showFoot.hasChildNodes() ) { showFoot.removeChild( showFoot.firstChild ); }
+		const div = document.createElement('div');
+        div.classList.add('system');
+		div.innerHTML='대화상대를 찾는중입니다.'
+		document.querySelector('.chat-list').appendChild(div);
+		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+    });  
+	 socket.on('chat', function (data) {
+      const div = document.createElement('div');
+      if (data.user === '{{user.nick}}') {
+        div.classList.add('mine');
+      } else {
+        div.classList.add('other');
+      }
+      const name = document.createElement('div');
+      name.innerHTML =`<img src="/${data.profile}" style="border:none; width:30px; border-radius:50px;">` + data.user;
+      div.appendChild(name);
+      if (data.chat) {
+        const chat = document.createElement('div');
+        chat.textContent = data.chat;
+        div.appendChild(chat);
+      } else {
+		const img = document.createElement('img');
+    	img.src =data.img;
+	    div.appendChild(img);
+      }
+      document.querySelector('.chat-list').appendChild(div);
+	  document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+    });
+	  
+    document.querySelector('.chat-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (e.target.chat.value) {
+		 socket.emit('sendMessage',{
+			chat: this.chat.value,
+			user:'{{user.nick}}',
+			profile:'{{user.profile}}',
+		 });
+         e.target.chat.value = '';
+      }
+    });
+ 
+    document.querySelector('#img').addEventListener('change', async function (e) {
+      console.log(e.target.files);
+		const formData = new FormData();
+      formData.append('img', e.target.files[0]);
+      axios.post('/post/randomTalk/img', formData)
+        .then((res) => {
+		  console.log(res.data.url);
+		  socket.emit('sendMessage',{
+				img: res.data.url,
+				user:'{{user.nick}}',
+				profile:'{{user.profile}}',
+		  });
+          e.target.file = null;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+	  
+
+  </script>
+{% endblock %}

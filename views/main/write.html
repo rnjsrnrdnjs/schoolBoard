@@ -35,7 +35,7 @@
 	<button id="write-btn" type="submit" class="btn" >완료</button>
 	</div>
 	<div class="btn4" style="border-top:20px; border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
-		<textarea id="t1" name="title" maxlength="20" style="height:15%;" placeholder="제목" required>{% if post %}{{post.title}}{% endif %}</textarea>
+		<textarea id="t1" name="title" maxlength="20" style="height:15%;margin-top: 3%;" placeholder="제목" required>{% if post %}{{post.title}}{% endif %}</textarea>
     </div>
     <div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
 		<textarea id="t2" name="content" maxlength="1000"placeholder="여기에 내용을 입력해주세요"  required>{% if post %}{{post.content}}{% endif %}</textarea>

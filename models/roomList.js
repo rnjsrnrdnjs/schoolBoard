@@ -14,7 +14,7 @@ module.exports = class RoomList extends Sequelize.Model {
                 timestamps: false,
                 underscored: false,
                 modelName: 'RoomList',
-                tableName: 'RoomLists',
+                tableName: 'roomLists',
                 paranoid: false,
                 charset: 'utf8',
                 collate: 'utf8_general_ci',

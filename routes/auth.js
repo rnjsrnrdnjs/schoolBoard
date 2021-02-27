@@ -86,6 +86,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 	  schoolName:sname.name,
 	  SchoolId:sname.id, 
 	  profile:'blank-profile.svg',
+	  randomState:0,	
     });
 	  
     return res.redirect('/');
