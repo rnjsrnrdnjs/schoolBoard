@@ -3,37 +3,38 @@
 <img src="/manito.svg" id ="loginImg">
 <form id="loginForm" action="/auth/join" method="post">
 	<div style="text-align:center">
-		{{nick}}
 		{% if nick %}
 		    <div class="input_group">
-        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa " id="nick" type="nick" name="nick" value="{{nick}}" placeholder="사용할 닉네임" required autofocus/>
+        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; "maxlength="8" id="nick" type="nick" name="nick" value="{{nick}}" placeholder="사용할 닉네임" required autofocus/>
 		<div id="overlap" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
 	    </div>
 		{% else %}
 		    <div class="input_group">
-        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa " id="nick" type="nick" name="nick" placeholder="사용할 닉네임" required autofocus/>
+        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; "maxlength="8" id="nick" type="nick" name="nick" placeholder="사용할 닉네임" required autofocus/>
 		<div id="overlap" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
 	    </div>
 		{% endif %}
     <p></p>
 		<div class="input_group">
 		{% if find %}
-	        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa; margin-bottom:10px;" id="schoolName" type="schoolName" name="schoolName"  value="{{find}}" onkeypress="return false;" required />
+	        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; margin-bottom:10px;" id="schoolName" type="schoolName" name="schoolName"  value="{{find}}" onkeypress="return false;" required />
 		    <input type="hidden" name="code" value="{{code}}">
 			<a href="/findSchool" class="btn"><i class="fas fa-search-location"></i>학교선택</a>
 		{% else %}
-	        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa; margin-bottom:10px;" id="schoolName" type="schoolName" name="schoolName"  placeholder="버튼을 눌러주세요--->" onkeypress="return false;" required />
+	        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; margin-bottom:10px;" id="schoolName" type="schoolName" name="schoolName"  placeholder="버튼을 눌러주세요--->" onkeypress="return false;" required />
 			<a href="/findSchool" class="btn"><i class="fas fa-search-location"></i>학교선택</a>
 		{% endif %}
 			
    		</div>
     <div class="input_group">
-        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa " id="email" type="email" name="email"  placeholder="이메일" required  />
+        <input style="width:83% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa " id="email" type="email" name="email"  placeholder="이메일" required  />
+		<!--
 		<a href="/findSchool" class="btn"><i class="fas fa-envelope-square"></i>인증하기</a>
+		-->
     </div>
     <p></p>
     <div class="input_group">
-        <input style="width:83% ;border:none; border-bottom:1px solid #828282; background-color:#fffafa " id="password" type="password" name="password" placeholder="비밀번호" required />
+        <input style="width:83% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa " id="password" type="password" name="password" placeholder="비밀번호" required />
     </div>
     <p></p>
 	<label for="man">
@@ -52,6 +53,7 @@
     <button id="joinBtn" type="submit" class="btn">가입</button>
 	</div>
 </form>
+	
 </div>
 {% endblock %}
 {% block script %}

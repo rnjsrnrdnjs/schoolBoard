@@ -19,16 +19,16 @@
 		
 	{% endif %}-->
 		<img src="/{{posts.User.profile}}" style="padding-top:5px;width:30px; height:30px; border-radius:50px;">	
-		<span style=" position:relative;left:10px;">{{posts.User.nick}}</span>
+		<span style=" padding-left:4px;">{{posts.User.nick}}</span>
 				{% if posts.UserId === user.id %}
 			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
 				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
-						<i class="fas fa-trash-alt"></i>
+						<i class="fas fa-trash-alt" style="color:#828282;"></i>
 				</button>
 				</form>
 		<a href="/update/{{posts.id}}" style="display:inline; position:relative; float:right; right:40px;">
 				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
-						<i class="far fa-edit"></i>
+						<i class="far fa-edit" style="color:#828282;"></i>
 				</button>
 				</a>
 				
@@ -36,7 +36,7 @@
 			{% if posts.UserId !== user.id %}
 				<form action="" method="" style="display:inline; position:relative; float:right; right:40px;">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;  background-color:inherit;">
-						<i class="far fa-heart"></i>메시지
+						<i class="far fa-paper-plane" style="color:#828282;"></i>
 				</button>
 				</form>
 			{% endif %}
@@ -44,7 +44,7 @@
 			
 	
 	</div>
-		<div class="writenTime">			
+		<div class="writenTime" style="padding: 5px;">			
 		{{posts.createdAt.getFullYear()}}년
 		{{posts.createdAt.getMonth()+1}}월
 		{{posts.createdAt.getDate()}}일
@@ -65,22 +65,23 @@
 	<div class="write-content">
         {{posts.content}}
     </div>
-	<div style="text-align:center;background-color:#fff2f4;border-top:1px solid #c8c8c8;">
+	<div style="text-align:center;background-color:#fffcfc;height: 30px;
+    padding-top: 10px;">
 		
 		<form action="/post/post/like/{{posts.id}}" method="post" style="display:inline;">
-		<button class="btn6" style="color:#6EDCDC;background-color:#fff2f4;" type="submit" >
+		<button class="btn6" id="postLike" style="color:#6EDCDC;background-color:#fffcfc;" type="submit" >
 		<i class="fas fa-thumbs-up" style="color:#6EDCDC;"></i>
 		{{posts.like}}
 		</button>
 		</form>
 		
 		<form action="/post/post/dislike/{{posts.id}}" method="post" style="display:inline;">
-		<button class="btn6" style="color:#FF4646;background-color:#fff2f4;" type="submit" >
+		<button class="btn6" id="postdisLike" style="color:#FF4646;background-color:#fffcfc;" type="submit" >
 		<i class="fas fa-thumbs-down"></i>
 		{{posts.dislike}}
 		</button>
 		</form>
-		<button class="btn6" style="color:#8c8c8c;background-color:#fff2f4;" style="display:inline;">
+		<button class="btn6" style="color:#8c8c8c;background-color:#fffcfc;" style="display:inline;">
 		<i class="far fa-comment"></i>
 			{{comments.length}}
 		</button>
@@ -94,39 +95,37 @@
 
 <form action="/post/comment" method="post"  >
 			<input type="hidden" name="Pid" value="{{posts.id}}" >
-			<input  id="Wcomment"name="content" placeholder="댓글을 입력하세요."  maxlength="140" style="display:inline;margin-bottom:10px;" required>
-			<button class="btn" type="submit"  style="display:inline; width:30%; height:50px; margin-top :5px;">
-				<div>
-					<img src="/tree.svg" style="width:30px;">
-					작성
-				</div>
+			<input  id="Wcomment"name="content" placeholder="댓글을 입력하세요."  maxlength="500" style="display:inline;margin-bottom:10px;" required>
+	
+			<button class="btn6" type="submit"  style="display:inline; width:16%; height:50px; margin-top :5px;color:#828282;">
+				<i class="far fa-comment"></i> 작성
 			</button>
 </form>
 
 {% for comment in comments %}
 	 <div class="write-content comment">
-		 <div class="writenHead">
+		 <div class="writenHead" style="border:none;">
 		<img src="/{{comment.User.profile}}" style="width:30px; height:30px;border-radius:50px;">	
-		<span >{{comment.User.nick}}</span>
+		<span style="padding-left:4px;">{{comment.User.nick}}</span>
 				{% if comment.UserId === user.id %}
 			<form action="/delete/comment/{{comment.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
 				<input type="hidden" name="Pid" value="{{posts.id}}">
 				<button class="btn7" type="submit" style="width:20%;font-size:1em; border:none;">
-						<i class="fas fa-trash-alt"></i>
+						<i class="fas fa-trash-alt" style="color:#828282;"></i>
 				</button>
 				</form>
-				
+			 
 			{% endif %}
 			{% if comment.UserId !== user.id %}
 				<form action="" method="" style="display:inline; position:relative; float:right; right:40px; ">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;">
-						<i class="far fa-heart"></i>메시지
+						<i class="far fa-paper-plane" style="color:#828282;"></i>
 				</button>
 				</form>
 			{% endif %}
 		 		
 		 
-		 <div class="writenTime">			
+		 <div class="writenTime" style="padding: 5px;">			
 		{{comment.createdAt.getFullYear()}}년
 		{{comment.createdAt.getMonth()+1}}월
 		{{comment.createdAt.getDate()}}일
@@ -211,7 +210,7 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a hreft="/game" class="btn2">
+                <a href="/game" class="btn2">
                     게임
                 </a>
             </td>
@@ -228,4 +227,6 @@
         </tr>
     </table>
 </footer>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %} 
+
+{% endblock %}

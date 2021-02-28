@@ -3,9 +3,13 @@ body {
     margin: 0;
     height: 100%;
 	box-sizing: border-box;
+	 scrollbar-width: none;
+    -ms-overflow-style: none;
+	/*overflow-y:hidden;*/
 }
-/*body::-webkit-scrollbar { display: none !important;  }*/
-
+body::-webkit-scrollbar {
+    display: none;
+}
 .btn {
     display: inline-block;
     text-decoration: none;
@@ -22,19 +26,10 @@ body {
 	border-radius:10px;
 }
 .join-btn {
-    display: inline-block;
-    text-decoration: none;
+   background-color:white;
+	border:0px;
+	text-decoration: none;
     cursor: pointer;
-    border-radius: 4px;
-    background-color: #FF98A3;
-    border: 1px solid #FF5675;
-    color: white;
-    height: 37px;
-    line-height: 37px;
-    vertical-align: top;
-    font-size: 15px;
-	box-shadow: 2px 2px 2px 2px #FFD9E4;
-	border-radius:10px;
 }
 .btn2{
 	text-decoration: none;
@@ -45,10 +40,9 @@ body {
 .btn7{
 	font-size: 1em; font-weight:bold; 
 	background-color:white;
-	color:#FF5675;
+	color:#000000;
 	text-decoration: none;
     cursor: pointer;
-	border:1px solid #282828;
 }
 .btn3{
 	padding:6%;
@@ -73,10 +67,18 @@ body {
 .btn6{
 	background-color:white;
 	border:0px;
-	padding:3%;
 	text-decoration: none;
     cursor: pointer;
 }
+.btn8{
+	border-radius:5px;
+	color:#289AFF;
+	background-color:white;
+	border:1px solid #289AFF;
+	text-decoration: none;
+    cursor: pointer;
+}
+
 input [type='text'],
 input[type='email'],
 input[type='password'],
@@ -208,9 +210,9 @@ footer{
 }
 .title{
 	color:#323232;
-	font-size:1.2em;
+	font-size:1.1em;
 	font-weight:bold;
-	text-shadow:2px 1px 1px #FAB7B7;
+	/*text-shadow:2px 1px 1px #FAB7B7;*/
 }
 .boardIcon{
 	color:#ACCCC4;
@@ -222,15 +224,15 @@ footer{
 	font-size:0.7em;
 	color:#C4BCB8;
 }
-.write-img{text-align:center;}
+.write-img{text-align:center; }
 .write-img img{
+	
 	width:100%;
 }
 .writen{
 	box-sizing: border-box;
 	width:100%;
-	border-top:1px solid #c8c8c8;
-	border-bottom:0.5px solid #c8c8c8;
+	border-bottom:1px solid #c8c8c8;
 }
 .writenHead{
 	width:100%;
@@ -240,8 +242,6 @@ footer{
 	width:100%;
 	font-size:0.5em;
 	color:#464646;
-	padding-bottom:10px;
-	border-radius:0px 0px 8px 8px;
 }
 .imgBG{
 	background-size:100% 100%;
@@ -249,15 +249,12 @@ footer{
 .writeBG{
 	background-color:#fafffd;
 	background-size:100% 100%;
-	background-image:url(/cherry.svg);
-	border-bottom:1px solid #c8c8c8;
-	border-radius:0px 0px 10px 10px;
+	border-top:1px solid #c8c8c8;
 }
 .boardBG{
 	background-size:100% 100%;
 	/*background-image:url(/boardBG.svg);*/
-	border-top:1px solid #c8c8c8;
-	border-bottom:1px solid #c8c8c8;
+	/*border-bottom:1px solid #c8c8c8;*/
 	border-radius:10px;
 }
 .settingBG{
@@ -271,8 +268,8 @@ footer{
 }
 .talkBG{
 	background-size:100% 100%;
-	background-image:url(/talkBG.svg);
-	width: 90%;
+	/*background-image:url(/talkBG.svg);*/
+	background-color:#b2c7d9;
     height: 80%;
     overflow: hidden;
 	border:none;
@@ -301,8 +298,6 @@ footer{
 	margin:5px;
 	font-size:1.2em;
 	font-weight:bold;
-}
-.write-img{
 }
 .write-content{
 	font-size:0.8em;
@@ -341,14 +336,13 @@ input#img{
 }
 #Wcomment{
 	margin-top:5px;
-	border:1px solid black;
+	border:1px solid #d2d2d2;
 	border-radius:10px;
-	width:65%;
+	width:80%;
 	height:50px;
 }
 .comment{
-	border-top:1px solid #c8c8c8;
-	border-bottom:0.5px solid #c8c8c8;
+	border-bottom:1px solid #c8c8c8;
 	
 }
 .bar{width:110px; height:25px;font-family: "Font Awesome 5 Free"; font-weight:500; }
@@ -410,11 +404,10 @@ input#img{
 }
 
 .mine { text-align: right; }
-.system { border:1px solid #d2d2d2; border-radius:5px;margin:5px; background-color:#fffafc; ;text-align: center; }
+.system { border:1px solid #d2d2d2; border-radius:10px;margin-bottom:10px; background-color:white;text-align: center; color:#828282;}
 .mine img, .other img {
   max-width:70%;
   display: inline-block;
-  border: 1px solid silver;
   border-radius: 5px;
   padding: 2px 5px;
 }
@@ -424,10 +417,13 @@ input#img{
   border: 1px solid silver;
   border-radius: 5px;
   padding: 2px 5px;
-  max-width: 300px;
+  max-width:70%;
+	background-color:white;
+	word-break: break-all;
+	text-align:left;
 }
 .chat-list { 
-	height: 100%; overflow: auto; padding: 5px; }
+	height: 100%; overflow: auto;  }
 .chat-form { text-align: right; }
 label[for='gif'], #chat, #chat-form [type='submit'] {
   display: inline-block;

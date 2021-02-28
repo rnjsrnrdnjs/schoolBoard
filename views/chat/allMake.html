@@ -8,16 +8,20 @@
 </header>
 
 <fieldset style="    box-sizing: border-box; width:100%; text-align:center; border:none; height:60%;" class="makeBG">
-    <legend style="padding-top:10%; font-weight:bold;">채팅방 생성</legend>
+     <legend style="padding-top:10%;">채팅방 생성</legend>
     <form action="/post/allMake" method="post">
        <div>
-        <input style="width:50%; height:42px; border:1px solid #ffdbde; margin-bottom:10px;" type="text" name="title" placeholder="방 제목(최대 20글자)" required autofocus>
+        <input style="width:60%; border-radius:4px; padding-left: 5px;
+    padding-top: 5px;
+    height: 36px;
+    border: 1px solid #ffdbde;
+    margin-bottom: 10px;" maxlength="15" type="text" name="title" placeholder="방 제목(최대 15글자)" required autofocus>
       </div>
 	  <div>
-		<input style="width:50%; height:20px; border:1px solid #ffdbde; margin-bottom:10px;" type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
+		<input style="width:60%; height:20px; border:1px solid #ffdbde; margin-bottom:10px;" maxlength="15" type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
 	  </div>
       <div>
-        <button class="btn" type="submit">생성</button>
+        <button class="btn8" style="background-color:white; font-size:1.2em;" type="submit"><i class="fas fa-dice-d6 fa-lg"></i> 생성</button>
       </div>
     </form>
   </fieldset>

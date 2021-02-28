@@ -14,7 +14,7 @@ module.exports = class Post extends Sequelize.Model {
 				},
                 content: {
 					//나중에 1000으로바꾸기
-                    type: Sequelize.STRING(140),
+                    type: Sequelize.STRING(1000),
                     allowNull: false,
                 },
                 img: {

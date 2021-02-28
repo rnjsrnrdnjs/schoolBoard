@@ -43,7 +43,7 @@
                 width: 50%;
                 border: none;
                 border-bottom: 1px solid #828282;
-                background-color: #fffafa;
+                background-color: #fafafa;
                 height: 35px;
             "
             name="schoolname"
@@ -59,7 +59,7 @@
     {% for find in result %}
     <form action="/post/join/{{find.name}}" method="post" >
         <input type="hidden" name="code" value="{{find.code}}" />
-        <button type="submit" style="width:100%; border-radius:10px; border:1px solid #c8c8c8; background-color:#e8fffb;padding: 15px;">
+        <button type="submit" style="width:100%;border:none; border-bottom:0.5px solid #c8c8c8;border-top:0.5px solid #c8c8c8; background-color:white;padding: 15px;">
                 <div>
                     {{find.name}}
                 </div>

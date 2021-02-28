@@ -5,11 +5,11 @@ module.exports = class Room extends Sequelize.Model {
         return super.init(
             {
 				title:{
-                    type: Sequelize.STRING(20),
+                    type: Sequelize.STRING(15),
                     allowNull: false,
 				},
 				owner:{
-                    type: Sequelize.STRING(15),
+                    type: Sequelize.STRING(8),
                     allowNull: false,
 				},
 				password:{

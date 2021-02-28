@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const {User,School,Post,Comment,Chat,Room} = require('../models/');
+const {User,School,Post,Comment,Chat,Room,RoomAll} = require('../models/');
 
 const neis = require('../neis/neis');
 const SchoolType = require('../neis/types/SchoolType');
@@ -31,6 +31,23 @@ router.post('/overlap/change', isLoggedIn, async (req, res, next) => {
 				id:req.user.id,
 			}
 		});
+		await Room.update({
+			owner:req.body.nick,
+		},{
+			where:{
+				owner:req.user.nick,
+			}
+		});
+		await RoomAll.update({
+			owner:req.body.nick,
+		},{
+			where:{
+				owner:req.user.nick,
+			}
+		});
+		
+		
+		
 		return res.redirect('/setting');
 	}catch(err){
 		console.error(err);
