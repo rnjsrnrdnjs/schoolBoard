@@ -21,12 +21,12 @@
 		<img src="/{{posts.User.profile}}" style="padding-top:5px;width:30px; height:30px; border-radius:50px;">	
 		<span style=" padding-left:4px;">{{posts.User.nick}}</span>
 				{% if posts.UserId === user.id %}
-			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">
+			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
 				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
 						<i class="fas fa-trash-alt" style="color:#828282;"></i>
 				</button>
 				</form>
-		<a href="/update/{{posts.id}}" style="display:inline; position:relative; float:right; right:40px;">
+		<a href="/update/{{posts.id}}" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
 				<button class="btn7" type="submit" style="font-size:1em; border:none; background-color:inherit;">
 						<i class="far fa-edit" style="color:#828282;"></i>
 				</button>
@@ -34,7 +34,7 @@
 				
 			{% endif %}
 			{% if posts.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; float:right; right:40px;">
+				<form action="" method="" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;  background-color:inherit;">
 						<i class="far fa-paper-plane" style="color:#828282;"></i>
 				</button>

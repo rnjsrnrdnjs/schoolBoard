@@ -28,7 +28,7 @@
       {% for chat in chats %}
         {% if chat.user === user %}
           <div class="mine">
-            <div ><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;">{{chat.user}}</div>
+            <!--<div ><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;">{{chat.user}}</div>-->
             {% if chat.img %}
               <img src="/img/{{chat.img}}">
             {% else %}
@@ -89,10 +89,11 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
         div.classList.add('mine');
       } else {
         div.classList.add('other');
-      }
-      const name = document.createElement('div');
+		        const name = document.createElement('div');
       name.innerHTML =`<img src="/${data.User.profile}" style="border:none; width:30px; border-radius:50px;">` + data.user;
       div.appendChild(name);
+
+	}
       if (data.chat) {
         const chat = document.createElement('div');
         chat.textContent = data.chat;

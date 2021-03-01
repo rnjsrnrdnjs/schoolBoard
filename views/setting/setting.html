@@ -11,20 +11,14 @@
 </header>
             <a
                 href="/auth/logout"
-                class="btn"
-                style="position: relative; float: right;"
+                class="btn6 ax" 
+                style="color:#828282;margin-left:15px;"
             >
+				<i class="fas fa-sign-out-alt" style="color:#FFB2AF;" ></i>
                 로그아웃
             </a>
 
-<div   style="width:40%;float: left;">
-    <div>
-        <div style="margin-bottom: 5px; margin-left: 5px; background-color: white;">
-            <span style="color: #828282; font-weight: bold;">
-                닉네임 -
-            </span>
-            <span style="color: #282828; font-weight: bold; font-size: 1.1em;">{{user.nick}} </span>
-        </div>
+    <div style="text-align:center;background-color:#fcfcfc;margin-bottom: 20px;">
         <img class="imgBG"
             src="/{{user.profile}}"
             style="
@@ -37,101 +31,94 @@
                 padding: 20px;
             "
         />
-    </div>
-    <div>
-        <form action="/auth/overlap/change" method="post" >
-			<input type="text" name="nick" maxlength="8" style="width:95%; height:37px; border:1px solid #d2d2d2; margin-left:5px;" placeholder="변경할 닉네임" required>
+		<div style="margin-bottom: 5px; font-size:0.8em;">
+            <span style="color: #828282; font-weight: bold;">
+                닉네임 -
+            </span>
+            <span style="color: #282828; font-weight: bold; font-size: 1.1em;">{{user.nick}} </span>
+        </div>
+		<div style="width: 48%;
+    display: inline-block;
+    padding-bottom: 10px;">
+			<form action="/auth/overlap/change" method="post" style="border-right: 1px solid #b4b4b4;">
+			<input type="text" name="nick" maxlength="8" style="border-radius: 10px;
+    width: 55%;
+    height: 37px;
+    border: 1px solid #d2d2d2;" placeholder="변경할 닉네임" required>
             <button
+			    class="btn8"
                 type="submit"
                 style="
-                    background-color:#fff2f7;
                     height: 40px;
-                    border: none;
-                    border-top: 1px solid #d2d2d2;
-                    border-bottom: 0.5px solid #d2d2d2;
-                    width: 100%;
-                    color: #828282;
-                    margin: 5px 5px 0px 5px;
+    border-radius: 10px;
+    background-color: white;
                 "
             >
-                닉네임 변경
+				<i class="fab fa-modx" ></i> 변경
             </button>
         </form>
-    </div>
-    <div>
-			<label  for="img" style="
-                   display:inline-block;	
-					font-size:0.9em;
-				    text-align:center;
-					background-color:#fff2f7;
-				   width:100%;
-					padding-top:10px;
-                    height: 30px;
-                    border: none;
-                    border-top: 1px solid #d2d2d2;
-                    border-bottom: 0.5px solid #d2d2d2;
-                    color: #828282;
-                    margin: 0 5px 0 5px;
-                ">사진 변경</label>
+		</div>
+		<div style="    width: 48%;
+    display: inline-block;">
+					<label  for="img" style="
+                   display: inline-block;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #d2d2d2;
+    color: #828282;
+    background-color: white;
+    padding-top: 10px;
+    height: 30px;
+                "><i class="fas fa-camera-retro" style="color:black;"></i> 프로필사진 변경</label>
     	    <input id="img"  style="text-align:center;width:0%;" type="file" accept="image/*"  />
+		</div>
+
     </div>
-    <div>
+
+	<div>
             <button onclick="location.href='/mypost'"
                 type="submit"
                 style="
-                    background-color:#fff2f7;
-                    height: 40px;
+					 background-color:white;
+					 text-align:left;
+                    height: 45px;
                     border: none;
-                    border-top: 0.5px solid #d2d2d2;
-                    border-bottom: 0.5px solid #d2d2d2;
                     width: 100%;
-                    color: #828282;
                     margin: 0 5px 0px 5px;
                 "
             >
-                내가쓴글
+                <i class="far fa-clipboard"></i> 내가쓴글
             </button>
             <button onclick="location.href='/mycomment'"
                 style="
-                    background-color:#fff2f7;
-                    height: 40px;
+					 background-color:white;
+					   text-align:left;
+                    height: 45px;
                     border: none;
-                    border-top: 0.5px solid #d2d2d2;
-                    border-bottom: 0.5px solid #d2d2d2;
                     width: 100%;
-                    color: #828282;
                     margin: 0 5px 5px 5px;
                 "
             >
-                내가쓴 댓글
+                <i class="far fa-comment"></i> 내가쓴 댓글
             </button>
             <button
                 onclick="removeCheck()"
                 style="
+					 background-color:white;
+					   text-align:left;
 					color:#FF4646;
-					text-align:center;
 					font-size:0.8em;
-                    background-color: #fff2f7;
-                    height: 40px;
+                    height: 45px;
                     border: none;
-                    border-top: 0.5px solid #d2d2d2;
-                    border-bottom: 1px solid #d2d2d2;
                     width: 100%;
                     margin: 5px;
                 "
             >
-                회원탈퇴
+                <i class="fas fa-hourglass-end"></i> 회원탈퇴
             </button>
-    </div>
-</div>
-<div class="settingBG" style="float:right; width:58%; height:40%; top:-20%;"></div>
-
-<div style="background-color:#282828;color:white; font-size: 0.8em; margin-top: 10px;clear: both;">
-    <div style="text-align: center;font-size:1.3em;border-bottom:1px solid white;">앱 정보</div>
-    <div>1인개발자로 처음부터 끝까지 혼자 만든 앱입니다..!!</div>
-    <div>처음 만든 앱이라 오류가 생길시 연락바랍니다.</div>
-    <div>사용해주셔서 진심으로 감사합니다.</div>
-    <div style="margin-bottom: 10px;">잘부탁드립니다.</div>
+	</div>
+<div style="font-size: 0.8em; margin-top: 10px;color:#828282;">	
 	<div> 앱버전 - v1.0.0 </div>
     <div>개발자 github - <a class="ax" href="https://github.com/rnjsrnrdnjs">github.com/rnjsrnrdnjs</a></div>
     <div>학급정보 api 오픈소스 - <a class="ax" href="https://github.com/nnnlog/neis"> nnnlog</a></div>
@@ -141,11 +128,20 @@
         아이콘 제작자2 <a class="ax" href="https://www.freepik.com" title="Freepik">Freepik</a> from
         <a class="ax" href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a>
     </div>
-    <div>
+    <div style="margin-bottom:5%;">
         아이콘 제작자3
         <a class="ax" href="https://www.flaticon.com/kr/authors/smashicons" title="Smashicons">Smashicons</a>
         from <a class="ax" href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a>
     </div>
+	<!--
+	    <div style="text-align: center;font-size:1.3em;color:#828282;background-color:#fcfcfc;">앱 정보</div>
+	<div style="text-align:center;color:#828282;">
+	    <div>1인개발자로 처음부터 끝까지 혼자 만든 앱입니다..!!</div>
+	    <div>처음 만든 앱이라 오류가 생길시 연락바랍니다.</div>
+	    <div>사용해주셔서 진심으로 감사합니다.</div>
+	    <div>잘부탁드립니다.</div>
+	</div>
+	-->
 </div>
 
 <div class="push"></div>

@@ -1,113 +1,143 @@
 {% extends 'layout.html' %} {% block content %}
-<header style="margin-bottom:11%;">
+<header style="margin-bottom: 11%;">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
+    <i
+        class="far fa-bell"
+        style="vertical-align: middle; color: black; float: right; padding: 20px 20px;"
+    ></i>
 </header>
 
+<div
+    style="
+        font-weight: bold;
+        font-size: 0.8em;
+        text-align: center;
+        padding-bottom: 5px;
+        color: #ff8e99;
+    "
+>
+    달력을 클릭하여 학사일정, 급식을 확인해보세요!
+</div>
+<div id="showSchedule" style=""></div>
+<div>
+    <div id="selectDate">
+        <span style="width: 14%; float: left;"
+            ><label onclick="prevCalendar()"><i class="fas fa-angle-double-left"></i></label
+        ></span>
+        <span style="width: 14%;" id="tbCalendarYM">yyyy년 m월</span>
+        <span style="width: 14%; float: right;"
+            ><label onclick="nextCalendar()"><i class="fas fa-angle-double-right"></i></label
+        ></span>
+    </div>
 
-<div style=" font-weight:bold; font-size:0.8em; text-align:center;padding-bottom:5px; color:#FF8E99">
-	달력을 클릭하여 학사일정, 급식을 확인해보세요!
+    <table id="calendar" style="text-align: center; width: 100%;">
+        <tr></tr>
+        <tr>
+            <td style="width: 14%;"><font color="#FF4646">Sun</font></td>
+            <td style="width: 14%;">Mon</td>
+            <td style="width: 14%;">Tue</td>
+            <td style="width: 14%;">Wed</td>
+            <td style="width: 14%;">Tur</td>
+            <td style="width: 14%;">Fri</td>
+            <td style="width: 14%;">Sat</td>
+        </tr>
+    </table>
 </div>
-<div id="showSchedule">
+
+<!-- <-   월 선택 ->  -->
+<div style="display: none;">
+    {% for diary in schoolDiary %}
+    <div id="{{diary.day}}">
+        {{diary.diary}}
+    </div>
+    {% endfor %}
 </div>
-<div id="selectDate">
-        <span style="width:14%; float:left"><label onclick="prevCalendar()"><i class="fas fa-angle-double-left"></i></label></span>
-		<span style="width:14%;" id="tbCalendarYM">yyyy년 m월</span>
-        <span style="width:14%; float:right"><label onclick="nextCalendar()"><i class="fas fa-angle-double-right"></i></label></span>
+<div style="display: none;">
+    {% for meal in schoolMeal %}
+    <div id="{{meal.day}}">
+        <div>{{meal.breakfast}}</div>
+        <div>{{meal.lunch}}</div>
+        <div>{{meal.dinner}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div
+    style="
+        margin-top: 30px;
+        background-color: white;
+        font-size: 0.8em;
+        clear: both;
+		   padding-bottom:10px;
+    "
+>
+    {% if school %}
+    <div
+        style="
+            font-weight: bold;
+            font-size: 1.3em;
+            border-bottom: 1px solid white;
+        "
+    >
+        학교 정보
+    </div>
+	<div style="color:#828282;">
+		
+    <div style="padding:3px;">
+        학교이름-{{school.name}}
+    </div>
+    <div style="padding:3px;">
+        학교주소-{{school.addr}}
+    </div>
+    <div style="padding:3px;">
+        학교번호-{{school.tellNum}}
+    </div>
+    <div style="padding:3px;">학교홈페이지-<a class="ax" href="{{school.homepage}}">{{school.homepage}}</a></div>
+    <div style="padding:3px;">
+        {{school.coeduScNm}} 학교
+    </div>
+    <div style="padding:3px;">
+        {{school.fondScNm}} 학교
+    </div>
+    <div style="padding:3px;">
+        선생님수-{{school.teacherCnt}}
+    </div>
 	</div>
 
-	<table id="calendar" style="text-align:center;width:100%;">
-		<tr>
-		</tr>
-    <tr>
-		<td style="width:14%;"><font color ="#FF4646">Sun</font></td>
-        <td style="width:14%;">Mon</td>
-        <td style="width:14%;">Tue</td>
-        <td style="width:14%;">Wed</td>
-        <td style="width:14%;">Tur</td>
-        <td style="width:14%;">Fri</td>
-		<td style="width:14%;"><font color ="#00AFFF">Sat</font></td>
-    </tr> 
-</table>
-<!-- <-   월 선택 ->  -->
-<div style="display:none;">
-		{% for diary in schoolDiary %}
-			<div id="{{diary.day}}">
-				{{diary.diary}}
-			</div>
-		{% endfor %}
-</div>	
-<div style="display:none;">
-		{% for meal in schoolMeal %}
-			<div id="{{meal.day}}">
-				<div>{{meal.breakfast}}</div>
-				<div>{{meal.lunch}}</div>
-				<div>{{meal.dinner}}</div>
-			</div>
-		{% endfor %}
+    {% endif %}
 </div>
 
-
-
-<div style="margin-top:60px;background-color:#282828; color:white; font-size:0.8em;">
-	{% if school %}
-		<div style="text-align:center; font-weight:bold; font-size:1.3em;border-bottom:1px solid white;"> 학교 정보</div>
-		<div>
-		학교이름-{{school.name}}
-		</div>
-		<div>
-		학교주소-{{school.addr}}
-		</div>
-		<div>
-		학교번호-{{school.tellNum}}
-		</div>
-		<div>
-		학교홈페이지-<a class="ax" href="{{school.homepage}}">{{school.homepage}}</a>
-		</div>
-		<div>
-		{{school.coeduScNm}} 학교
-		</div>
-		<div>
-		{{school.fondScNm}} 학교
-		</div>
-		<div>
-		선생님수-{{school.teacherCnt}}
-		</div>
-		
-	{% endif %}
-</div>
-
-<div class="push">
-</div>
+<div class="push"></div>
 <footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
+                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color:#FF5675"></i>
+                    <i class="fas fa-school fa-2x" style="color: #ff5675;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
         </tr>
@@ -128,7 +158,7 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a href="/school" class="btn2" style="color:#FF5675">
+                <a href="/school" class="btn2" style="color: #ff5675;">
                     학급정보
                 </a>
             </td>
@@ -142,185 +172,201 @@
 </footer>
 {% endblock %} {% block script %}
 <script>
-	 var today = new Date();
-	 var para = document.location.href.split('/')[document.location.href.split('/').length-1];
-	 if(para!=='school'){
-		 today=new Date(parseInt(para));
-	 }
-        var date = new Date();
-        function prevCalendar() {
-         today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-			const getT=today.getTime();
-	        location.href=`/school/${getT}`;
-			buildCalendar();
+    var today = new Date();
+    var para = document.location.href.split('/')[document.location.href.split('/').length - 1];
+    if (para !== 'school') {
+        today = new Date(parseInt(para));
+    }
+    var date = new Date();
+    function prevCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        const getT = today.getTime();
+        location.href = `/school/${getT}`;
+        buildCalendar();
+    }
+    function nextCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        const getT = today.getTime();
+        location.href = `/school/${getT}`;
+        buildCalendar();
+    }
+    function buildCalendar() {
+        var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var tbCalendar = document.getElementById('calendar');
+        var tbCalendarYM = document.getElementById('tbCalendarYM');
+        tbCalendarYM.innerHTML = today.getFullYear() + '년' + (today.getMonth() + 1) + '월';
+
+        while (tbCalendar.rows.length > 2) {
+            tbCalendar.deleteRow(tbCalendar.rows.length - 1);
         }
-        function nextCalendar() {
-             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-			const getT=today.getTime();
-			location.href=`/school/${getT}`;
-            buildCalendar();
+        var row = null;
+        row = tbCalendar.insertRow();
+        var cnt = 0;
+        // 1일이 시작되는 칸을 맞추어 줌
+        for (let i = 0; i < doMonth.getDay(); i++) {
+            cell = row.insertCell();
+            cnt = cnt + 1;
         }
-        function buildCalendar(){
-            var doMonth = new Date(today.getFullYear(),today.getMonth(),1);
-            var lastDate = new Date(today.getFullYear(),today.getMonth()+1,0);
-            var tbCalendar = document.getElementById("calendar");
-            var tbCalendarYM = document.getElementById("tbCalendarYM");
-             tbCalendarYM.innerHTML = today.getFullYear()+"년" + (today.getMonth() + 1) + "월"; 
- 
-            while (tbCalendar.rows.length > 2) {
-                  tbCalendar.deleteRow(tbCalendar.rows.length-1);
-             }
-             var row = null;
-             row = tbCalendar.insertRow();
-             var cnt = 0;
-            // 1일이 시작되는 칸을 맞추어 줌
-             for (let i=0; i<doMonth.getDay(); i++) {
-                  cell = row.insertCell();
-                  cnt = cnt + 1;
-             }
-            /*달력 출력*/
-             for (let i=1; i<=lastDate.getDate(); i++) { 
-             //1일부터 마지막 일까지 돌림
-                  cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-                  cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-				  cell.style.height=30+"px";
-				  cell.id=i;
-				  let getDay=document.getElementById(i);
-				  getDay.addEventListener('click',()=>{
-					 const tooday=today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+i+"일 정보";
-					const titleDay=document.createElement('div');
-					  titleDay.textContent=tooday;
-					 titleDay.style.fontSize=2+"em";
-					  
-					  titleDay.style.paddingLeft=20+"%";
-					  
-					  //di  mi
-					const showSchedule=document.getElementById('showSchedule');
-					while ( showSchedule.hasChildNodes() ) { showSchedule.removeChild( showSchedule.firstChild ); }
-					showSchedule.appendChild(titleDay);	
-					  
-					if(document.getElementById("d"+i)){
-						const diarydiv=document.createElement('div');
-						const diaryTitle=document.createElement('div');
-						const pdd=document.createElement('div');
-						pdd.style.color="#57E9E1";
-						pdd.textContent='---------------------------- \n';
-						diaryTitle.textContent='학사일정 \n';
+        /*달력 출력*/
+        for (let i = 1; i <= lastDate.getDate(); i++) {
+            //1일부터 마지막 일까지 돌림
+            cell = row.insertCell(); //열 한칸한칸 계속 만들어주는 역할
+            cell.innerHTML = i; //셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+            cell.style.height = 30 + 'px';
+            cell.id = i;
+            let getDay = document.getElementById(i);
+            getDay.addEventListener(
+                'click',
+                () => {
+                    //getDay.style.color="red";
+                    //getDay.bgColor="white;"
+                    const tooday =
+                        today.getFullYear() +
+                        '년 ' +
+                        (today.getMonth() + 1) +
+                        '월 ' +
+                        i +
+                        '일 정보';
+                    const titleDay = document.createElement('div');
+                    titleDay.innerHTML = `<div style="padding-top:20%; text-align:center;font-weight:bold;font-size:1.2em;"> ${tooday} </div>`;
+
+                    //di  mi
+                    const showSchedule = document.getElementById('showSchedule');
+                    while (showSchedule.hasChildNodes()) {
+                        showSchedule.removeChild(showSchedule.firstChild);
+                    }
+                    showSchedule.appendChild(titleDay);
+                        const diaryTitle = document.createElement('div');
+                        diaryTitle.innerHTML = `<div style="font-size:0.8em;margin-top: 15px;padding-top: 5px; "><i class="far fa-calendar-alt" style="color:#15AABF"></i> 학사일정</div>`;
+                        showSchedule.appendChild(diaryTitle);
+                    if (document.getElementById('d' + i)) {
+                        const diarydiv = document.createElement('div');
 						
-						const diary=document.getElementById("d"+i);
-						diarydiv.textContent=diary.textContent;
-	
-						
-						showSchedule.appendChild(diaryTitle);
-						showSchedule.appendChild(diarydiv);
-						showSchedule.appendChild(pdd);
-					}
-					
-					const mealdiv=document.createElement('div');
-					const meal=document.getElementById("m"+i);
-					let mealTitle=document.createElement('div');
-					mealTitle.textContent='급식정보 \n';
-					mealdiv.appendChild(mealTitle);
-					
-					const pdd1=document.createElement('div');
-						pdd1.style.color="#57E9E1";
-					  pdd1.textContent='---------------------------- \n';
-					mealdiv.appendChild(pdd1);
-					 
-					const breakfast=document.createElement('div');
-					breakfast.innerHTML='조식정보 \n';
-					mealdiv.appendChild(breakfast);
-					const mplit1=meal.childNodes[1].innerHTML.split('\n'); 
-					if(mplit1[0]==""){
-						const none=document.createElement('div');
-						none.innerHTML='메뉴가 없습니다!\n';
-						mealdiv.appendChild(none);
-					}
-					else{
-					 mplit1.forEach(function(m1){
-						 const mContent=document.createElement('div');
-						 mContent.innerHTML=m1+'\n';
-						 mealdiv.appendChild(mContent);
-					 }) 
-				    }
-					const pdd2=document.createElement('div');
-						pdd2.style.color="#57E9E1";
-					pdd2.textContent='---------------------------- \n';
-					mealdiv.appendChild(pdd2);
-  
-					  
-					 const lunch=document.createElement('div');
-					lunch.innerHTML='중식정보 \n';
-					mealdiv.appendChild(lunch); 
-					const mplit3=meal.childNodes[3].innerHTML.split('\n'); 
-					if(mplit3[0]==""){
-						const none=document.createElement('div');
-						none.innerHTML='메뉴가 없습니다!\n';
-						mealdiv.appendChild(none);
-					}
-					else{
-					 mplit3.forEach(function(m3){
-						 const mContent=document.createElement('div');
-						 mContent.innerHTML=m3+'\n';
-						 mealdiv.appendChild(mContent);
-					 }) 
-					}
-					const pdd3=document.createElement('div');
-						pdd3.style.color="#57E9E1";
-					  pdd3.textContent='---------------------------- \n';
-					mealdiv.appendChild(pdd3);
-  
-					  const dinner=document.createElement('div');
-					dinner.innerHTML='석식정보 \n';
-					mealdiv.appendChild(dinner); 
-					const mplit5=meal.childNodes[5].innerHTML.split('\n'); 
-					  if(mplit5[0]==""){
-						const none=document.createElement('div');
-						none.innerHTML='메뉴가 없습니다!\n';
-						mealdiv.appendChild(none);
-					  }
-					  else{
-					 mplit5.forEach(function(m5){
-						 const mContent=document.createElement('div');
-						 mContent.innerHTML=m5+'\n';
-						 mealdiv.appendChild(mContent);
-					 }) 
-					  }
-					showSchedule.appendChild(mealdiv);
-				  },false);
-                  cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-              if (cnt % 7 == 1) {/*일요일 계산*/
-                  //1주일이 7일 이므로 일요일 구하기
-                  //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=#FF3232>" + i
+                        const diary = document.getElementById('d' + i);
+                        diarydiv.innerHTML = `<div style="padding-top:5px;font-size:0.7em;">${diary.innerHTML}</div>`;
+                        showSchedule.appendChild(diarydiv);
+                    }
+
+                    const mealdiv = document.createElement('div');
+                    const mealdiv1 = document.createElement('div');
+                    const mealdiv2 = document.createElement('div');
+                    const mealdiv3 = document.createElement('div');
+
+                    const meal = document.getElementById('m' + i);
+                    let mealTitle = document.createElement('div');
+                    mealTitle.innerHTML = `<div style="font-size:0.8em;border-top: 1px solid #d2d2d2;
+    margin-top: 15px;
+    padding-top: 5px; "><i class="fas fa-utensils" style="color:#FF8C0A;padding-bottom:15px;" ></i> 급식정보</div>`;
+                    mealdiv.appendChild(mealTitle);
+                    if (meal == null) {
+                        console.log(1);
+                        const none = document.createElement('div');
+						none.innerHTML=`<div style="color:#828282;font-size:1.2em;">오늘은 급식이 없습니다!</div>`;
+                        mealdiv.appendChild(none);
+                    } else {
+                        const breakfast = document.createElement('div');
+                        breakfast.innerHTML = `<div style="color:#828282;font-size:0.8em;"><i class="fas fa-hamburger" style="color:#FF7F50;"></i> 조식정보</div>`;
+                        mealdiv1.style.width = 33 + '%';
+                        mealdiv1.style.display = 'inline-block';
+                        mealdiv1.style.textAlign = 'center';
+						mealdiv1.style.float="left";
+                        mealdiv1.appendChild(breakfast);
+                        const mplit1 = meal.childNodes[1].innerHTML.split('\n');
+                        if (mplit1[0] == '') {
+                            const none = document.createElement('div');
+                            none.innerHTML = `<div style="font-size:0.6em;">메뉴가 없습니다!</div>`;
+                            breakfast.appendChild(none);
+                        } else {
+                            mplit1.forEach(function (m1) {
+                                const mContent = document.createElement('div');
+                                mContent.innerHTML = `<div style="font-size:0.6em;">${m1}</div>`;
+                                breakfast.appendChild(mContent);
+                            });
+                        }
+
+                        const lunch = document.createElement('div');
+                        lunch.innerHTML = `<div style="color:#828282;"><i class="fas fa-pizza-slice" style="color:#FF5A5A"></i>중식정보</div>`;
+                        mealdiv2.style.width = 33 + '%';
+                        mealdiv2.style.display = 'inline-block';
+                        mealdiv2.style.textAlign = 'center';
+                        mealdiv2.appendChild(lunch);
+                        const mplit3 = meal.childNodes[3].innerHTML.split('\n');
+                        if (mplit3[0] == '') {
+                            const none = document.createElement('div');
+                            none.innerHTML = `<div style="font-size:0.6em;">메뉴가 없습니다!</div>`;
+                            lunch.appendChild(none);
+                        } else {
+                            mplit3.forEach(function (m3) {
+                                const mContent = document.createElement('div');
+                                mContent.innerHTML = `<div style="font-size:0.6em;">${m3}</div>`;
+                                lunch.appendChild(mContent);
+                            });
+                        }
+                        const dinner = document.createElement('div');
+                        dinner.innerHTML = `<div style="color:#828282;font-size:0.8em;"><i class="fas fa-hotdog" style="color:#FFB182;"></i> 석식정보</div>`;
+                        mealdiv3.style.width = 33 + '%';
+                        mealdiv3.style.display = 'inline-block';
+                        mealdiv3.style.textAlign = 'center';
+                        mealdiv3.appendChild(dinner);
+                   		mealdiv3.style.float="right";
+						const mplit5 = meal.childNodes[5].innerHTML.split('\n');
+                        if (mplit5[0] == '') {
+                            const none = document.createElement('div');
+                            none.innerHTML = `<div style="font-size:0.6em;">메뉴가 없습니다!</div>`;
+                            dinner.appendChild(none);
+                        } else {
+                            mplit5.forEach(function (m5) {
+                                const mContent = document.createElement('div');
+                                mContent.innerHTML = `<div style="font-size:0.6em;">${m5}</div>`;
+                                dinner.appendChild(mContent);
+                            });
+                        }
+                    }
+                    mealdiv.appendChild(mealdiv1);
+                    mealdiv.appendChild(mealdiv2);
+                    mealdiv.appendChild(mealdiv3);
+                    showSchedule.appendChild(mealdiv);
+                },
+                false
+            );
+            cnt = cnt + 1; //열의 갯수를 계속 다음으로 위치하게 해주는 역할
+            if (cnt % 7 == 1) {
+                /*일요일 계산*/
+                //1주일이 7일 이므로 일요일 구하기
+                //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
+                cell.innerHTML = '<font color=#FF3232>' + i;
                 //1번째의 cell에만 색칠
-            }    
-              if (cnt%7 == 0){/* 1주일이 7일 이므로 토요일 구하기*/
-                  //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                  cell.innerHTML = "<font color=#69b8ff>" + i
-                  //7번째의 cell에만 색칠
-                   row = calendar.insertRow();
-                   //토요일 다음에 올 셀을 추가
-              }
-              /*오늘의 날짜에 노란색 칠하기*/
-              if (today.getFullYear() == date.getFullYear()
-                 && today.getMonth() == date.getMonth()
-                 && i == date.getDate()) {
-                  cell.bgColor = "#edfff8";//셀의 배경색을 노랑으로 
-               }
-             }
+            }
+            if (cnt % 7 == 0) {
+                /* 1주일이 7일 이므로 토요일 구하기*/
+                //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
+                // cell.innerHTML = "<font color=#69b8ff>" + i
+                //7번째의 cell에만 색칠
+                row = calendar.insertRow();
+                //토요일 다음에 올 셀을 추가
+            }
+            /*오늘의 날짜에 노란색 칠하기*/
+            if (
+                today.getFullYear() == date.getFullYear() &&
+                today.getMonth() == date.getMonth() &&
+                i == date.getDate()
+            ) {
+                cell.bgColor = 'red'; //셀의 배경색을 노랑으로
+                cell.style.color = 'white';
+            }
         }
-	window.onload=()=>{
-		buildCalendar();
-		var pick=today.getDate();
-		if(document.getElementById(`${pick}`)){
-			document.getElementById(`${pick}`).click();
-		}
-		else{
-			document.getElementById('1').click();
-		}
-	}
-	
-	//https://jerryjerryjerry.tistory.com/26 님의 코드를 사용하였습니다.
+    }
+    window.onload = () => {
+        buildCalendar();
+        var pick = today.getDate();
+        if (document.getElementById(`${pick}`)) {
+            document.getElementById(`${pick}`).click();
+        } else {
+            document.getElementById('1').click();
+        }
+    };
+
+    //https://jerryjerryjerry.tistory.com/26 님의 코드를 사용하였습니다.
 </script>
 {% endblock %}

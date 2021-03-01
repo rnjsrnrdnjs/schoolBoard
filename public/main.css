@@ -273,7 +273,6 @@ footer{
     height: 80%;
     overflow: hidden;
 	border:none;
-	border-bottom:1px solid #ffe0e3;
 }
 .talkBG3{
 	background-size:100% 100%;
@@ -353,31 +352,33 @@ input#img{
 #selectDate{
 	padding:10px;
 	text-align:center;
-	font-weight:bold;
-	font-size:1.2em;
+	font-size:1.1em;
 	color:#1c1b1b;
-	background-color:#ff9caf;
-	border-radius:10px 10px 0px 0px;
+	background-color:white;
+	border-left:4px solid #F58873;
+	border-right:4px solid #F58873;
 }
 #calendar{
-	font-weight:bold;
-	background-color:#ff9caf;
+	border-left:4px solid #F58873;
+	border-right:4px solid #F58873;
+	border-bottom:4px solid #F58873;
+	background-color:white;
 	border-radius:0px 0px 10px 10px;
 }
 #showSchedule{
-	border-radius:10px 10px 10px 10px;
+	border-radius:10px 10px 0px 0px;
 	width:100%;
-	height:350px;
-	background-size:50% 100%;
+	height:340px;
+	background-size:100% 20%;
 	background-image:url(/showSchedule.svg);
-	background-position:right;
+	background-position:top;
 	background-repeat:no-repeat;
-	background-color:#fffafc;
+	background-color:white;
 	padding: 10px;
-	border: 2px solid #FFA8A5;
+	border-left:4px solid #F58873;
+	border-right:4px solid #F58873;
+	border-top:4px solid #F58873;
 	box-sizing:border-box;
-	font-weight:bold;
-	font-size:0.6em;
 }
 
 
@@ -404,14 +405,14 @@ input#img{
 }
 
 .mine { text-align: right; }
-.system { border:1px solid #d2d2d2; border-radius:10px;margin-bottom:10px; background-color:white;text-align: center; color:#828282;}
+.system { border:1px solid #d2d2d2;font-size:0.7em;margin-left:25%;width:50%; border-radius:10px;margin-bottom:10px; background-color:#d1ffee;text-align: center; color:#828282;}
 .mine img, .other img {
   max-width:70%;
   display: inline-block;
   border-radius: 5px;
   padding: 2px 5px;
 }
-.mine div:first-child, .other div:first-child { font-size: 12px; }
+./*mine div:first-child,*/ .other div:first-child { font-size: 12px; }
 .mine div:last-child, .other div:last-child {
   display: inline-block;
   border: 1px solid silver;

@@ -152,10 +152,10 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/roomRandom', {
         div.classList.add('mine');
       } else {
         div.classList.add('other');
-      }
       const name = document.createElement('div');
       name.innerHTML =`<img src="/${data.profile}" style="border:none; width:30px; border-radius:50px;">` + data.user;
       div.appendChild(name);
+      }
       if (data.chat) {
         const chat = document.createElement('div');
         chat.textContent = data.chat;

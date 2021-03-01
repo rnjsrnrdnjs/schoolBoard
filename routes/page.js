@@ -65,7 +65,9 @@ router.get('/mycomment', isLoggedIn, async (req, res, next) => {
 		next(err);
 	}
 });
-
+router.get('/manitoTalk', isLoggedIn, async (req, res, next) => {
+	res.render('chat/manitoTalk');
+});
 
 router.get('/schoolTalk', isLoggedIn, async (req, res, next) => {
     try {
