@@ -8,7 +8,74 @@
 </header>
 
 		
-
+<form action="/post/school/search" method="post">
+        <select name="region" class="btn" style="width: 20%;" required>
+            <option value="SEOUL">서울</option
+            >
+            <option value="BUSAN">부산</option
+            >
+            <option value="DAEGU">대구</option
+            >
+            <option value="INCHOEN">인천</option
+            >
+            <option value="GWANGJU">광주</option
+            >
+            <option value="DAEJEON">대전</option
+            >
+            <option value="ULSAN">울산</option
+            >
+            <option value="SEJONG">세종</option
+            >
+            <option value="GYEONGGI">경기</option
+            >
+            <option value="GANGWON">강원</option
+            >
+            <option value="CHUNGBUK">충청북도</option
+            >
+            <option value="CHUNKNAM	">충청남도</option
+            >
+            <option value="JEONBUK">전라북도</option
+            >
+            <option value="JEONNAM">전라남도</option
+            >
+            <option value="GYEONGBUK">경상북도</option
+            >
+            <option value="GYEONGNAM">경상남도</option
+            >
+            <option value="JEJU">제주</option
+            >
+        </select>
+        <input
+            style="
+                width: 50%;
+                border: none;
+                border-bottom: 1px solid #828282;
+                background-color: #fafafa;
+                height: 35px;
+            "
+            name="schoolname"
+            placeholder="학교를 검색해보세요."
+            maxlength="30"
+            required
+            autofocus
+        />
+        <button class="btn" type="submit" style="width: 20%; font-size: 1em; border: none;">
+            <i class="fas fa-search-location"></i>검색
+        </button>
+    </form>
+    {% for find in result %}
+    <form action="/post/join/{{find.name}}" method="post" >
+        <input type="hidden" name="code" value="{{find.code}}" />
+        <button type="submit" style="width:100%;border:none; border-bottom:0.5px solid #c8c8c8;border-top:0.5px solid #c8c8c8; background-color:white;padding: 15px;">
+                <div>
+                    {{find.name}}
+                </div>
+                <div>
+                    {{find.addr}}
+                </div>
+        </button>
+    </form>
+    {% endfor %}
 
 <div class="push">
 </div>

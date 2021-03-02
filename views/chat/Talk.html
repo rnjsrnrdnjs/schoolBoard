@@ -16,7 +16,7 @@
 	 </form>
    {% if room.owner === user %}
 	   <form action="/schoolTalk" method="get" style="display:inline-block;margin-top:5px;float:right;padding-right:10px;padding-top:10px;padding-bottom:10px;position:relative;">
-		 <button class="btn8" id="deleteRoom" type="submit">
+		 <button class="btn8 deleteRoom"  type="submit">
 			 <i class="far fa-trash-alt"></i>
 		 </button>
 	 </form>
@@ -30,7 +30,7 @@
           <div class="mine">
             <!--<div ><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;">{{chat.user}}</div>-->
             {% if chat.img %}
-              <img src="/img/{{chat.img}}">
+              <img onclick="location.href='/imageView/img/{{chat.img}}';" src="/img/{{chat.img}}">
             {% else %}
               <div style="">{{chat.chat}}</div>
             {% endif %}
@@ -41,9 +41,9 @@
           </div>
         {% else %}
           <div class="other" >
-            <div><img src="/{{chat.User.profile}}" style="border:none; width:30px; border-radius:50px;"> {{chat.user}}</div>
+            <div><img onclick="location.href='/imageView/{{chat.User.profile}}';" src="/{{chat.User.profile}}" style="border:none; width:30px;height:30px; border-radius:50px;"> {{chat.user}} <i class="far fa-paper-plane"style="color: black;padding: 5px;border: 1px solid #828282;border-radius: 10px;margin-left: 30px;"></i></div>
             {% if chat.img %}
-              <img src="/img/{{chat.img}}">
+              <img onclick="location.href='/imageView/img/{{chat.img}}';" src="/img/{{chat.img}}">
             {% else %}
               <div>{{chat.chat}}</div>
             {% endif %}
@@ -61,7 +61,6 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-	 
 const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
       path: '/socket.io',
     });
@@ -90,7 +89,7 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
       } else {
         div.classList.add('other');
 		        const name = document.createElement('div');
-      name.innerHTML =`<img src="/${data.User.profile}" style="border:none; width:30px; border-radius:50px;">` + data.user;
+      name.innerHTML =`<img onclick="location.href='/imageView/${data.User.profile}';" src="/${data.User.profile}" style="border:none; width:30px;height:30px; border-radius:50px;">` + data.user +`<i class="far fa-paper-plane"style="color: black;padding: 5px;border: 1px solid #828282;border-radius: 10px;margin-left: 30px;"></i>`;
       div.appendChild(name);
 
 	}
@@ -99,8 +98,15 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
         chat.textContent = data.chat;
         div.appendChild(chat);
       } else {
+		  /*
+        const img = document.createElement('div');
+		img.innerHTML=`<img onclick="location.href='/imageView/img/${data.img}';" src="/img/${data.img}">`;*/
         const img = document.createElement('img');
         img.src = '/img/' + data.img;
+		img.addEventListener('click',()=>{
+		location.href=`/imageView/img/${data.img}`;
+		},false);
+		
         div.appendChild(img);
       }
       document.querySelector('.chat-list').appendChild(div);
@@ -123,17 +129,19 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
           });
       }
     });
-	document.querySelector('#deleteRoom').addEventListener('click', function (e) {
+	if(document.querySelector('.deleteRoom')){
+	document.querySelector('.deleteRoom').addEventListener('click', function (e) {
 		axios.delete('/room/{{room.id}}');
 	});
- 
+	} 
     document.querySelector('#img').addEventListener('change', function (e) {
       console.log(e.target.files);
       const formData = new FormData();
       formData.append('img', e.target.files[0]);
       axios.post('/post/room/{{room.id}}/img', formData)
         .then(() => {
-          e.target.file = null;
+		  e.target.files = null;
+		  location.href="";
         })
         .catch((err) => {
           console.error(err);

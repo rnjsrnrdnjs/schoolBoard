@@ -18,7 +18,7 @@
 	{% else %}
 		
 	{% endif %}-->
-		<img src="/{{posts.User.profile}}" style="padding-top:5px;width:30px; height:30px; border-radius:50px;">	
+		<img onclick="location.href='/imageView/{{posts.User.profile}}';" src="/{{posts.User.profile}}" style="margin-top:5px;width:30px; height:30px; border-radius:50px;">	
 		<span style=" padding-left:4px;">{{posts.User.nick}}</span>
 				{% if posts.UserId === user.id %}
 			<form action="/delete/post/{{posts.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
@@ -56,7 +56,7 @@
 
 	{% if posts.img %}
     <div class="write-img">
-        <img src="{{posts.img}}"/>
+        <img onclick="location.href='/imageView/{{posts.img}}';" src="{{posts.img}}"/>
     </div>
     {% endif %} 
     <div class="write-title">
@@ -105,7 +105,7 @@
 {% for comment in comments %}
 	 <div class="write-content comment">
 		 <div class="writenHead" style="border:none;">
-		<img src="/{{comment.User.profile}}" style="width:30px; height:30px;border-radius:50px;">	
+		<img  onclick="location.href='/imageView/{{comment.User.profile}}';" src="/{{comment.User.profile}}" style="width:30px; height:30px;border-radius:50px;">	
 		<span style="padding-left:4px;">{{comment.User.nick}}</span>
 				{% if comment.UserId === user.id %}
 			<form action="/delete/comment/{{comment.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;">

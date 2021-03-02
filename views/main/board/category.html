@@ -2,12 +2,12 @@
 
 <div style="padding-top: 18px;
     position: fixed;
-    width: 100%;
+    width: inherit;
     height: 6%;
     overflow: hidden;
     top:0%;
     background-color:#fffcfc;
-	border-bottom: 1px solid #FFC6C3;">
+	border-bottom: 1px solid #FFDFDC;">
     <span style="font-weight: bold; padding-left: 20px;">
         {% if title==='free' %}자유 {% elseif title==='worry' %}고민 {% elseif title==='study'
         %}공부 {% elseif title==='love' %}짝사랑 {% elseif title==='food' %}음식 {% elseif
@@ -15,7 +15,7 @@
         {% elseif title==='blame' %}뒷담 {% endif %}게시판
     </span>
     <a
-        href="/write"
+        href="/write/{{title}}"
         class="btn7"
         style="position: relative; float: right; border: none; padding-right: 10px; background-color:#fffcfc;"
         ><i class="fas fa-pencil-alt" style="color: #646464;"></i>글작성

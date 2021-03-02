@@ -19,7 +19,7 @@
     <tbody>
     {% for room in rooms %}
       <tr data-id="{{room.id}}" class="roomCall">
-        <td style="width:20%;"><img src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.owner}}</td>
+        <td style="width:20%;"><img onclick="location.href='/imageView/{{room.User.profile}}';" src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.owner}}</td>
         <td style="width:35%;">{{room.title}}</td>
 		<td style="width:15%;">{{'비밀방' if room.password else '공개방'}}</td>
         <td style="width:15%;">{{room.cnt}}</td>
@@ -49,7 +49,7 @@
 	tr.classList.add('roomCall');
     let td = document.createElement('td');
     td = document.createElement('td');
-    td.innerHTML = `<img src=${data.User.profile} style="width:20px;height:20px; border-radius:50px;"> `+ data.owner;
+    td.innerHTML = `<img onclick="location.href='/imageView/${data.User.profile}';" src=${data.User.profile} style="width:20px;height:20px; border-radius:50px;"> `+ data.owner;
 	td.style.width=20+"%";
     tr.appendChild(td);
     td = document.createElement('td');

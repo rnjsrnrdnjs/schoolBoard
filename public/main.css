@@ -225,6 +225,24 @@ footer{
 	color:#C4BCB8;
 }
 .write-img{text-align:center; }
+.imageView{
+	width:100%;
+	max-width:100%;
+	max-height:100%;
+}
+.viewContainer {
+	width: 100%;
+    height: 100%;
+	line-height:100%;
+    background-color: black;
+    display: table;
+}
+.viewContainer2 {
+	width: inherit;
+    height: inherit;
+	display:table-cell; vertical-align: middle;
+    text-align: center;
+}
 .write-img img{
 	
 	width:100%;
@@ -295,7 +313,7 @@ footer{
 }
 .write-title{
 	margin:5px;
-	font-size:1.2em;
+	font-size:1em;
 	font-weight:bold;
 }
 .write-content{
@@ -410,7 +428,7 @@ input#img{
   max-width:70%;
   display: inline-block;
   border-radius: 5px;
-  padding: 2px 5px;
+  margin: 2px 5px;
 }
 ./*mine div:first-child,*/ .other div:first-child { font-size: 12px; }
 .mine div:last-child, .other div:last-child {

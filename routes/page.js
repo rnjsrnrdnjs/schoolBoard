@@ -121,10 +121,13 @@ router.get('/room/:id', isLoggedIn,async (req, res, next) => {
         });
         const io = req.app.get('io');
         if (!room) {
-            return res.redirect('/?error=존재하지 않는 방입니다.');
+            return res.redirect('/schoolTalk?error=존재하지 않는 방입니다.');
         }
+		if(room.SchoolId!=res.locals.school.id){
+            return res.redirect('/schoolTalk?error=잘못된 접근입니다.');
+		}
 		if(room.password && room.password!==req.query.password){
-			return res.redirect('/?error=비밀번호가 틀렸습니다.');
+			return res.redirect('/schoolTalk?error=비밀번호가 틀렸습니다.');
 		}
 		const user= await User.findOne({
 			where:{
@@ -298,8 +301,10 @@ router.get('/comment/:id', isLoggedIn, async (req, res, next) => {
         next(err);
     }
 });
-router.get('/write', isLoggedIn, (req, res, next) => {
-    res.render('main/write');
+router.get('/write/:title', isLoggedIn, (req, res, next) => {
+    res.render('main/write',{
+		title:req.params.title,
+	});
 });
 router.get('/update/:Pid', isLoggedIn, async (req, res, next) => {
     try {
@@ -504,6 +509,20 @@ router.get('/game', isLoggedIn, (req, res, next) => {
 router.get('/chat', isLoggedIn, (req, res, next) => {
     res.render('chat/chat');
 });
+router.get('/mychat', isLoggedIn, (req, res, next) => {
+    res.render('chat/mychat');
+});
+router.get('/imageView/img/:src', isLoggedIn, (req, res, next) => {
+    res.render('imageView',{
+		src:req.params.src,	
+	});
+});
+router.get('/imageView/:src', isLoggedIn, (req, res, next) => {
+    res.render('imageView',{
+		src:req.params.src,	
+	});
+});
+
 
 router.delete('/room/:id', async (req, res, next) => {
     try {

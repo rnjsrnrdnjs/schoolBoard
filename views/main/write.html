@@ -13,7 +13,8 @@
 <div style="position:relative; top:5%;right:30%;"> 		
 	<a href="/main/free" class="btn" style="padding-top: 5px;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
 	<div style=" font-weight:bold; display:inline; margin-left:10px;">
-		글쓰기
+		글쓰기 			
+
 	</div>
 </div>
 
@@ -22,15 +23,51 @@
 <div id="writePost">
 	<div style="float:right;">
 		<select id="write" name="category" style="display:inline;" require>
-        <option value="free">자유 게시판</option>
-        <option value="worry">고민 게시판</option>
+		{% if title=='free' %}
+		<option value="free" selected>자유 게시판</option>
+		{% else %}
+	    <option value="free">자유 게시판</option>
+		{% endif %}
+		{% if title=='worry' %}
+        <option value="worry" selected>고민 게시판</option>
+		{% else %}
+        <option value="worry" >고민 게시판</option>
+		{% endif %}
+		{% if title==='study' %}
+        <option value="study" selected>공부 게시판</option>
+		{% else %}
         <option value="study">공부 게시판</option>
+		{% endif %}
+		{% if title==='love' %}
+        <option value="love" selected>짝사랑 게시판</option>
+		{% else %}
         <option value="love">짝사랑 게시판</option>
+		{% endif %}
+		{% if title==='food' %}
+        <option value="food" selected>음식 게시판</option>
+		{% else %}
         <option value="food">음식 게시판</option>
+		{% endif %}
+		{% if title==='beauty' %}
+        <option value="beauty" selected>뷰티 게시판</option>
+		{% else %}
         <option value="beauty">뷰티 게시판</option>
+		{% endif %}
+		{% if title==='fashion' %}
+        <option value="fashion" selected>패션 게시판</option>
+		{% else %}
         <option value="fashion">패션 게시판</option>
+		{% endif %}
+		{% if title==='music' %}
+        <option value="music" selected>음악 게시판</option>
+		{% else %}
         <option value="music">음악 게시판</option>
+		{% endif %}
+		{% if title==='blame' %}
+        <option value="blame" selected>뒷담 게시판</option>
+		{% else %}
         <option value="blame">뒷담 게시판</option>
+		{% endif %}
     </select>
 	<button id="write-btn" type="submit" class="btn" >완료</button>
 	</div>
