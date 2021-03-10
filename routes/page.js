@@ -509,8 +509,8 @@ router.get('/game', isLoggedIn, (req, res, next) => {
 router.get('/chat', isLoggedIn, (req, res, next) => {
     res.render('chat/chat');
 });
-router.get('/mychat', isLoggedIn, (req, res, next) => {
-    res.render('chat/mychat');
+router.get('/myRoom', isLoggedIn, (req, res, next) => {
+    res.render('chat/myRoom');
 });
 router.get('/imageView/img/:src', isLoggedIn, (req, res, next) => {
     res.render('imageView',{

@@ -15,6 +15,8 @@ const RoomList=require('./roomList');
 const RoomAll=require('./roomAll');
 const RoomAllList=require('./roomAllList');
 const ChatAll=require('./chatAll');
+const MyRoom=require('./myroom');
+const MyChat=require('./mychat');
 
 
 const db = {};
@@ -37,6 +39,8 @@ db.RoomList=RoomList;
 db.RoomAll=RoomAll;
 db.RoomAllList=RoomAllList;
 db.ChatAll=ChatAll;
+db.MyRoom=MyRoom;
+db.MyChat=MyChat;
 
 
 User.init(sequelize);
@@ -53,6 +57,8 @@ RoomList.init(sequelize);
 RoomAllList.init(sequelize);
 RoomAll.init(sequelize);
 ChatAll.init(sequelize);
+MyRoom.init(sequelize);
+MyChat.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -68,5 +74,7 @@ RoomList.associate(db);
 RoomAllList.associate(db);
 RoomAll.associate(db);
 ChatAll.associate(db);
+MyRoom.associate(db);
+MyChat.associate(db);
 
 module.exports = db;

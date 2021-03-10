@@ -1,110 +1,121 @@
 {% extends 'layout.html' %} {% block content %}
-<header style="margin-bottom:13%;">
+<header style="margin-bottom: 18%;">
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
+    <i
+        class="far fa-bell"
+        style="vertical-align: middle; color: black; float: right; padding: 20px 20px;"
+    ></i>
 </header>
 
+<form action="/post/manito/search" method="post">
+    <select name="region" class="btn8" style="width: 20%; margin-left: 5%; border: none;" required>
+        <option value="SEOUL">서울</option>
+        <option value="BUSAN">부산</option>
+        <option value="DAEGU">대구</option>
+        <option value="INCHOEN">인천</option>
+        <option value="GWANGJU">광주</option>
+        <option value="DAEJEON">대전</option>
+        <option value="ULSAN">울산</option>
+        <option value="SEJONG">세종</option>
+        <option value="GYEONGGI">경기</option>
+        <option value="GANGWON">강원</option>
+        <option value="CHUNGBUK">충청북도</option>
+        <option value="CHUNKNAM	">충청남도</option>
+        <option value="JEONBUK">전라북도</option>
+        <option value="JEONNAM">전라남도</option>
+        <option value="GYEONGBUK">경상북도</option>
+        <option value="GYEONGNAM">경상남도</option>
+        <option value="JEJU">제주</option>
+    </select>
+    <input
+        style="
+            width: 50%;
+            border: none;
+            border-bottom: 1px solid #828282;
+            background-color: #fafafa;
+            height: 35px;
+        "
+        name="schoolname"
+        placeholder="학교를 검색해보세요."
+        maxlength="30"
+        required
+        autofocus
+    />
+    <button class="btn8" type="submit" style="width: 20%; font-size: 1em; border: none;">
+        <i class="fas fa-search-location"></i>검색
+    </button>
+</form>
+{% for find in result %}
+<form action="/post/join/{{find.name}}" method="post">
+    <input type="hidden" name="code" value="{{find.code}}" />
+   <div style="
+			   text-align:center;
+			   font-size:0.9em;
+            width: 100%;
+            border: none;
+            border-bottom: 0.5px solid #c8c8c8;
+            border-top: 0.5px solid #c8c8c8;
+            background-color: white;
+            padding: 15px;
+        ">
+		<div>
+            {{find.name}}
+        </div>
+        <div>
+            {{find.addr}}
+        </div>
+	</div>
+	<div style="text-align:center;">
 		
-<form action="/post/school/search" method="post">
-        <select name="region" class="btn" style="width: 20%;" required>
-            <option value="SEOUL">서울</option
-            >
-            <option value="BUSAN">부산</option
-            >
-            <option value="DAEGU">대구</option
-            >
-            <option value="INCHOEN">인천</option
-            >
-            <option value="GWANGJU">광주</option
-            >
-            <option value="DAEJEON">대전</option
-            >
-            <option value="ULSAN">울산</option
-            >
-            <option value="SEJONG">세종</option
-            >
-            <option value="GYEONGGI">경기</option
-            >
-            <option value="GANGWON">강원</option
-            >
-            <option value="CHUNGBUK">충청북도</option
-            >
-            <option value="CHUNKNAM	">충청남도</option
-            >
-            <option value="JEONBUK">전라북도</option
-            >
-            <option value="JEONNAM">전라남도</option
-            >
-            <option value="GYEONGBUK">경상북도</option
-            >
-            <option value="GYEONGNAM">경상남도</option
-            >
-            <option value="JEJU">제주</option
-            >
-        </select>
-        <input
-            style="
-                width: 50%;
-                border: none;
-                border-bottom: 1px solid #828282;
-                background-color: #fafafa;
-                height: 35px;
-            "
-            name="schoolname"
-            placeholder="학교를 검색해보세요."
-            maxlength="30"
-            required
-            autofocus
-        />
-        <button class="btn" type="submit" style="width: 20%; font-size: 1em; border: none;">
-            <i class="fas fa-search-location"></i>검색
-        </button>
-    </form>
-    {% for find in result %}
-    <form action="/post/join/{{find.name}}" method="post" >
-        <input type="hidden" name="code" value="{{find.code}}" />
-        <button type="submit" style="width:100%;border:none; border-bottom:0.5px solid #c8c8c8;border-top:0.5px solid #c8c8c8; background-color:white;padding: 15px;">
-                <div>
-                    {{find.name}}
-                </div>
-                <div>
-                    {{find.addr}}
-                </div>
-        </button>
-    </form>
-    {% endfor %}
+	 <label for="man" >
+                <input id="man" type="radio" name="sexual" value="man" />
+                <span class="o">남자</span>
+    </label>
+    <label for="woman">
+                <input id="woman" type="radio" name="sexual" value="woman" />
+                <span class="w">여자</span>
+    </label>
+    <button class="btn8"
+        type="submit" style="padding:2%;"
+    > <i class="far fa-paper-plane fa-lg" ></i>
+    </button>
+		
+		
+	</div>
+           
+</form>
+{% endfor %}
 
-<div class="push">
-</div>
+<div class="push"></div>
 <footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color:#FF5675"></i>
+                    <i class="fas fa-envelope fa-2x" style="color: #ff5675;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
         </tr>
@@ -115,7 +126,7 @@
                 </a>
             </td>
             <td class="footerTd">
-                <a href="/chat" class="btn2" style="color:#FF5675">
+                <a href="/chat" class="btn2" style="color: #ff5675;">
                     채팅
                 </a>
             </td>

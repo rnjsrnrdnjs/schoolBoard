@@ -7,8 +7,30 @@ var socketRoom=[];
 module.exports = (server, app,sessionMiddleware) => {
     const io = SocketIO(server, { path: '/socket.io' });
     app.set('io', io);
-    const manito = io.of('/manito');
-    
+    const myRoom = io.of('/myRoom');
+    const myChat = io.of('/myChat');
+	
+    myRoom.on('connection', (socket) => {
+        console.log('myRoom 네임스페이스에 접속');
+        const req = socket.request;
+        socket.on('disconnect', () => {
+            console.log('myRoom 네임스페이스에 접속 헤제');
+        });
+    });
+	myChat.on('connection', async(socket) => {
+        console.log('myChat 네이스페이스 접속');
+        const req = socket.request;
+        const {
+            headers: { referer },
+        } = req;
+        const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
+		socket.join(roomId);
+        socket.on('disconnect', async() => {
+            console.log('myChat 네이스페이스 접속 해제');
+            socket.leave(roomId);
+        });
+    });
+	    
 	
 	const roomRandom = io.of('/roomRandom');
 	

@@ -10,17 +10,17 @@
 
 
 
-<div style="position:relative; top:5%;right:30%;"> 		
+	
+
+	<form  action="/post" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="Pid" value="{{post.id}}">
+<div id="writePost">
 	<a href="/main/free" class="btn" style="padding-top: 5px;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
 	<div style=" font-weight:bold; display:inline; margin-left:10px;">
 		글쓰기 			
 
 	</div>
-</div>
-
-	<form  action="/post" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="Pid" value="{{post.id}}">
-<div id="writePost">
+	
 	<div style="float:right;">
 		<select id="write" name="category" style="display:inline;" require>
 		{% if title=='free' %}

@@ -352,6 +352,44 @@ router.post('/school/search', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
+router.post('/manito/search', isLoggedIn, async (req, res, next) => {
+    try {
+        const result = await neis.searchSchool(req.body.schoolname, req.body.region);
+        result.forEach(async (school) => {
+            const find = await School.findOne({
+                where: {
+                    code: school.code,
+                },
+            });
+            if (find === null) {
+                const detail = await neis
+                    .createSchool(neis.REGION[school.edu], school.code, school.kind)
+                    .getSchoolDetail();
+                await School.create({
+                    edu: neis.REGION[detail.edu],
+                    code: detail.code,
+                    kind: detail.kind,
+                    name: detail.name,
+                    addr: detail.addr,
+                    tellNum: detail.tellNum,
+                    homepage: detail.homepage,
+                    coeduScNm: detail.coeduScNm,
+                    fondScNm: detail.fondScNm,
+                    teacherCnt: detail.teacherCnt,
+                    level: 0,
+                });
+            }
+        });
+        await res.render('chat/manitoTalk', {
+            result: result,
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
+
 router.post('/schoolMake', isLoggedIn, async (req, res, next) => {
     try {
         const newRoom = await Room.create({
