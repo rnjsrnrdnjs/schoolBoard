@@ -1,10 +1,12 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll} = require('../models');
+const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll,MyRoom,MyChat} = require('../models');
 const router = express.Router();
 const { sequelize } = require('../models');
 const neis = require('../neis/neis');
 const SchoolType = require('../neis/types/SchoolType');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op; 
 
 router.use(async (req, res, next) => {
     // 기본적으로 제공할 변수들추가 res.locals.변수명
@@ -240,7 +242,39 @@ router.get('/roomAll/:id', isLoggedIn,async (req, res, next) => {
         next(error);
     }
 });
-
+router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
+    try {
+        const room = await MyRoom.findOne({
+			where:{
+	            id: req.params.id,
+			},
+        });
+        const io = req.app.get('io');
+        if (!room) {
+            return res.redirect('/?error=존재하지 않는 방입니다.');
+        }
+		if(room.member1!=req.user.id && room.member2!=req.user.id){
+            return res.redirect('/?error=잘못된 접근입니다.');
+		}
+		 const chats = await MyChat.findAll({
+			include:[{
+				model:User,
+			}],
+            where: {
+                MyRoomId: req.params.id,
+            },
+            order: [['createdAt', 'ASC']],
+        });
+        return res.render('chat/myChat', {
+            room,
+            chats: chats,
+            user: req.user.nick,
+        });
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
 
 
 router.get('/schoolMake', isLoggedIn, (req, res, next) => {
@@ -509,8 +543,25 @@ router.get('/game', isLoggedIn, (req, res, next) => {
 router.get('/chat', isLoggedIn, (req, res, next) => {
     res.render('chat/chat');
 });
-router.get('/myRoom', isLoggedIn, (req, res, next) => {
-    res.render('chat/myRoom');
+router.get('/myRoom', isLoggedIn, async(req, res, next) => {
+	
+	const individualRoom=await MyRoom.findAll({
+		where:{
+			kind:"individual",
+			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+		}
+	});
+	
+	const manitoRoom=await MyRoom.findAll({
+		where:{
+			kind:"manito",
+			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+		}
+	});
+    res.render('chat/myRoom',{
+		individualRoom:individualRoom,
+		manitoRoom:manitoRoom,
+	});
 });
 router.get('/imageView/img/:src', isLoggedIn, (req, res, next) => {
     res.render('imageView',{

@@ -3,8 +3,9 @@
 {% block content %}
 
 <span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">1:1 채팅</span>
-<span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">마니또 채팅</span>
-
+<button style="position:relative;top: 20px; font-size:0.8em; font-weight:bold;padding:20px;">
+	<i class="fas fa-sync-alt"></i> 마니또 채팅
+</button>
 
 <fieldset style="border:none; border-top:1px solid #fcebef; margin-top:10%;">
   <legend style="font-size:0.8em; color:#FF9E9B;">채팅 목록</legend>
@@ -15,23 +16,22 @@
     </tr>
     </thead>
     <tbody>
-    {% for room in rooms %}
+	
+		
+    {% for room in individualRoom %}
       <tr data-id="{{room.id}}" class="roomCall">
         <td style="width:20%;"><img onclick="location.href='/imageView/{{room.User.profile}}';" src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.owner}}</td>
-        <td style="width:35%;">{{room.title}}</td>
-		<td style="width:15%;">{{'비밀방' if room.password else '공개방'}}</td>
-        <td style="width:15%;">{{room.cnt}}</td>
-        <td style="width:15%;">
+		  <td style="width:15%;">
           <button 
-		    data-password="{{'true' if room.password else 'false'}}"
             data-id="{{room.id}}"
             class="join-btn"
-          ><i data-password="{{'true' if room.password else 'false'}}"
-            data-id="{{room.id}}" class="join-btn fas fa-location-arrow fa-lg" style="margin:10px; color:#FF9E9B;"></i>
+          ><i data-id="{{room.id}}" class="join-btn fas fa-location-arrow fa-lg" style="margin:10px; color:#FF9E9B;"></i>
           </button>
         </td>
       </tr>
     {% endfor %}
+		
+		
     </tbody>
   </table>
   <div class="error-message">{{error}}</div>
@@ -85,13 +85,7 @@
     });
   });
   function addBtnEvent(e) { // 방 입장 클릭 시
-	  if(e.target.dataset.password==='true'){
-		  const password=prompt('비밀번호를 입력하세요');
-		  console.log(e.target.dataset.id);
-		  location.href='/room/'+e.target.dataset.id+'?password='+password;
-	  }else{
-      location.href = '/room/' + e.target.dataset.id;
-	  }
+      location.href = '/MyRoom/' + e.target.dataset.id;
   }
   document.querySelectorAll('.join-btn').forEach(function (btn) {
     btn.addEventListener('click', addBtnEvent);

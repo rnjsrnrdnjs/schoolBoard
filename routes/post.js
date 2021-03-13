@@ -4,6 +4,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { sequelize } = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op; 
 
 const neis = require('../neis/neis');
 const SchoolType = require('../neis/types/SchoolType');
@@ -20,7 +22,7 @@ const {
     Clike,
     Cdlike,
     RoomList,
-	RoomAll,RoomAllList,ChatAll,
+	RoomAll,RoomAllList,ChatAll,MyRoom,MyChat
 } = require('../models');
 const router = express.Router();
 
@@ -119,6 +121,31 @@ router.post('/roomAll/:id/img', isLoggedIn, upload.single('img'), async (req, re
             ],
         });
         req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
+        res.send('ok');
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+router.post('/MyRoom/:id/img', isLoggedIn, upload.single('img'), async (req, res, next) => {
+    try {
+        const chat = await MyChat.create({
+            UserId: req.user.id,
+            MyRoomId: req.params.id,
+            user: req.user.nick,
+            img: req.file.filename,
+        });
+        const chat2 = await MyChat.findOne({
+            where: {
+                id: chat.id,
+            },
+            include: [
+                {
+                    model: User,
+                },
+            ],
+        });
+        req.app.get('io').of('/myChat').to(req.params.id).emit('chat', chat2);
         res.send('ok');
     } catch (error) {
         console.error(error);
@@ -314,6 +341,61 @@ router.post('/join/:find', isNotLoggedIn, async (req, res, next) => {
         next(err);
     }
 });
+router.post('/manito/:find', isLoggedIn, async (req, res, next) => {
+    try {
+		const manito=User.findOne({
+			where:{
+				SchoolId:req.body.code,
+				sexual:req.body.sexual,
+			},
+		});
+		
+		if(!manito){
+			return res.redirect('/manitoTalk?error=가입된 회원이없습니다.');
+		}
+		
+		const room=MyRoom.create({
+			kind:"manito",
+			member1:req.user.id,
+			member2:manito.id,
+			UserId:req.user.id,
+		});
+		const chat=MyChat.create({
+			
+		})
+		
+		res.render('chat/myRoom',{
+			
+		});
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+router.post('/individualChat/:id', isLoggedIn, async (req, res, next) => {
+    try {
+		const roomFind=await MyRoom.findOne({
+			where:{
+				kind:"individual",
+				[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+			}
+		});
+		if(!roomFind){
+			const room=await MyRoom.create({
+				kind:"individual",
+				member1:req.user.id,
+				member2:req.params.id,
+				UserId:req.user.id,
+			});
+			return res.redirect(`/myRoom/${room.id}`);
+		}
+		return res.redirect(`/myRoom/${roomFind.id}`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
 
 router.post('/school/search', isNotLoggedIn, async (req, res, next) => {
     try {
@@ -502,7 +584,31 @@ router.post('/roomAll/:id/chat', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
-
+router.post('/myRoom/:id/chat', isLoggedIn, async (req, res, next) => {
+    try {
+        const chat = await MyChat.create({
+            user: req.user.nick,
+            UserId: req.user.id,
+            MyRoomId: req.params.id,
+            chat: req.body.chat,
+        });
+        const chat2 = await MyChat.findOne({
+            where: {
+                id: chat.id,
+            },
+            include: [
+                {
+                    model: User,
+                },
+            ],
+        });
+        req.app.get('io').of('/myChat').to(req.params.id).emit('chat', chat2);
+        res.send('ok');
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
 
 
 router.post('/room/:id/getout', isLoggedIn, async (req, res, next) => {

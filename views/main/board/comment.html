@@ -34,7 +34,7 @@
 				
 			{% endif %}
 			{% if posts.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
+				<form action="/post/individualChat/{{posts.User.id}}" method="post" style="display:inline; position:relative; float:right; right:40px;padding-top:5px;">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;  background-color:inherit;">
 						<i class="far fa-paper-plane" style="color:#828282;"></i>
 				</button>
@@ -117,7 +117,7 @@
 			 
 			{% endif %}
 			{% if comment.UserId !== user.id %}
-				<form action="" method="" style="display:inline; position:relative; float:right; right:40px; ">
+				<form action="/post/individualChat/{{comment.User.id}}" method="post" style="display:inline; position:relative; float:right; right:40px; ">
 					<button type="submit" class="btn7" style="font-size:1em; border:none;">
 						<i class="far fa-paper-plane" style="color:#828282;"></i>
 				</button>

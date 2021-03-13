@@ -4,11 +4,12 @@
 
 
  <div >
-	 <a style="display: inline-block;" class="btn6" href="/schoolTalk" ><i class="fas fa-arrow-left" style="color:#d2d2d2;padding-left:15px;"></i> </a>
+	 <a style="display: inline-block;" class="btn6" href="/myRoom" ><i class="fas fa-arrow-left" style="color:#d2d2d2;padding-left:15px;"></i> </a>
   <div style="font-weight: bold;
     font-size: 0.7em;
     margin: 18px;
     display: inline-block;">{{room.title}}</div>
+	 
 	 <form action="/post/room/{{room.id}}/getout" method="post" style="display:inline-block;padding-right:5px;float:right;margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;">
 		 <button class="btn8" type="submit">
 			 <i class="fas fa-sign-out-alt"></i>
@@ -118,7 +119,7 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myChat', {
     document.querySelector('.chat-form').addEventListener('submit', function (e) {
       e.preventDefault();
       if (e.target.chat.value) {
-        axios.post('/post/room/{{room.id}}/chat', {
+        axios.post('/post/myRoom/{{room.id}}/chat', {
           chat: this.chat.value,
         })
           .then(() => {
@@ -131,14 +132,14 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myChat', {
     });
 	if(document.querySelector('.deleteRoom')){
 	document.querySelector('.deleteRoom').addEventListener('click', function (e) {
-		axios.delete('/room/{{room.id}}');
+		axios.delete('/myRoom/{{room.id}}');
 	});
 	} 
     document.querySelector('#img').addEventListener('change', function (e) {
       console.log(e.target.files);
       const formData = new FormData();
       formData.append('img', e.target.files[0]);
-      axios.post('/post/room/{{room.id}}/img', formData)
+      axios.post('/post/myRoom/{{room.id}}/img', formData)
         .then(() => {
 		  e.target.files = null;
 		  location.href="";
