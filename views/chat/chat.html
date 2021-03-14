@@ -1,63 +1,100 @@
 {% extends 'layout.html' %} {% block content %}
-<header style="margin-bottom:13%;">
+<header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
-    </div>
-    <i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px;"></i>
+    </div>	
+    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
 </header>
 
 		
 		<div onclick="location.href='/manitoTalk';" style="width:100%; height:150px; "> 
-			<img src="/c1.svg" style="width:50%; height:140px; float:left; ">
+			<img src="/c1.svg" style="width:50%; height:140px; float:left; margin-right: 2%;
+    margin-left: 5%;
+    background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);">
 			<div style="font-weight:bold;">
 				마니또
 			</div>
-			<div style="padding-top:8px;color:#828282;font-size:0.7em;margin-bottom: 20px;">
+			<div style="padding-top:8px;color:#828282;font-size:0.8em;margin-bottom: 20px;">
 				원하는 상대와의 채팅!
 				<i class="fas fa-hand-holding-heart" style="color:#FF3232;"></i>
 			</div>
-			<div style="display: inline;padding: 15px; height:100px; border:1px solid #289AFF; border-radius:5px; color:#289AFF">
-				<i class="fas fa-location-arrow fa-lg" style="color:#289AFF;"></i><span style="font-size:1.2em; padding:20px;"> 입장</span>
+			<div style="    display: inline;
+    color: #FF9E9B;
+    padding: 2%;
+    border: 1px solid #FF9E9B;
+    border-radius: 5px;
+    margin-left: 3%;">
+				<i class="fas fa-location-arrow fa-lg"></i><span style="font-size:1.2em;"> 입장</span>
 			</div>
 		</div>
 		<div onclick="location.href='/randomTalk';" style="width:100%; height:150px;"> 
-			<img src="/c2.svg" style="width:50%; height:140px;float:left;">
+			<img src="/c2.svg" style="width:50%; height:140px;float:left;margin-right: 2%;
+    margin-left: 5%;
+    background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);">
 			<div style="font-weight:bold;">
 				랜덤채팅
 			</div>
-			<div style="padding-top:8px;color:#828282;font-size:0.7em;    margin-bottom: 20px;">
+			<div style="padding-top:8px;color:#828282;font-size:0.8em;    margin-bottom: 20px;">
 				앱 이용자들과의 무작위 채팅!
 				<i class="fas fa-star" style="color:#FFB400;"></i>
 			</div>
-			<div style="display: inline;padding: 15px; height:100px; border:1px solid #289AFF; border-radius:5px; color:#289AFF">
-				<i class="fas fa-location-arrow fa-lg" style="color:#289AFF;"></i><span style="font-size:1.2em; padding:20px;"> 입장</span>
+			<div style="    display: inline;
+    color: #FF9E9B;
+    padding: 2%;
+    border: 1px solid #FF9E9B;
+    border-radius: 5px;
+    margin-left: 3%;">
+				<i class="fas fa-location-arrow fa-lg" ></i><span style="font-size:1.2em;"> 입장</span>
 			</div>
 		</div>
 		<div onclick="location.href='/schoolTalk';"  style="width:100%; height:150px;"> 
-			<img src="/c3.svg" style="width:50%; height:140px;float:left;">
+			<img src="/c3.svg" style="width:50%; height:140px;float:left;margin-right: 2%;
+    margin-left: 5%;
+    background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);">
 			<div style="font-weight:bold;">
 				학교채팅방
 			</div>
-			<div style="padding-top:8px;color:#828282;font-size:0.7em;margin-bottom: 20px;">
+			<div style="padding-top:8px;color:#828282;font-size:0.8em;margin-bottom: 20px;">
 				학교사람들과 단체채팅!
 				<i class="fas fa-apple-alt" style="color:#FFBBC6"></i>
 			</div>
-			<div style="display: inline;padding: 15px; height:100px; border:1px solid #289AFF; border-radius:5px; color:#289AFF">
-				<i class="fas fa-location-arrow fa-lg" style="color:#289AFF;"></i><span style="font-size:1.2em; padding:20px;"> 입장</span>
+			<div style="    display: inline;
+    color: #FF9E9B;
+    padding: 2%;
+    border: 1px solid #FF9E9B;
+    border-radius: 5px;
+    margin-left: 3%;">
+				<i class="fas fa-location-arrow fa-lg" ></i><span style="font-size:1.2em; "> 입장</span>
 			</div>
 		</div>
 		<div onclick="location.href='/allTalk';"  style="width:100%; height:150px; margin-bottom:5%;"> 
-			<img src="/c4.svg" style="width:50%; height:140px;float:left;">
+			<img src="/c4.svg" style="width:50%; height:140px;float:left;margin-right: 2%;
+    margin-left: 5%;
+    background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);">
 			<div style="font-weight:bold;">
 				모두의 채팅방
 			</div>
-			<div style="padding-top:8px;color:#828282;font-size:0.7em;margin-bottom: 20px;">
+			<div style="padding-top:8px;color:#828282;font-size:0.8em;margin-bottom: 20px;">
 				앱 이용자들과 단체채팅!
 				<i class="fas fa-globe-americas" style="color:#64D2D2"></i>
 			</div>
-			<div style="display: inline;padding: 15px; height:100px; border:1px solid #289AFF; border-radius:5px; color:#289AFF">
-				<i class="fas fa-location-arrow fa-lg" style="color:#289AFF;"></i><span style="font-size:1.2em; padding:20px;"> 입장</span>
+			<div style="    display: inline;
+    color: #FF9E9B;
+    padding: 2%;
+    border: 1px solid #FF9E9B;
+    border-radius: 5px;
+    margin-left: 3%;">
+				<i class="fas fa-location-arrow fa-lg"></i><span style="font-size:1.2em;"> 입장</span>
 			</div>
 		</div>
 

@@ -343,6 +343,7 @@ router.post('/join/:find', isNotLoggedIn, async (req, res, next) => {
 });
 router.post('/manito/:find', isLoggedIn, async (req, res, next) => {
     try {
+		console.log(req.body+" !");
 		const manito=User.findOne({
 			where:{
 				SchoolId:req.body.code,
@@ -380,6 +381,7 @@ router.post('/individualChat/:id', isLoggedIn, async (req, res, next) => {
 				[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
 			}
 		});
+		console.log(roomFind+" @");
 		if(!roomFind){
 			const room=await MyRoom.create({
 				kind:"individual",
@@ -434,7 +436,7 @@ router.post('/school/search', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/manito/search', isLoggedIn, async (req, res, next) => {
+router.post('/manito/school/search', isLoggedIn, async (req, res, next) => {
     try {
         const result = await neis.searchSchool(req.body.schoolname, req.body.region);
         result.forEach(async (school) => {
@@ -495,7 +497,7 @@ router.post('/schoolMake', isLoggedIn, async (req, res, next) => {
             RoomId: newRoom.id,
         });
         const io = req.app.get('io');
-        io.of('/room').emit('newRoom', dataRoom);
+        //io.of('/room').emit('newRoom', dataRoom);
         res.redirect(`/room/${newRoom.id}?password=${req.body.password}`);
     } catch (err) {
         console.error(error);

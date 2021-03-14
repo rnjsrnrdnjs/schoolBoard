@@ -41,7 +41,12 @@
           </div>
         {% else %}
           <div class="other" >
-            <div><img onclick="location.href='/imageView/{{chat.User.profile}}';" src="/{{chat.User.profile}}" style="border:none; width:30px;height:30px; border-radius:50px;"> {{chat.user}} <i class="far fa-paper-plane"style="color: black;padding: 5px;border: 1px solid #828282;border-radius: 10px;margin-left: 30px;"></i></div>
+            <div><img onclick="location.href='/imageView/{{chat.User.profile}}';" src="/{{chat.User.profile}}" style="border:none; width:30px;height:30px; border-radius:50px;"> {{chat.user}} <i class="far fa-paper-plane btn8"style="background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);
+    border-radius: 10px;
+    margin-left: 15px;
+    padding: 1%;"></i></div>
             {% if chat.img %}
               <img onclick="location.href='/imageView/img/{{chat.img}}';" src="/img/{{chat.img}}">
             {% else %}
@@ -89,7 +94,12 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chat', {
       } else {
         div.classList.add('other');
 		        const name = document.createElement('div');
-      name.innerHTML =`<img onclick="location.href='/imageView/${data.User.profile}';" src="/${data.User.profile}" style="border:none; width:30px;height:30px; border-radius:50px;">` + data.user +`<i class="far fa-paper-plane"style="color: black;padding: 5px;border: 1px solid #828282;border-radius: 10px;margin-left: 30px;"></i>`;
+      name.innerHTML =`<img onclick="location.href='/imageView/${data.User.profile}';" src="/${data.User.profile}" style="border:none; width:30px;height:30px; border-radius:50px;">` + data.user +`<i class="far fa-paper-plane btn8"style="background: linear-gradient( 
+45deg
+ , #FF9E9B,#9DF0E1,transparent);
+    border-radius: 10px;
+    margin-left: 15px;
+    padding: 1%;"></i>`;
       div.appendChild(name);
 
 	}

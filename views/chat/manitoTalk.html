@@ -1,16 +1,14 @@
 {% extends 'layout.html' %} {% block content %}
-<header style="margin-bottom: 18%;">
+<header>
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
-    </div>
-    <i
-        class="far fa-bell"
-        style="vertical-align: middle; color: black; float: right; padding: 20px 20px;"
-    ></i>
+    </div>	
+    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
 </header>
 
-<form action="/post/manito/search" method="post">
+<form action="/post/manito/school/search" method="post">
     <select name="region" class="btn8" style="width: 20%; margin-left: 5%; border: none;" required>
         <option value="SEOUL">서울</option>
         <option value="BUSAN">부산</option>
@@ -48,17 +46,6 @@
         <i class="fas fa-search-location"></i>검색
     </button>
 </form>
-
-<div style="text-align:center;">
- <label for="man" >
-                <input id="man" type="radio" name="sexual" value="man" />
-                <span id="o">남자</span>
-    </label>
-    <label for="woman">
-                <input id="woman" type="radio" name="sexual" value="woman" />
-                <span id="w">여자</span>
-    </label>
-</div>
 {% for find in result %}
 <form action="/post/manito/{{find.name}}" method="post">
     <input type="hidden" name="code" value="{{find.code}}" />
@@ -81,8 +68,13 @@
 	</div>
 	
 	<div style="text-align:center;">
+                <input id="man" type="radio" name="sexual" value="man" onclick="manClick()"/>
+                <span class="o">남자</span>
+                <input id="woman" type="radio" name="sexual" value="woman" />
+                <span class="w">여자</span>
     <button class="btn8"
-        type="submit" style="padding:2%;"
+        type="submit" style="padding:1%;background: linear-gradient( 
+45deg, #FF9E9B,#9DF0E1,transparent);"
     > <i class="far fa-paper-plane fa-lg" ></i>
     </button>
 	</div>
@@ -149,4 +141,15 @@
         </tr>
     </table>
 </footer>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %} 
+<script>
+	function manClick(){
+		console.log(1);
+		alert(1);
+	}
+	var womanClick=()=>{
+		
+	};
+	
+</script>
+{% endblock %}

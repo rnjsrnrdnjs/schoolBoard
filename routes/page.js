@@ -544,25 +544,69 @@ router.get('/chat', isLoggedIn, (req, res, next) => {
     res.render('chat/chat');
 });
 router.get('/myRoom', isLoggedIn, async(req, res, next) => {
-	
+	try{
 	const individualRoom=await MyRoom.findAll({
 		where:{
 			kind:"individual",
 			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
-		}
+		},
 	});
-	
+	await individualRoom.map(async(room,idx)=>{
+		if(room.member1==req.user.id){
+			const you=await User.findOne({
+				where:{
+					id:room.member2,
+				}
+			});
+			individualRoom[idx].User=await you;
+		}
+		else if(room.member2==req.user.id){
+			const you=await User.findOne({
+				where:{
+					id:room.member1,
+				}
+			});
+			individualRoom[idx].User=await you;
+		}		
+	});
+	await individualRoom.map(async(room,idx)=>{
+		const chat=await MyChat.findOne({
+			where:{
+				MyRoomId:room.id,
+			},
+			order: [['createdAt', 'DESC']],
+		});
+		individualRoom[idx].MyChat=await chat;
+		console.log(chat.chat+" !");
+		console.log(individualRoom[idx].MyChat.chat+" @");
+	});
+		/*
+		const manitoRoom=await MyRoom.findAll({
+		where:{
+			kind:"manito",
+			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+		}
+	});*/
+	console.log(individualRoom+" ~");
+	console.log(individualRoom[0]+" %%!!~~");
+	console.log(individualRoom[0].MyChat+" %%!!");
+    await res.render('chat/myRoom',{
+		individualRoom:individualRoom,
+	});
+	/*
 	const manitoRoom=await MyRoom.findAll({
 		where:{
 			kind:"manito",
 			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
 		}
-	});
-    res.render('chat/myRoom',{
-		individualRoom:individualRoom,
-		manitoRoom:manitoRoom,
-	});
+	});*/
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
 });
+
+
 router.get('/imageView/img/:src', isLoggedIn, (req, res, next) => {
     res.render('imageView',{
 		src:req.params.src,	
@@ -582,6 +626,19 @@ router.delete('/room/:id', async (req, res, next) => {
         res.send('ok');
         setTimeout(() => {
             req.app.get('io').of('/room').emit('removeRoom', req.params.id);
+        }, 2000);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+router.delete('/myRoom/:id', async (req, res, next) => {
+    try {
+        await MyRoom.destroy({ where: { [Op.or]: [{member1: req.user.id}, {member2: req.user.id}] }	});
+        await MyChat.destroy({ where: { MyRoomId: req.params.id } });
+        res.send('ok');
+        setTimeout(() => {
+            req.app.get('io').of('/myRoom').emit('removeRoom', req.params.id);
         }, 2000);
     } catch (err) {
         console.error(err);
