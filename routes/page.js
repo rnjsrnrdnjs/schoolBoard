@@ -551,7 +551,7 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
 		},
 	});
-	await individualRoom.map(async(room,idx)=>{
+	await Promise.all( individualRoom.map(async(room,idx)=>{
 		if(room.member1==req.user.id){
 			const you=await User.findOne({
 				where:{
@@ -568,8 +568,8 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 			});
 			individualRoom[idx].User=await you;
 		}		
-	});
-	await individualRoom.map(async(room,idx)=>{
+	}));
+	await Promise.all( individualRoom.map(async(room,idx)=>{
 		const chat=await MyChat.findOne({
 			where:{
 				MyRoomId:room.id,
@@ -577,9 +577,7 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 			order: [['createdAt', 'DESC']],
 		});
 		individualRoom[idx].MyChat=await chat;
-		console.log(chat.chat+" !");
-		console.log(individualRoom[idx].MyChat.chat+" @");
-	});
+	}));
 		/*
 		const manitoRoom=await MyRoom.findAll({
 		where:{
@@ -587,25 +585,57 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
 		}
 	});*/
-	console.log(individualRoom+" ~");
-	console.log(individualRoom[0]+" %%!!~~");
-	console.log(individualRoom[0].MyChat+" %%!!");
     await res.render('chat/myRoom',{
 		individualRoom:individualRoom,
 	});
-	/*
-	const manitoRoom=await MyRoom.findAll({
-		where:{
-			kind:"manito",
-			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
-		}
-	});*/
 	}catch(err){
 		console.error(err);
 		next(err);
 	}
 });
-
+router.get('/myRoom2', isLoggedIn, async(req, res, next) => {
+	try{
+	const individualRoom=await MyRoom.findAll({
+		where:{
+			kind:"manito",
+			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+		},
+	});
+	await Promise.all( individualRoom.map(async(room,idx)=>{
+		if(room.member1==req.user.id){
+			const you=await User.findOne({
+				where:{
+					id:room.member2,
+				}
+			});
+			individualRoom[idx].User=await you;
+		}
+		else if(room.member2==req.user.id){
+			const you=await User.findOne({
+				where:{
+					id:room.member1,
+				}
+			});
+			individualRoom[idx].User=await you;
+		}		
+	}));
+	await Promise.all( individualRoom.map(async(room,idx)=>{
+		const chat=await MyChat.findOne({
+			where:{
+				MyRoomId:room.id,
+			},
+			order: [['createdAt', 'DESC']],
+		});
+		individualRoom[idx].MyChat=await chat;
+	}));
+    await res.render('chat/myRoom2',{
+		individualRoom:individualRoom,
+	});
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
 
 router.get('/imageView/img/:src', isLoggedIn, (req, res, next) => {
     res.render('imageView',{
