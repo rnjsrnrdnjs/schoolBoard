@@ -22,7 +22,7 @@ const {
     Clike,
     Cdlike,
     RoomList,
-	RoomAll,RoomAllList,ChatAll,MyRoom,MyChat
+	RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,
 } = require('../models');
 const router = express.Router();
 
@@ -202,6 +202,21 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
         next(error);
     }
 });
+router.post('/notice/add', isLoggedIn, upload2.none(), async (req, res, next) => {
+    try {
+		const {title,content,url}=req.body;
+		const makeNotice=await Notice.create({
+			title:title,
+			content:content,
+			img:url,
+		});
+		res.redirect('/notice');
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 router.post('/comment', isLoggedIn, async (req, res, next) => {
     try {
         const Pid = await req.body.Pid;
@@ -383,7 +398,7 @@ router.post('/individualChat/:id', isLoggedIn, async (req, res, next) => {
 		const roomFind=await MyRoom.findOne({
 			where:{
 				kind:"individual",
-				[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+				[Op.or]: [{member1: req.params.id}, {member2: req.params.id}],	
 			}
 		});
 		console.log(roomFind+" @");

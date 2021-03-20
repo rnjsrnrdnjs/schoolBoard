@@ -3,130 +3,145 @@
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
-    </div>	
-    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
-	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
+    </div>
+    <a class="ax" href="/alarm"
+        ><i
+            class="far fa-bell"
+            style="vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"
+        ></i
+    ></a>
+    <a class="ax" href="/myRoom"
+        ><i
+            class="far fa-paper-plane"
+            style="vertical-align: middle; color: black; float: right; padding: 20px;"
+        ></i
+    ></a>
 </header>
 
+<form action="/post" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="Pid" value="{{post.id}}" />
+    <div id="writePost">
+        <a href="/main/free" class="btn" style="padding-top: 5px;"
+            ><i class="fas fa-arrow-circle-left fa-2x"></i
+        ></a>
+        <div style="font-weight: bold; display: inline; margin-left: 10px;">
+            글쓰기
+        </div>
 
-
-
-	
-
-	<form  action="/post" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="Pid" value="{{post.id}}">
-<div id="writePost">
-	<a href="/main/free" class="btn" style="padding-top: 5px;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
-	<div style=" font-weight:bold; display:inline; margin-left:10px;">
-		글쓰기 			
-
-	</div>
-	
-	<div style="float:right;">
-		<select id="write" name="category" style="display:inline;" require>
-		{% if title=='free' %}
-		<option value="free" selected>자유 게시판</option>
-		{% else %}
-	    <option value="free">자유 게시판</option>
-		{% endif %}
-		{% if title=='worry' %}
-        <option value="worry" selected>고민 게시판</option>
-		{% else %}
-        <option value="worry" >고민 게시판</option>
-		{% endif %}
-		{% if title==='study' %}
-        <option value="study" selected>공부 게시판</option>
-		{% else %}
-        <option value="study">공부 게시판</option>
-		{% endif %}
-		{% if title==='love' %}
-        <option value="love" selected>짝사랑 게시판</option>
-		{% else %}
-        <option value="love">짝사랑 게시판</option>
-		{% endif %}
-		{% if title==='food' %}
-        <option value="food" selected>음식 게시판</option>
-		{% else %}
-        <option value="food">음식 게시판</option>
-		{% endif %}
-		{% if title==='beauty' %}
-        <option value="beauty" selected>뷰티 게시판</option>
-		{% else %}
-        <option value="beauty">뷰티 게시판</option>
-		{% endif %}
-		{% if title==='fashion' %}
-        <option value="fashion" selected>패션 게시판</option>
-		{% else %}
-        <option value="fashion">패션 게시판</option>
-		{% endif %}
-		{% if title==='music' %}
-        <option value="music" selected>음악 게시판</option>
-		{% else %}
-        <option value="music">음악 게시판</option>
-		{% endif %}
-		{% if title==='blame' %}
-        <option value="blame" selected>뒷담 게시판</option>
-		{% else %}
-        <option value="blame">뒷담 게시판</option>
-		{% endif %}
-    </select>
-	<button id="write-btn" type="submit" class="btn" >완료</button>
-	</div>
-	<div class="btn4" style="border-top:20px; border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
-		<textarea id="t1" name="title" maxlength="20" style="height:15%;margin-top: 3%;" placeholder="제목" required>{% if post %}{{post.title}}{% endif %}</textarea>
+        <div style="float: right;">
+            <select id="write" name="category" style="display: inline;" require>
+                {% if title=='free' %}
+                <option value="free" selected>자유 게시판</option>
+                {% else %}
+                <option value="free">자유 게시판</option>
+                {% endif %} {% if title=='worry' %}
+                <option value="worry" selected>고민 게시판</option>
+                {% else %}
+                <option value="worry">고민 게시판</option>
+                {% endif %} {% if title==='study' %}
+                <option value="study" selected>공부 게시판</option>
+                {% else %}
+                <option value="study">공부 게시판</option>
+                {% endif %} {% if title==='love' %}
+                <option value="love" selected>짝사랑 게시판</option>
+                {% else %}
+                <option value="love">짝사랑 게시판</option>
+                {% endif %} {% if title==='food' %}
+                <option value="food" selected>음식 게시판</option>
+                {% else %}
+                <option value="food">음식 게시판</option>
+                {% endif %} {% if title==='beauty' %}
+                <option value="beauty" selected>뷰티 게시판</option>
+                {% else %}
+                <option value="beauty">뷰티 게시판</option>
+                {% endif %} {% if title==='fashion' %}
+                <option value="fashion" selected>패션 게시판</option>
+                {% else %}
+                <option value="fashion">패션 게시판</option>
+                {% endif %} {% if title==='music' %}
+                <option value="music" selected>음악 게시판</option>
+                {% else %}
+                <option value="music">음악 게시판</option>
+                {% endif %} {% if title==='blame' %}
+                <option value="blame" selected>뒷담 게시판</option>
+                {% else %}
+                <option value="blame">뒷담 게시판</option>
+                {% endif %}
+            </select>
+            <button id="write-btn" type="submit" class="btn">완료</button>
+        </div>
+        <div
+            class="btn4"
+            style="border-top: 20px; border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;"
+        >
+            <textarea
+                id="t1"
+                name="title"
+                maxlength="20"
+                style="height: 15%; margin-top: 3%;"
+                placeholder="제목"
+                required
+            >
+{% if post %}{{post.title}}{% endif %}</textarea
+            >
+        </div>
+        <div class="btn4" style="border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;">
+            <textarea
+                id="t2"
+                name="content"
+                maxlength="1000"
+                placeholder="여기에 내용을 입력해주세요"
+                required
+            >
+{% if post %}{{post.content}}{% endif %}</textarea
+            >
+        </div>
+        <label id="img-label" for="img" class="btn">사진 선택</label>
+        <div class="img-preview" style="margin: 5px; text-align: center;">
+            {% if post.img %}
+            <img id="img-preview" src="{{post.img}}" width="50%" alt="미리보기" />
+            {% else %}
+            <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
+            {% endif %}
+            <input id="img-url" type="hidden" name="url" />
+        </div>
+        <input id="img" style="text-align: center;" type="file" accept="image/*" />
     </div>
-    <div class="btn4" style="border-bottom:1px solid #c8c8c8; padding:1%; display:block;">
-		<textarea id="t2" name="content" maxlength="1000"placeholder="여기에 내용을 입력해주세요"  required>{% if post %}{{post.content}}{% endif %}</textarea>
-    </div>
-	    <label id="img-label" for="img" class="btn">사진 선택</label>
-	    <div class="img-preview" style="margin:5px; text-align:center;">
-		{% if post.img %}
-			<img id="img-preview" src="{{post.img}}" width="50%"alt="미리보기">
-		{% else %}
-        <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
-		{% endif %}
-        <input id="img-url" type="hidden" name="url" />
-    	 </div>
-        <input id="img"  style="text-align:center;" type="file" accept="image/*"  />
-</div>
 </form>
 
-
-
-<div class="push">
-</div>
-<footer >
+<div class="push"></div>
+<footer>
     <table>
         <tr>
             <td class="footerTd">
                 <a href="/main">
-                    <i class="fas fa-clipboard-list fa-2x" style="color:#FF5675"></i>
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #ff5675;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/chat">
-                    <i class="fas fa-envelope fa-2x" style="color:#b4b4b4"></i>
+                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/game">
-                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-gamepad fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/school">
-                    <i class="fas fa-school fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
             <td class="footerTd">
                 <a href="/setting">
-                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4"></i>
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
                 </a>
             </td>
         </tr>
         <tr>
             <td class="footerTd">
-                <a href="/main" class="btn2" style="color:#FF5675">
+                <a href="/main" class="btn2" style="color: #ff5675;">
                     게시판
                 </a>
             </td>
@@ -155,22 +170,23 @@
 </footer>
 
 {% endblock %} {% block script %}
-	<script>
+<script>
     if (document.getElementById('img')) {
-      document.getElementById('img').addEventListener('change', function(e) {
-        const formData = new FormData();
-        console.log(this, this.files);
-        formData.append('img', this.files[0]);
-        axios.post('/post/img', formData)
-          .then((res) => {
-            document.getElementById('img-url').value = res.data.url;
-            document.getElementById('img-preview').src = res.data.url;
-            document.getElementById('img-preview').style.display = 'inline';
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      });
+        document.getElementById('img').addEventListener('change', function (e) {
+            const formData = new FormData();
+            console.log(this, this.files);
+            formData.append('img', this.files[0]);
+            axios
+                .post('/post/img', formData)
+                .then((res) => {
+                    document.getElementById('img-url').value = res.data.url;
+                    document.getElementById('img-preview').src = res.data.url;
+                    document.getElementById('img-preview').style.display = 'inline';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        });
     }
-  </script>
+</script>
 {% endblock %}

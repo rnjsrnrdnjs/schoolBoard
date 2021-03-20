@@ -8,8 +8,56 @@
 	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
 </header>
 
+<form method="post" action="/post/notice/add">
+	<div
+            class="btn4"
+            style="border-top: 20px; border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;"
+        >
+            <textarea
+                id="t1"
+                name="title"
+                maxlength="20"
+                style="height: 15%; margin-top: 3%;"
+                placeholder="제목"
+                required
+            ></textarea
+            >
+        </div>
+        <div class="btn4" style="border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;">
+            <textarea
+                id="t2"
+                name="content"
+                maxlength="1000"
+                placeholder="여기에 내용을 입력해주세요"
+                required
+            ></textarea
+            >
+        </div>
+        <label id="img-label" for="img" class="btn">사진 선택</label>
+        <div class="img-preview" style="margin: 5px; text-align: center;">
+            {% if post.img %}
+            <img id="img-preview" src="{{post.img}}" width="50%" alt="미리보기" />
+            {% else %}
+            <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
+            {% endif %}
+            <input id="img-url" type="hidden" name="url" />
+        </div>
+        <input id="img" style="text-align: center;" type="file" accept="image/*" />
+	<button type="submit">
+		전송
+	</button>
+</form>
 
 
+	{% for post in notice %}
+<div>{{post.title}}
+</div>
+<div>{{post.content}}
+</div>
+<div>
+</div>
+
+	{% endfor %}
 
 
 <div class="push">
@@ -75,4 +123,23 @@
 
 {% endblock %} 
 {% block script %}
+<script>
+	if (document.getElementById('img')) {
+        document.getElementById('img').addEventListener('change', function (e) {
+            const formData = new FormData();
+            console.log(this, this.files);
+            formData.append('img', this.files[0]);
+            axios
+                .post('/post/img', formData)
+                .then((res) => {
+                    document.getElementById('img-url').value = res.data.url;
+                    document.getElementById('img-preview').src = res.data.url;
+                    document.getElementById('img-preview').style.display = 'inline';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        });
+    }
+</script>
 {% endblock %}

@@ -20,7 +20,7 @@
     </thead>
     <tbody>
     {% for room in rooms %}
-      <tr data-id="{{room.id}}" class="roomCall"  style="width:100%;height:60px;background: #f5fffd;">
+      <tr data-id="{{room.id}}" class="roomCall"  style="width:100%;height:60px;">
         <td style="width:20%;text-align: left;
     padding-left: 2%;"><img onclick="location.href='/imageView/{{room.User.profile}}';" src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.owner}}</td>
         <td style="width:35%;">{{room.title}}</td>

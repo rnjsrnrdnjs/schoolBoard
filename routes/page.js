@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll,MyRoom,MyChat} = require('../models');
+const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,} = require('../models');
 const router = express.Router();
 const { sequelize } = require('../models');
 const neis = require('../neis/neis');
@@ -374,6 +374,27 @@ router.get('/main', isLoggedIn, async (req, res, next) => {
         next(err);
     }
 });
+router.get('/notice', isLoggedIn, async (req, res, next) => {
+    try {
+        const notice=await Notice.findAll({});
+		res.render('main/notice',{
+			notice:notice,
+		});
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+router.get('/alarm', isLoggedIn, async (req, res, next) => {
+    try {
+        res.render(`main/alarm`, {});
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
+
 router.get('/main/:category', isLoggedIn, async (req, res, next) => {
     try {
         const myschool = await School.findOne({
@@ -590,13 +611,7 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 		});
 		individualRoom[idx].MyChat=await chat;
 	}));
-		/*
-		const manitoRoom=await MyRoom.findAll({
-		where:{
-			kind:"manito",
-			[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
-		}
-	});*/
+	
     await res.render('chat/myRoom',{
 		individualRoom:individualRoom,
 	});

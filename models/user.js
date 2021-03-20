@@ -68,5 +68,6 @@ module.exports = class User extends Sequelize.Model {
 		db.User.hasMany(db.ChatAll);
 		db.User.hasMany(db.MyRoom);
 		db.User.hasMany(db.MyChat);
+		db.User.hasMany(db.Alarm);
 	}
 };

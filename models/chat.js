@@ -9,7 +9,7 @@ module.exports = class Chat extends Sequelize.Model {
                     allowNull: false,
                 },
 				chat: {
-                    type: Sequelize.STRING(200),
+                    type: Sequelize.STRING(1500),
                     allowNull: true,
                 },
                 img: {

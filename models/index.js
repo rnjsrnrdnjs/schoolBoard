@@ -17,7 +17,8 @@ const RoomAllList=require('./roomAllList');
 const ChatAll=require('./chatAll');
 const MyRoom=require('./myroom');
 const MyChat=require('./mychat');
-
+const Alarm=require('./alarm');
+const Notice=require('./notice');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -41,7 +42,8 @@ db.RoomAllList=RoomAllList;
 db.ChatAll=ChatAll;
 db.MyRoom=MyRoom;
 db.MyChat=MyChat;
-
+db.Notice=Notice;
+db.Alarm=Alarm;
 
 User.init(sequelize);
 Post.init(sequelize);
@@ -59,6 +61,8 @@ RoomAll.init(sequelize);
 ChatAll.init(sequelize);
 MyRoom.init(sequelize);
 MyChat.init(sequelize);
+Alarm.init(sequelize);
+Notice.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -76,5 +80,7 @@ RoomAll.associate(db);
 ChatAll.associate(db);
 MyRoom.associate(db);
 MyChat.associate(db);
+Notice.associate(db);
+Alarm.associate(db);
 
 module.exports = db;
