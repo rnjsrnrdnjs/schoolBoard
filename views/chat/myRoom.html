@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
+<div style="    background-color: pink;
+    padding-bottom: 10%;">
 <span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">개인 채팅</span>
 <button onclick="location.href='/myRoom2'" id="chatChange" class="btn8" style="position: relative;
     top: 20px;
@@ -9,14 +10,14 @@
     padding: 10px 5px 10px 5px;">
 	<i class="fas fa-sync-alt"></i> 마니또 채팅
 </button>
+</div>
 
-<fieldset style="border:none; border-top:1px solid #fcebef; margin-top:10%;">
+<fieldset style="border:none; border-top:1px solid #fcebef;background-color: #f7f7f7;">
   <legend style="font-size:0.8em; color:#FF9E9B;">채팅 목록</legend>
   <table  id="roomList" style="table-layout: fixed; border:none;">
 	 
     {% for room in individualRoom %}
-      <tr  style="width:100%;height:60px;background: linear-gradient( 
-45deg, #FF9E9B,#9DF0E1,transparent);" data-id="{{room.id}}" class="roomCall">
+      <tr  style="width:100%;height:60px;background: #f5fffd;" data-id="{{room.id}}" class="roomCall">
         <td style="width:25%;     text-align: left;
     padding-left: 2%;"><img onclick="location.href='/imageView/{{room.User.profile}}';" src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.User.nick}}</td>
 		  <td style="width:60%;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">{{room.MyChat.chat}}</td>

@@ -1,11 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
+<div style="    background-color: pink;
+    padding-bottom: 10%;">
 <span style="position:relative;top: 20px; font-size:1.2em; font-weight:bold;padding:20px;">모두의 채팅방</span>
-<span style="position:relative; float:right; padding:10px;"><a class="btn6 ax" href="/allMake"><i class="fas fa-dice-d6" style="color:#FF9E9B;"></i> 방만들기</a></span>
+<span style="position:relative; float:right; padding:10px;"><a class="btn8"  href="/allMake"><i class="fas fa-dice-d6" style="color:#FF9E9B;"></i> 방만들기</a></span>
+</div>
 
-<fieldset style="border:none; border-top:1px solid #fcebef; margin-top:10%;">
+<fieldset style="border:none; border-top:1px solid #fcebef;background-color: #f7f7f7;">
   <legend style="font-size:0.8em; color:#FF9E9B;">채팅방 목록</legend>
   <table  id="roomList">
     <thead style="font-size:0.8em;">
@@ -18,8 +20,7 @@
     </thead>
     <tbody>
     {% for room in rooms %}
-      <tr data-id="{{room.id}}" class="roomCall"  style="width:100%;height:60px;background: linear-gradient( 
-45deg, #FF9E9B,#9DF0E1,transparent);">
+      <tr data-id="{{room.id}}" class="roomCall"  style="width:100%;height:60px;background: #f5fffd;">
         <td style="width:20%;text-align: left;
     padding-left: 2%;"><img onclick="location.href='/imageView/{{room.User.profile}}';" src="{{room.User.profile}}" style="width:20px;height:20px; border-radius:50px;"> {{room.owner}}</td>
         <td style="width:35%;">{{room.title}}</td>

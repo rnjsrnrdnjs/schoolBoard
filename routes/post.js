@@ -343,31 +343,36 @@ router.post('/join/:find', isNotLoggedIn, async (req, res, next) => {
 });
 router.post('/manito/:find', isLoggedIn, async (req, res, next) => {
     try {
-		console.log(req.body+" !");
-		const manito=User.findOne({
+		const manito=await User.findAll({
 			where:{
-				SchoolId:req.body.code,
+				code:req.params.find,
 				sexual:req.body.sexual,
+				id:{
+			      [Op.ne]: req.user.id,
+				},
 			},
 		});
-		
-		if(!manito){
-			return res.redirect('/manitoTalk?error=가입된 회원이없습니다.');
+		if(!manito[0]){
+			return res.redirect('/manitoTalk?Error=가입된 회원이없습니다.');
 		}
-		
-		const room=MyRoom.create({
-			kind:"manito",
-			member1:req.user.id,
-			member2:manito.id,
-			UserId:req.user.id,
+		const idx=Math.floor(Math.random()*manito.length);
+		const roomFind=await MyRoom.findOne({
+			where:{
+				kind:"manito",
+				[Op.or]: [{member1: manito[idx].id}, {member2: manito[idx].id}],	
+			}
 		});
-		const chat=MyChat.create({
-			
-		})
+		if(!roomFind){
+			const room=await MyRoom.create({
+				kind:"manito",
+				member1:req.user.id,
+				member2:manito[idx].id,
+				UserId:req.user.id,
+			});
+			return res.redirect(`/myRoom/${room.id}`);
+		}
+		return res.redirect(`/myRoom/${roomFind.id}`);
 		
-		res.render('chat/myRoom',{
-			
-		});
     } catch (err) {
         console.error(err);
         next(err);

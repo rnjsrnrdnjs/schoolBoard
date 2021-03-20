@@ -265,16 +265,29 @@ router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
             },
             order: [['createdAt', 'ASC']],
         });
-        return res.render('chat/myChat', {
-            room,
-            chats: chats,
-            user: req.user.nick,
-        });
+		if(room.kind=="individual"){
+	        return res.render('chat/myChat', {
+	            room,
+	            chats: chats,
+	            user: req.user.nick,
+				kind:"individual",
+	        });
+		}
+		else if(room.kind=="manito"){
+			
+	        return res.render('chat/myChat', {
+	            room,
+	            chats: chats,
+	            user: req.user.nick,
+				kind:"manito",
+	        });
+		}
     } catch (err) {
         console.error(error);
         next(error);
     }
 });
+
 
 
 router.get('/schoolMake', isLoggedIn, (req, res, next) => {
@@ -432,7 +445,6 @@ router.get('/school/:today', isLoggedIn, async (req, res, next) => {
 		const day=await new Date(parseInt(req.params.today));
 		const year=await day.getFullYear();
 		const month=await day.getMonth() + 1;
-		
 		 const school = await School.findOne({
             where: {
                 id: res.locals.school.id,
@@ -664,7 +676,7 @@ router.delete('/room/:id', async (req, res, next) => {
 });
 router.delete('/myRoom/:id', async (req, res, next) => {
     try {
-        await MyRoom.destroy({ where: { [Op.or]: [{member1: req.user.id}, {member2: req.user.id}] }	});
+        await MyRoom.destroy({ where: { id:req.params.id}} );
         await MyChat.destroy({ where: { MyRoomId: req.params.id } });
         res.send('ok');
         setTimeout(() => {
@@ -675,6 +687,7 @@ router.delete('/myRoom/:id', async (req, res, next) => {
         next(err);
     }
 });
+
 router.delete('/roomAll/:id', async (req, res, next) => {
     try {
         await RoomAll.destroy({ where: { id: req.params.id } });

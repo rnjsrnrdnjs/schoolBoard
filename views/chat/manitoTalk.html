@@ -47,8 +47,7 @@
     </button>
 </form>
 {% for find in result %}
-<form action="/post/manito/{{find.name}}" method="post">
-    <input type="hidden" name="code" value="{{find.code}}" />
+<form action="/post/manito/{{find.code}}" method="post">
    <div style="
 			   text-align:center;
 			   font-size:0.9em;
@@ -68,10 +67,11 @@
 	</div>
 	
 	<div style="text-align:center;">
-                <input id="man" type="radio" name="sexual" value="man" onclick="manClick()"/>
-                <span class="o">남자</span>
-                <input id="woman" type="radio" name="sexual" value="woman" />
-                <span class="w">여자</span>
+                <input id="{{find.code}}11" type="radio" name="sexual" value="man" />
+                <span id="{{find.code}}1" onclick="manClick({{find.code}}1)">남자</span>
+                <input id="{{find.code}}22"  type="radio" name="sexual" value="woman" />
+                <span id="{{find.code}}2" onclick="womanClick({{find.code}}2)">여자</span>
+		
     <button class="btn8"
         type="submit" style="padding:1%;background: linear-gradient( 
 45deg, #FF9E9B,#9DF0E1,transparent);"
@@ -143,13 +143,38 @@
 </footer>
 {% endblock %} {% block script %} 
 <script>
-	function manClick(){
-		console.log(1);
-		alert(1);
+	var mySelect=null;
+	
+	function manClick(c){
+		var currentSelect=document.getElementById(`${c.id}`);
+		currentSelect.style.backgroundColor="#32B8FF";
+		currentSelect.style.color="#fff";
+		currentSelect.style.border="1px solid #23a3a7";		
+		var currentCheck=document.getElementById(`${c.id}1`);
+		currentCheck.checked=true;
+		if(mySelect!=null && mySelect!=c.id){
+			var preSelect=document.getElementById(`${mySelect}`);
+			preSelect.style.backgroundColor="#fff";
+			preSelect.style.color="black";
+			preSelect.style.border="1px solid #d2d2d2";
+		}
+		mySelect=`${c.id}`;
 	}
-	var womanClick=()=>{
-		
-	};
+	function womanClick(c){
+		var currentSelect=document.getElementById(`${c.id}`);
+		currentSelect.style.backgroundColor="#FF848F";
+		currentSelect.style.color="#fff";
+		currentSelect.style.border="1px solid #23a3a7";
+		var currentCheck=document.getElementById(`${c.id}2`);
+		currentCheck.checked=true;
+		if(mySelect!=null && mySelect!=c.id){
+			var preSelect=document.getElementById(`${mySelect}`);
+			preSelect.style.backgroundColor="#fff";
+			preSelect.style.color="black";
+			preSelect.style.border="1px solid #d2d2d2";
+		}
+		mySelect=`${c.id}`;
+	}
 	
 </script>
 {% endblock %}
