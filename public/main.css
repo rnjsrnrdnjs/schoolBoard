@@ -245,8 +245,7 @@ margin-bottom: 4%;
     color: #F4FFFF;
     font-weight: bold;
     border-radius: 10px;
-    background: linear-gradient( 
-45deg, #FF9E9B,#9DF0E1,transparent);
+    background: linear-gradient(to right,#FFB4B9, #fffcdc);
 	font-size:1.1em;
 }
 .boardIcon{
@@ -300,9 +299,7 @@ margin-bottom: 4%;
 	background-size:100% 100%;
 }
 .writeBG{
-	background: linear-gradient(
-45deg
-, #FF9E9B,#9DF0E1,transparent);
+	background: linear-gradient(to right,#FFB4B9, #fffcdc);
 	background-size:100% 100%;
 	border-top:1px solid #c8c8c8;
 }
@@ -328,6 +325,17 @@ margin-bottom: 4%;
     height: 80%;
     overflow: hidden;
 	border:none;
+}
+.alarmBG{
+	background-size:100% 100%;
+	background-image:url(/alarmBG.svg);
+	width:100%;
+	height:100vw;
+}
+.alarmTop{
+	text-align:center;
+	color:#828282;
+	margin-top:15%;	
 }
 .talkBG3{
 	background-size:100% 100%;

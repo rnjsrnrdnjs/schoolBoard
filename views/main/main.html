@@ -48,12 +48,18 @@
 	<div style="padding:5px;width:100%;height:40px; background-color: #FFA2AD; color:#B90000; font-weight:bold;border-radius:5px 5px 0 0;box-sizing:border-box;">
 		공지사항 <img src="/megaphone.svg" style="width:20px;">
 	</div>
-	
 	<div style="padding:4px; width:100%; border:1px solid #FFA2AD; box-sizing:border-box;">
-		아직은 공지사항이 없습니다!
-		<p>
-			잘부탁 드립니다.
-		</p>
+		<div style="font-weight: bold;font-size: 0.9em;">
+		{{notice.title}}
+		<img src="/notice.svg" style="width:20px; height:20px;">
+		</div>
+		<div style="height: 50px;
+    color: #828282;
+    overflow: hidden;
+    font-size: 0.7em;">
+			{{notice.content}}
+		</div>
+		<span style="margin-left:65%;color:#6e6e6e;"><i class="fas fa-arrow-left"></i> 더보기</span>
 	</div>
 	
 </div>

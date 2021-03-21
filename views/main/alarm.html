@@ -1,11 +1,34 @@
 {% extends 'layout.html' %} {% block content %}
 
+{% if alarms[0] %}
 {% for alarm in alarms %}
-	<div style="width:100%; height:50px;"onclick="location.href='{{alarm.src}}'">
-		{{alarm.content}}
+	<div style="width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #d2d2d2;
+    padding: 4%;"onclick="thisAlarm({{alarm.id}});location.href='{{alarm.src}}'">
+		{{alarm.content}}<img src="/bell.svg" style="width:20px;height:20px">
+		<div style=" font-size: 0.7em;
+    color: #828282;
+    margin-top: 2%;">
+		{{alarm.createdAt.getFullYear()}}년
+		{{alarm.createdAt.getMonth()+1}}월
+		{{alarm.createdAt.getDate()}}일
+		{{alarm.createdAt.getHours()+9}}시
+		{{alarm.createdAt.getMinutes()}}분
+		{{alarm.createdAt.getSeconds()}}초
+			<img src="/alarm.svg" style="width:20px;height:20px;padding-left:5%;">
+		</div>
 	</div>
 
 {% endfor %}
+{% else %}
+<div class="alarmTop">
+	알람이 없습니다!<img src="/bell.svg" style="width:20px;height:20px">
+</div>
+	<div class="alarmBG">
+		
+	</div>
+{% endif %}
 
 
 
@@ -72,4 +95,9 @@
 
 {% endblock %} 
 {% block script %}
+<script>
+	function thisAlarm(id){
+		axios.delete(`/alarm/${id}`);
+	}
+</script>
 {% endblock %}

@@ -3,14 +3,18 @@
     <img src="/manito.svg" id="hdImg" />
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
-    </div>	
-    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
-	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
+    </div>
+	{% if alarm===true %}
+	    <a class="ax" href="/alarm"><i class="far fa-bell alarm1" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	{% else %}
+	    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	{% endif %}
+	{% if talk===true %}
+		<a class="ax" href="/myRoom"><i class="far fa-paper-plane alarm1"style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	{% else %}
+		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
+	{% endif %}
 </header>
-<div class="title" style="margin-bottom:4%;">
-		{{school.name}}<img src="/tree.svg" style="width:50px;">
-		학급 정보
-</div>
 
 1. 오목  -  https://github.com/cjaewon/gomokuio
 2. 캐치마인드  -  https://nomad-academy.teachable.com/p/websocket-realtime-multiplayer-game

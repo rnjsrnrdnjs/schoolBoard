@@ -1,63 +1,20 @@
 {% extends 'layout.html' %} {% block content %}
-<header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
-        <a href="/main" class="ax">마니또</a>
-    </div>	
-    <a class="ax" href="/alarm"><i class="far fa-bell" style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
-	<a class="ax" href="/myRoom"><i class="far fa-paper-plane"style=" vertical-align: middle; color: black; float: right; padding: 20px ;"></i></a>
-</header>
 
-<form method="post" action="/post/notice/add">
-	<div
-            class="btn4"
-            style="border-top: 20px; border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;"
-        >
-            <textarea
-                id="t1"
-                name="title"
-                maxlength="20"
-                style="height: 15%; margin-top: 3%;"
-                placeholder="제목"
-                required
-            ></textarea
-            >
-        </div>
-        <div class="btn4" style="border-bottom: 1px solid #c8c8c8; padding: 1%; display: block;">
-            <textarea
-                id="t2"
-                name="content"
-                maxlength="1000"
-                placeholder="여기에 내용을 입력해주세요"
-                required
-            ></textarea
-            >
-        </div>
-        <label id="img-label" for="img" class="btn">사진 선택</label>
-        <div class="img-preview" style="margin: 5px; text-align: center;">
-            {% if post.img %}
-            <img id="img-preview" src="{{post.img}}" width="50%" alt="미리보기" />
-            {% else %}
-            <img id="img-preview" src="" style="display: none;" width="50%" alt="미리보기" />
-            {% endif %}
-            <input id="img-url" type="hidden" name="url" />
-        </div>
-        <input id="img" style="text-align: center;" type="file" accept="image/*" />
-	<button type="submit">
-		전송
-	</button>
-</form>
-
-
-	{% for post in notice %}
-<div>{{post.title}}
-</div>
-<div>{{post.content}}
-</div>
-<div>
+<div style="text-align:center; font-weight:bold;color:#828282; padding-bottom:5%;margin-top:5%;border-bottom:1px solid #d2d2d2;">
+	공지사항 <img src="/notice.svg" style="width:20px; height:20px;">
 </div>
 
-	{% endfor %}
+{% for post in notice %}
+
+	<div style="width:100%; border-bottom:1px solid #d2d2d2;    background-color: ghostwhite;">
+		<div style="padding:5% 5% 0% 5%;font-weight:bold;">{{post.title}}		
+		</div>
+<div style="padding:5%;word-break:break-all;color:#828282">{{post.content}}
+</div>
+<div style="text-align:center;"><img src="{{post.img}}" style="width:80%;">
+</div>
+	</div>
+{% endfor %}
 
 
 <div class="push">

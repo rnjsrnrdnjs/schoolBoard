@@ -430,7 +430,10 @@ router.get('/update/:Pid', isLoggedIn, async (req, res, next) => {
 });
 router.get('/main', isLoggedIn, async (req, res, next) => {
     try {
-        res.render(`main/main`, {});
+		const notice=await Notice.findOne({
+			order: [['createdAt', 'DESC']],
+		});
+        res.render(`main/main`, {notice});
     } catch (err) {
         console.error(err);
         next(err);
@@ -438,7 +441,9 @@ router.get('/main', isLoggedIn, async (req, res, next) => {
 });
 router.get('/notice', isLoggedIn, async (req, res, next) => {
     try {
-        const notice=await Notice.findAll({});
+        const notice=await Notice.findAll({
+			order: [['createdAt', 'DESC']],
+		});
 		res.render('main/notice',{
 			notice:notice,
 		});
@@ -447,6 +452,19 @@ router.get('/notice', isLoggedIn, async (req, res, next) => {
         next(err);
     }
 });
+router.get('/admin', isLoggedIn, async (req, res, next) => {
+    try {
+		if(req.user.nick!=="운영자" || req.user.email!=="090tree@gmail.com"){
+		   res.redirect('/?Error=운영자 전용페이지입니다.')
+		}
+		res.render('main/admin',{
+		});
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
 router.get('/alarm', isLoggedIn, async (req, res, next) => {
     try {
 		const alarms=await Alarm.findAll({
@@ -547,6 +565,7 @@ router.get('/school/:today', isLoggedIn, async (req, res, next) => {
 		const day=await new Date(parseInt(req.params.today));
 		const year=await day.getFullYear();
 		const month=await day.getMonth() + 1;
+		
 		 const school = await School.findOne({
             where: {
                 id: res.locals.school.id,
@@ -560,7 +579,7 @@ router.get('/school/:today', isLoggedIn, async (req, res, next) => {
                 for (let day of Object.keys(list)) {
                     schoolDiary.push({ month: month, day:"d"+day, diary: list[day].join(', ') });
                 }
-            });
+        });
         const schoolMeal = [];
 		let i=0;
         await neis
@@ -827,6 +846,14 @@ router.delete('/roomAll/:id', async (req, res, next) => {
         next(err);
     }
 });
-
+router.delete('/alarm/:id', async (req, res, next) => {
+    try {
+		await Alarm.destroy({where:{id:req.params.id}});
+        res.send('ok');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
 
 module.exports = router;
