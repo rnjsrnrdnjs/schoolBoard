@@ -13,9 +13,27 @@
 	{% elif kind==="manito" %}
 	 <a style="display: inline-block;" class="btn6" href="/myRoom2" ><i class="fas fa-arrow-left" style="color:#d2d2d2;padding-left:15px;"></i> </a>
 		 <div style="font-weight: bold;
-    	font-size: 0.7em;
+    	font-size: 0.6em;
     	margin: 18px;
-	    display: inline-block;">마니또 채팅</div>
+	    display: inline-block;">
+			 <span>
+			 {{person1.schoolName}}
+				 {% if person1.sexual==="man" %}
+				 남자
+				 {% else %}
+				 여자
+				 {% endif %}
+			 </span>
+			 <img src="/love.svg" style="width;20px; height:20px;">
+			 <span>
+			 {{person2.schoolName}}
+				 {% if person1.sexua2==="man" %}
+				 남자
+				 {% else %}
+				 여자
+				 {% endif %}
+			 </span>
+			 </div>
 	 {% endif %}
 	 <form action="/myRoom" method="get" style="display:inline-block;margin-top:5px;float:right;padding-right:10px;padding-top:10px;padding-bottom:10px;position:relative;">
 		 <button class="btn8 deleteRoom"  type="submit">
@@ -56,7 +74,7 @@
   <form action="/chat" class="chat-form" method="post" enctype="multipart/form-data" style='margin-top:10px; text-align:center;'>
     <label for="img"><i class="far fa-images fa-2x" style="color:skyblue;"></i></label>
     <input type="file" id="img" name="img" accept="image/*">
-    <input style="width:70%; border:1px solid #d2d2d2;" type="text" id="chat" name="chat">
+    <input style="width:70%; border:1px solid #d2d2d2;" type="text" id="chat" name="chat" maxlength="1000">
     <button type="submit" class="btn6" style="width:10%;"><i class="far fa-paper-plane fa-2x" style="color:#828282"></i></button>
   </form>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -83,6 +101,11 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myChat', {
       document.querySelector('.chat-list').appendChild(div);
 		/*document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;*/
     });
+    socket.on('newChat', function (data) {
+		axios.post('/post/myRoom/{{room.id}}/read', {
+          id: data.id,
+        });
+	});
     socket.on('chat', function (data) {
       const div = document.createElement('div');
       if (data.user === '{{user}}') {
@@ -124,12 +147,14 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myChat', {
         })
           .then(() => {
             e.target.chat.value = '';
+			document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
           })
           .catch((err) => {
             console.error(err);
           });
       }
     });
+	  
 	if(document.querySelector('.deleteRoom')){
 	document.querySelector('.deleteRoom').addEventListener('click', function (e) {
 		axios.delete('/myRoom/{{room.id}}');
@@ -140,7 +165,7 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myChat', {
       const formData = new FormData();
       formData.append('img', e.target.files[0]);
       axios.post('/post/myRoom/{{room.id}}/img', formData)
-        .then(() => {
+        .then(async() => {
 		  e.target.files = null;
 		  location.href="";
         })

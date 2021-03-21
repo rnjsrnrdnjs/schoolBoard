@@ -22,7 +22,7 @@ const {
     Clike,
     Cdlike,
     RoomList,
-	RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,
+	RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,MyChatRead
 } = require('../models');
 const router = express.Router();
 
@@ -135,6 +135,10 @@ router.post('/MyRoom/:id/img', isLoggedIn, upload.single('img'), async (req, res
             user: req.user.nick,
             img: req.file.filename,
         });
+		await MyChatRead.create({
+			MyChatId:chat.id,
+			readId:req.user.id,
+		});
         const chat2 = await MyChat.findOne({
             where: {
                 id: chat.id,
@@ -146,6 +150,7 @@ router.post('/MyRoom/:id/img', isLoggedIn, upload.single('img'), async (req, res
             ],
         });
         req.app.get('io').of('/myChat').to(req.params.id).emit('chat', chat2);
+		req.app.get('io').of('/myChat').emit('newChat',chat);
         res.send('ok');
     } catch (error) {
         console.error(error);
@@ -220,14 +225,53 @@ router.post('/notice/add', isLoggedIn, upload2.none(), async (req, res, next) =>
 router.post('/comment', isLoggedIn, async (req, res, next) => {
     try {
         const Pid = await req.body.Pid;
-        const comment = await Comment.create({
+		const post=await Post.findOne({
+			include:[{
+				model:User,
+			}],
+			where:{
+				id:Pid,
+			},
+		});
+		const comment = await Comment.create({
             content: req.body.content,
             like: 0,
             dislike: 0,
             UserId: req.user.id,
             PostId: Pid,
         });
-        res.redirect(`/comment/${Pid}`);
+		const findComment=await Comment.findAll({
+			where:{
+				PostId:Pid,
+			},
+		});
+		const hashUser=[];
+		await Promise.all( findComment.map(async(comment)=>{
+			const user=await User.findOne({
+				where:{
+					id:comment.UserId,
+				},
+			});
+			hashUser[user.id]=await user;
+		}));
+		await Promise.all( hashUser.map(async(user)=>{
+			console.log(user.id+" @");
+				const alarm=await Alarm.create({
+					content:`${req.user.nick} 님이 ${post.User.nick} 님의 게시물에 댓글을 달았어요!`,
+					src:`/comment/${Pid}`,
+					read:"false",
+					UserId:user.id,
+				});
+		}));
+		if(!hashUser[post.User.id]){
+			const alarm=await Alarm.create({
+				content:`${req.user.nick} 님이 ${post.User.nick} 님의 게시물에 댓글을 달았어요!`,
+				src:`/comment/${Pid}`,
+				read:"false",
+				UserId:post.User.id,
+			});
+		}
+		res.redirect(`/comment/${Pid}`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -374,7 +418,8 @@ router.post('/manito/:find', isLoggedIn, async (req, res, next) => {
 		const roomFind=await MyRoom.findOne({
 			where:{
 				kind:"manito",
-				[Op.or]: [{member1: manito[idx].id}, {member2: manito[idx].id}],	
+				[Op.or]:[ {[Op.and]:[{member1:manito[idx].id}, {member2: req.user.id}]},{[Op.and]:[{member1: req.user.id}, {member2: manito[idx].id}]}],
+				//[Op.or]: [{member1: manito[idx].id}, {member2: manito[idx].id}],	
 			}
 		});
 		if(!roomFind){
@@ -398,10 +443,10 @@ router.post('/individualChat/:id', isLoggedIn, async (req, res, next) => {
 		const roomFind=await MyRoom.findOne({
 			where:{
 				kind:"individual",
-				[Op.or]: [{member1: req.params.id}, {member2: req.params.id}],	
+				[Op.or]:[ {[Op.and]:[{member1: req.user.id}, {member2: req.params.id}]},{[Op.and]:[{member1: req.params.id}, {member2: req.user.id}]}],
+				//[Op.or]: [{member1: req.params.id}, {member2: req.params.id}],	
 			}
 		});
-		console.log(roomFind+" @");
 		if(!roomFind){
 			const room=await MyRoom.create({
 				kind:"individual",
@@ -625,13 +670,25 @@ router.post('/myRoom/:id/chat', isLoggedIn, async (req, res, next) => {
             ],
         });
         req.app.get('io').of('/myChat').to(req.params.id).emit('chat', chat2);
+		req.app.get('io').of('/myChat').emit('newChat',chat);
         res.send('ok');
     } catch (err) {
         console.error(error);
         next(error);
     }
 });
-
+router.post('/myRoom/:id/read', isLoggedIn, async (req, res, next) => {
+    try {
+		await MyChatRead.create({
+			MyChatId:req.body.id,
+			readId:req.user.id,
+		});
+		res.send('ok');
+    } catch (err) {
+        console.error(error);
+        next(error);
+    }
+});
 
 router.post('/room/:id/getout', isLoggedIn, async (req, res, next) => {
     try {

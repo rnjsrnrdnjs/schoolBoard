@@ -64,7 +64,7 @@
   <form action="/chat" class="chat-form" method="post" enctype="multipart/form-data" style='margin-top:10px; text-align:center;'>
     <label for="img"><i class="far fa-images fa-2x" style="color:skyblue;"></i></label>
     <input type="file" id="img" name="img" accept="image/*">
-    <input style="width:70%; border:1px solid #d2d2d2;" type="text" id="chat" name="chat">
+    <input style="width:70%; border:1px solid #d2d2d2;" type="text" id="chat" name="chat" maxlength="1000">
     <button type="submit" class="btn6" style="width:10%;"><i class="far fa-paper-plane fa-2x" style="color:#828282"></i></button>
   </form>
 
@@ -178,6 +178,7 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/roomRandom', {
 			profile:'{{user.profile}}',
 		 });
          e.target.chat.value = '';
+		  document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
       }
     });
  

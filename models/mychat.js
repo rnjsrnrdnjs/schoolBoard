@@ -32,5 +32,6 @@ module.exports = class MyChat extends Sequelize.Model {
     static associate(db) {
 		db.MyChat.belongsTo(db.MyRoom);
 		db.MyChat.belongsTo(db.User);
+		db.MyChat.hasMany(db.MyChatRead);
 	}
 };

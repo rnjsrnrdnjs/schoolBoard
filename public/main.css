@@ -178,6 +178,7 @@ header{
 	height:10%;
 }
 footer{
+	border-top:1px solid #ebebeb;
   width:inherit;
   position:fixed;
   bottom: 0%;
@@ -192,9 +193,9 @@ footer{
 }
 .alarm2{
 	background-image:url('/alarm.svg');
-	background-size:40% 40%;
+	background-size:30% 30%;
 	background-repeat:no-repeat;
-	background-position:60% 35%;
+	background-position:80% 10%;
 }
 
 #hdImg{
@@ -498,7 +499,7 @@ label[for='gif'] { cursor: pointer; padding: 5px; }
 	border:none;
 }
 .roomCall{
-	width:100%;height:60px;background:#f5f5da;
+	width:100%;height:60px;background:white;
 	border-top:1px solid #d2d2d2;
 	border-bottom:0.5px solid #d2d2d2;
 	margin:10px;

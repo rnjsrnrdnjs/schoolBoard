@@ -19,6 +19,7 @@ const MyRoom=require('./myroom');
 const MyChat=require('./mychat');
 const Alarm=require('./alarm');
 const Notice=require('./notice');
+const MyChatRead=require('./mychatRead');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -44,6 +45,7 @@ db.MyRoom=MyRoom;
 db.MyChat=MyChat;
 db.Notice=Notice;
 db.Alarm=Alarm;
+db.MyChatRead=MyChatRead;
 
 User.init(sequelize);
 Post.init(sequelize);
@@ -63,6 +65,7 @@ MyRoom.init(sequelize);
 MyChat.init(sequelize);
 Alarm.init(sequelize);
 Notice.init(sequelize);
+MyChatRead.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -80,6 +83,7 @@ RoomAll.associate(db);
 ChatAll.associate(db);
 MyRoom.associate(db);
 MyChat.associate(db);
+MyChatRead.associate(db);
 Notice.associate(db);
 Alarm.associate(db);
 

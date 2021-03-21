@@ -12,7 +12,11 @@ module.exports = class Alarm extends Sequelize.Model {
 				src:{
 					type:Sequelize.STRING(200),
 					allowNull:true,
-				}
+				},
+				read:{
+					type: Sequelize.STRING(5),
+                    allowNull: false,
+				},
             },
             {
                 sequelize,

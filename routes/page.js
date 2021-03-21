@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,} = require('../models');
+const { Post, School, User, Comment, Chat, Room,RoomList,RoomAll,RoomAllList,ChatAll,MyRoom,MyChat,Notice,Alarm,MyChatRead,} = require('../models');
 const router = express.Router();
 const { sequelize } = require('../models');
 const neis = require('../neis/neis');
@@ -11,6 +11,8 @@ const Op = Sequelize.Op;
 router.use(async (req, res, next) => {
     // 기본적으로 제공할 변수들추가 res.locals.변수명
     res.locals.user = req.user;
+	res.locals.talk=false;
+	res.locals.alarm=false;
     if (req.user) {
         const school = await School.findOne({
             include: [
@@ -21,6 +23,40 @@ router.use(async (req, res, next) => {
             where: { id: req.user.SchoolId },
         });
         res.locals.school = req.user ? school : null;
+		
+		/* 여기서 알림 있는지 구현 */
+		//메시지 알림
+		const checkRead=await MyRoom.findAll({
+			where:{
+				[Op.or]: [{member1: req.user.id}, {member2: req.user.id}],	
+			},
+		});
+		await Promise.all( checkRead.map(async(room)=>{
+			const chat=await MyChat.findOne({
+				where:{
+					MyRoomId:room.id,
+				},
+				order: [['createdAt', 'DESC']],
+			});
+			const read=await MyChatRead.findAll({
+				where:{
+					MyChatId:chat.id,
+				},
+			});
+			if(read.length==1 && read[0].readId!=req.user.id)
+				res.locals.talk=true;
+		}));
+		// 게시글 등의 alarm
+		const checkAlarm=await Alarm.findAll({
+			where:{
+				UserId:req.user.id,
+			}
+		})
+		await Promise.all( checkAlarm.map(async(alarm)=>{
+			if(alarm.read==="false"){
+				res.locals.alarm=true;
+			}
+		}));
     }
     next();
 });
@@ -251,10 +287,10 @@ router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
         });
         const io = req.app.get('io');
         if (!room) {
-            return res.redirect('/?error=존재하지 않는 방입니다.');
+            return res.redirect('/?Error=존재하지 않는 방입니다.');
         }
 		if(room.member1!=req.user.id && room.member2!=req.user.id){
-            return res.redirect('/?error=잘못된 접근입니다.');
+            return res.redirect('/?Error=잘못된 접근입니다.');
 		}
 		 const chats = await MyChat.findAll({
 			include:[{
@@ -265,6 +301,21 @@ router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
             },
             order: [['createdAt', 'ASC']],
         });
+		await Promise.all( chats.map(async(chat)=>{
+			const findRead=await MyChatRead.findOne({
+				where:{
+					MyChatId:chat.id,
+					readId:req.user.id,
+				},
+			});
+			if(!findRead){
+				await MyChatRead.create({
+					MyChatId:chat.id,
+					readId:req.user.id,
+				});
+			}
+		}));
+		
 		if(room.kind=="individual"){
 	        return res.render('chat/myChat', {
 	            room,
@@ -274,9 +325,20 @@ router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
 	        });
 		}
 		else if(room.kind=="manito"){
-			
+			const person1=await User.findOne({
+				where:{
+					id:room.member1,
+				}
+			});
+			const person2=await User.findOne({
+				where:{
+					id:room.member2,
+				}
+			});
 	        return res.render('chat/myChat', {
 	            room,
+				person1,
+				person2,
 	            chats: chats,
 	            user: req.user.nick,
 				kind:"manito",
@@ -387,7 +449,26 @@ router.get('/notice', isLoggedIn, async (req, res, next) => {
 });
 router.get('/alarm', isLoggedIn, async (req, res, next) => {
     try {
-        res.render(`main/alarm`, {});
+		const alarms=await Alarm.findAll({
+			where:{
+				UserId:req.user.id,
+			},
+			order: [['createdAt', 'DESC']],
+		});
+		const alarm2=await Alarm.findAll({
+			where:{
+				UserId:req.user.id,
+				read:"false",
+			},
+		});
+		await Promise.all( alarm2.map(async(alarm)=>{
+			await Alarm.update({read:"true"},
+				{where:{
+					id:alarm.id,
+				}}
+			);
+		}));
+        res.render(`main/alarm`, {alarms});
     } catch (err) {
         console.error(err);
         next(err);
@@ -609,6 +690,16 @@ router.get('/myRoom', isLoggedIn, async(req, res, next) => {
 			},
 			order: [['createdAt', 'DESC']],
 		});
+		const chatRead=await MyChatRead.findOne({
+			where:{
+				MyChatId:chat.id,
+				readId:req.user.id,
+			},
+		});
+		if(chatRead)
+			individualRoom[idx].read=await true;
+		else
+			individualRoom[idx].read=await false;
 		individualRoom[idx].MyChat=await chat;
 	}));
 	
@@ -655,6 +746,25 @@ router.get('/myRoom2', isLoggedIn, async(req, res, next) => {
 		});
 		individualRoom[idx].MyChat=await chat;
 	}));
+	await Promise.all( individualRoom.map(async(room,idx)=>{
+		const chat=await MyChat.findOne({
+			where:{
+				MyRoomId:room.id,
+			},
+			order: [['createdAt', 'DESC']],
+		});
+		const chatRead=await MyChatRead.findOne({
+			where:{
+				MyChatId:chat.id,
+				readId:req.user.id,
+			},
+		});
+		if(chatRead)
+			individualRoom[idx].read=await true;
+		else
+			individualRoom[idx].read=await false;
+		individualRoom[idx].MyChat=await chat;
+	}));	
     await res.render('chat/myRoom2',{
 		individualRoom:individualRoom,
 	});
@@ -692,8 +802,9 @@ router.delete('/room/:id', async (req, res, next) => {
 router.delete('/myRoom/:id', async (req, res, next) => {
     try {
         await MyRoom.destroy({ where: { id:req.params.id}} );
-        await MyChat.destroy({ where: { MyRoomId: req.params.id } });
-        res.send('ok');
+        const my=await MyChat.destroy({ where: { MyRoomId: req.params.id } });
+        await MyChat.Read.destroy({where:{MyChatId:my.id},});
+		res.send('ok');
         setTimeout(() => {
             req.app.get('io').of('/myRoom').emit('removeRoom', req.params.id);
         }, 2000);
