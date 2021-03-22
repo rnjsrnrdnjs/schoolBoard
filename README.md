@@ -52,6 +52,8 @@ todo
 -알림,메시지 실시간 기능 구현 못함
 -리액트를 사용하지않은 페이지 렌더링(SPA 사용 x)
 1.이메일인증,비밀번호찾기
+https://gist.github.com/moon497/dce254ffb05e0cdfd24b2ba969ea67a9
 2.리액트 교과서 15장 하기
 3.오목 구현
+https://github.com/pawe9N/Gomoku
 4.리액트 네이티브 출시 및 애드몹 애드센스
