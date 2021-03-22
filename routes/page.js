@@ -7,7 +7,6 @@ const neis = require('../neis/neis');
 const SchoolType = require('../neis/types/SchoolType');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op; 
-
 router.use(async (req, res, next) => {
     // 기본적으로 제공할 변수들추가 res.locals.변수명
     res.locals.user = req.user;

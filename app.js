@@ -6,8 +6,17 @@ const session=require('express-session');
 const nunjucks=require('nunjucks');
 const dotenv=require('dotenv');
 const passport=require('passport');
+const helmet=require('helmet');
+const hpp=require('hpp');
+const redis=require('redis');
+const RedisStore=require('connect-redis')(session);
+const cors = require('cors')();
 
 dotenv.config();
+const redisClient=redis.createClient({
+	url:`redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+	password:process.env.REDIS_PASSWORD,
+});
 const pageRouter=require('./routes/page');
 const authRouter=require('./routes/auth');
 const postRouter=require('./routes/post');
@@ -15,6 +24,7 @@ const deleteRouter=require('./routes/delete');
 const {sequelize} =require('./models');
 const passportConfig=require('./passport');
 const webSocket=require('./socket');
+//const logger=require('./logger');
 
 const app=express();
 passportConfig();
@@ -32,7 +42,13 @@ const sessionMiddleware=session({
 		httpOnly:true,
 		secure:false,
 	},
+	store:new RedisStore({client:redisClient}),
 });
+/*  https를 사용해야하는경우 
+if(process.env.NODE_ENV==='production'){
+	sessionMiddleware.proxy=true;
+	sessionMiddleware.cookie.secure=true;
+}*/
 
 sequelize.sync({force:false})
 	.then(()=>{
@@ -41,8 +57,16 @@ sequelize.sync({force:false})
 .catch((err)=>{
 	console.error(err);
 });
-
-app.use(morgan('dev'));
+if(process.env.NODE_ENV==='production'){
+	app.use(morgan('combined'));
+	app.use(helmet());
+	app.use(hpp());
+	app.use(cors);
+}
+else{
+	app.use(morgan('dev'));
+}
+app.use(cors);
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/img',express.static(path.join(__dirname,'uploads')));
 app.use(express.json());

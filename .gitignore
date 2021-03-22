@@ -1,5 +1,5 @@
 #환경설정
 *.env
 #데이터베이스
-config/config.json
+config/config.js
 node_modules/

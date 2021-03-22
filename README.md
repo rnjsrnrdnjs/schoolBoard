@@ -8,6 +8,8 @@ https://github.com/nnnlog/neis
 https://fontawesome.com/
 https://www.flaticon.com/
 
+//pm2 종료시 npx pm2 kill, 재시작시 npx pm2 reload all
+
 데이터베이스 생성
 1.데이터 베이스 root 비번 바꾸기
 2.데이터 베이스 변동시 npx sequelize db:create
@@ -52,7 +54,7 @@ todo
 -알림,메시지 실시간 기능 구현 못함
 -리액트를 사용하지않은 페이지 렌더링(SPA 사용 x)
 1.이메일인증,비밀번호찾기
-https://gist.github.com/moon497/dce254ffb05e0cdfd24b2ba969ea67a9
+https://velog.io/@neity16/NodeJs-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B5%AC%ED%98%84nodemailer
 2.리액트 교과서 15장 하기
 3.오목 구현
 https://github.com/pawe9N/Gomoku
