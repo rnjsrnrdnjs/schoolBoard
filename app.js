@@ -59,14 +59,14 @@ sequelize.sync({force:false})
 });
 if(process.env.NODE_ENV==='production'){
 	app.use(morgan('combined'));
-	app.use(helmet());
+	//node contentSecurityPolicy 문제를 해결하기위한 방법
+	app.use(helmet({contentSecurityPolicy: false,}));
 	app.use(hpp());
 	app.use(cors);
 }
 else{
 	app.use(morgan('dev'));
 }
-app.use(cors);
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/img',express.static(path.join(__dirname,'uploads')));
 app.use(express.json());
