@@ -44,6 +44,16 @@ module.exports = class User extends Sequelize.Model {
                     type: Sequelize.STRING(200),
                     allowNull: true,
                 },
+				concaveWin:{
+					type: Sequelize.INTEGER,
+					defalutValue:0,
+                    allowNull: true,
+				},
+				concaveLose:{
+					type: Sequelize.INTEGER,
+					defalutValue:0,
+                    allowNull: true,
+				}
 			},
 			{
 				sequelize,

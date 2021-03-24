@@ -46,6 +46,7 @@
 <script>
   const socket = io.connect('https://schoolboard-raidd.run.goorm.io/roomAll', { // 네임스페이스
     path: '/socket.io',
+	  transports: ['websocket'],
   });
 
   socket.on('newRoom', function (data) { // 새 방 이벤트 시 새 방 생성

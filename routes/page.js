@@ -37,6 +37,7 @@ router.use(async (req, res, next) => {
 				},
 				order: [['createdAt', 'DESC']],
 			});
+			if(chat){
 			const read=await MyChatRead.findAll({
 				where:{
 					MyChatId:chat.id,
@@ -44,6 +45,7 @@ router.use(async (req, res, next) => {
 			});
 			if(read.length==1 && read[0].readId!=req.user.id)
 				res.locals.talk=true;
+			}
 		}));
 		// 게시글 등의 alarm
 		const checkAlarm=await Alarm.findAll({
@@ -148,6 +150,14 @@ router.get('/randomTalk', isLoggedIn, async (req, res, next) => {
     }
 });
 
+router.get('/concave',isLoggedIn,async(req,res,next)=>{
+	try{
+		res.render('game/concave');
+	}catch(err){
+		console.error(error);
+		next(error);
+	}
+});
 
 router.get('/room/:id', isLoggedIn,async (req, res, next) => {
     try {

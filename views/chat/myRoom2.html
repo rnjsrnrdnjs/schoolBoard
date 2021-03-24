@@ -49,6 +49,7 @@
 <script>
   const socket = io.connect('https://schoolboard-raidd.run.goorm.io/myRoom', { // 네임스페이스
     path: '/socket.io',
+	  transports: ['websocket'],
   });
   socket.on('removeRoom', function (data) { // 방 제거 이벤트 시 id가 일치하는 방 제거
     document.querySelectorAll('tbody tr').forEach(function (tr) {
