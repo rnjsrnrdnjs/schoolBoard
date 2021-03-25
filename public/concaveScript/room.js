@@ -9,6 +9,9 @@ socket.on('join', function (data) {
 		document.getElementById('userCount').innerHTML=data.userCount;
     });
 	socket.on('completeMatch',function(data){
+		if(player){
+			return;
+		}
 		let re=document.getElementById('reMatch');
 		let cancel=document.getElementById('cancelMatch');
 		let find=document.getElementById('findMatch');
@@ -18,16 +21,21 @@ socket.on('join', function (data) {
 		const div = document.createElement('div');
         div.classList.add('system');
 		div.innerHTML='대화가 시작되었습니다.'
-		document.querySelector('.chat-list').appendChild(div);
-		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+		
+		
+		const name = document.getElementById('name');
+        player = new Player(name.innerHTML, data.color);
+		game = new Game(data.room);
+        game.displayBoard('게임 시작!');
+		player.setCurrentTurn(data.turn);
 		
 	});
 	socket.on('endChat',function(data){
 		const div = document.createElement('div');
         div.classList.add('system');
 		div.innerHTML='대화가 종료되었습니다.'
-		document.querySelector('.chat-list').appendChild(div);
-		document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
+		//document.querySelector('.chat-list').appendChild(div);
+		//document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;	
 	});
  	//랜덤요청
 	socket.on('refind', function (data) {
@@ -39,13 +47,12 @@ socket.on('join', function (data) {
     });  
 
 function init(){
-    const p1Color = "white";
-    const p2Color = "black";
 
 	
 	document.getElementById('findMatch').addEventListener('click',function(){
 		//let showFoot = document.getElementById("showFoot"); while ( showFoot.hasChildNodes() ) { showFoot.removeChild( showFoot.firstChild ); }
 		
+
 		
 		socket.emit('requestRandomChat');
 		let find=document.getElementById('findMatch');
@@ -55,11 +62,7 @@ function init(){
 		const div = document.createElement('div');
         div.classList.add('system');
 		div.innerHTML='대화상대를 찾는중입니다.'
-		
-		
-		const name = document.getElementById('name');
-		console.log(name.value());
-        player = new Player(name, p1Color);
+				
         //socket.emit('createGame', { name });
 		//document.querySelector('.chat-list').appendChild(div);
 	});
@@ -135,12 +138,13 @@ function init(){
         game.displayBoard(message);
         player.setCurrentTurn(true);
       });
-    
+    */
       //After played turn update board and give new turn to other player
       socket.on('turnPlayed', (data) => {
         let row = game.getRowFromTile(data.tile);
         let col = game.getColFromTile(data.tile);
 
+		  console.log(2);
         const opponentColor = player.getPlayerColor() === p1Color ? p2Color : p1Color;
         game.updateBoard(opponentColor, row, col, data.tile);
         player.setCurrentTurn(true);
@@ -160,7 +164,7 @@ function init(){
       socket.on('userDisconnect', () =>{
         const message = `You win! Other player was disconnected!`;
         game.endGameMessage(message);
-      })*/
+      });
 }
 
 init();

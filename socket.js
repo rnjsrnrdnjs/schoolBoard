@@ -156,9 +156,10 @@ module.exports = (server, app, sessionMiddleware) => {
                 console.log(concaveRoom[key]);
                 if (concaveRoom[key].member.length == 1) {
                     var roomKey = concaveRoom[key].id;
+                    socket.broadcast.to(roomKey).emit('completeMatch', {color:"black",room:roomKey,turn:true,});
                     socket.join(roomKey);
                     concaveRoom[roomKey].member[1] = socket.id;
-                    concave.to(roomKey).emit('completeMatch', {});
+                    concave.to(roomKey).emit('completeMatch', {color:"white",room:roomKey,turn:false,});
                     return;
                 }
             }
@@ -188,10 +189,11 @@ module.exports = (server, app, sessionMiddleware) => {
                 console.log(concaveRoom[key]);
                 if (concaveRoom[key].member.length == 1) {
                     var roomKey = concaveRoom[key].id;
+                    socket.broadcast.to(roomKey).emit('completeMatch', {color:"black",room:roomKey,turn:true,});
                     socket.join(roomKey);
                     concaveRoom[roomKey].member[1] = socket.id;
                     concave.to(roomKey).emit('refind', {});
-                    concave.to(roomKey).emit('completeMatch', {});
+                    concave.to(roomKey).emit('completeMatch', {color:"white",room:roomKey,turn:false,});
                     return;
                 }
             }

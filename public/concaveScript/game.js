@@ -36,7 +36,7 @@ class Game {
         }
         //If tile has been already played
         else{
-          if ($(this).prop('disabled')) {
+          if (document.getElementById(`${this.id}`).disabled) {
             alert('This tile has already been played on!');
             return;
           }
@@ -51,12 +51,12 @@ class Game {
           player.setCurrentTurn(false);
         }
       }    
-      $('#color').css("background-color", `${player.getPlayerColor()}`);
+	  document.getElementById('color').style.background=`${player.getPlayerColor()}`;
       game.createTiles(tileClickHandler);
       if(player.getPlayerColor() != "white" && this.moves == 0){
         game.setTimer();
       }else{
-        $(".center").prop(`disabled`, true);
+		  document.getElementsByClassName('center')[0].disabled=true;
       }
     }
 
@@ -65,27 +65,32 @@ class Game {
       //Create tiles in the DOM
       for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 14; j++) {
-          $('.center').append(`<button class="tile" id="button_${i}_${j}"></button>`)
+			
+		  let btn=document.createElement('button');
+		   btn.innerHTML=`<button class="tile" id="button_${i}_${j}"></button>`;
+		  document.getElementsByClassName('center')[0].appendChild(btn);	
         }
-        $('.center').append(`<button class="tile" id="button_${i}_14" style="float:none;"/>`);
+		  let btn=document.createElement('button');
+		  btn.innerHTML=`<button class="tile" id="button_${i}_14" style="float:none;"></button>`;
+		  document.getElementsByClassName('center')[0].appendChild(btn);	
       }
 
       //Attach click listener to tiles
       for (let i = 0; i < 15; i++) {
         this.board.push(['']);
         for (let j = 0; j < 15; j++) {
-          $(`#button_${i}_${j}`).on('click', clickHandler);
+			document.getElementById(`button_${i}_${j}`).addEventListener('click',clickHandler);
         }
       }
     }
 
     //Set timer for turn
     setTimer(){
-      $("#time").text(`Time : ${player.getTimeForTurn()}`);
+	  document.getElementById('time').innerHTML=`Time : ${player.getTimeForTurn()}`;
 
       timePass = setInterval(function(){
         player.timeForTurn--;
-        $("#time").text(`Time : ${player.getTimeForTurn()}`);
+		document.getElementById('time').innerHTML=`Time : ${player.getTimeForTurn()}`;
         //If time is even zero, then other player wins!
         if(player.getTimeForTurn() == 0){
 
@@ -111,22 +116,27 @@ class Game {
 
     //Remove the menu from DOM, display the gameboard
     displayBoard(message) {
-	  document.getElementById('menu').style.display="none";
-	  document.getElementById('gameboard').style.display="block";
-      $('#userHello').html(message);
+	  document.getElementsByClassName('menu')[0].style.display='none';
+	  document.getElementsByClassName('gameBoard')[0].style.display='block';
+	  document.getElementById('userHello').innerHTML=message;
       this.createGameBoard();
     }
 
     //Update board
     updateBoard(color, row, col, tile) {
       clearInterval(timePass);
-      $("#time").text(`Not your turn!`);
-      $(".center").prop(`disabled`, true);
+	  document.getElementById('time').innerHTML=`Not your turn!`;
+	  document.getElementsByClassName('center')[0].disabled=true;
       if(!player.getCurrentTurn()){
         game.setTimer();
-        $(".center").prop(`disabled`, false);
+        document.getElementsByClassName('center')[0].disabled=false;
       }
-      $(`#${tile}`).css("backgroundImage", `url(images/${color}Pawn.png)`).prop('disabled', true);
+		
+		//background = "url('이미지 경로') no-repeat 0 0";
+
+	  document.getElementById(`${tile}`).style.background=`url(/${color}Pawn.png)`;
+	  document.getElementById(`${tile}`).disabled=true;
+      //$(`#${tile}`).css("backgroundImage", `url(images/${color}Pawn.png)`).prop('disabled', true);
       this.board[row][col] = color[0];
       this.moves++;
     }
@@ -161,7 +171,11 @@ class Game {
 
     // Send an update to the opponent game board
     playTurn(tile) {
-      const clickedTile = $(tile).attr('id');
+		
+		console.log(tile.id);
+		
+	  const clickedTile =	tile.id;
+      //const clickedTile = $(tile).attr('id');
 
       //Emit that turn was played by player
       socket.emit('playTurn', {
