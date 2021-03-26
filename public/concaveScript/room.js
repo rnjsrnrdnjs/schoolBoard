@@ -47,7 +47,8 @@ socket.on('join', function (data) {
     });  
 
 function init(){
-
+	var p1Color="white";
+	var p2Color="black";
 	
 	document.getElementById('findMatch').addEventListener('click',function(){
 		//let showFoot = document.getElementById("showFoot"); while ( showFoot.hasChildNodes() ) { showFoot.removeChild( showFoot.firstChild ); }
@@ -144,7 +145,6 @@ function init(){
         let row = game.getRowFromTile(data.tile);
         let col = game.getColFromTile(data.tile);
 
-		  console.log(2);
         const opponentColor = player.getPlayerColor() === p1Color ? p2Color : p1Color;
         game.updateBoard(opponentColor, row, col, data.tile);
         player.setCurrentTurn(true);

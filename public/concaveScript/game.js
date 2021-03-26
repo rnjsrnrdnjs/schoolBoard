@@ -65,12 +65,14 @@ class Game {
       //Create tiles in the DOM
       for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 14; j++) {
-			
-		  let btn=document.createElement('button');
+			if(i==7 && j==7){
+				
+			}
+		  let btn=document.createElement('div');
 		   btn.innerHTML=`<button class="tile" id="button_${i}_${j}"></button>`;
 		  document.getElementsByClassName('center')[0].appendChild(btn);	
         }
-		  let btn=document.createElement('button');
+		  let btn=document.createElement('div');
 		  btn.innerHTML=`<button class="tile" id="button_${i}_14" style="float:none;"></button>`;
 		  document.getElementsByClassName('center')[0].appendChild(btn);	
       }
@@ -134,7 +136,7 @@ class Game {
 		
 		//background = "url('이미지 경로') no-repeat 0 0";
 
-	  document.getElementById(`${tile}`).style.background=`url(/${color}Pawn.png)`;
+	  document.getElementById(`${tile}`).style.backgroundImage=`url(/${color}Pawn.png)`;
 	  document.getElementById(`${tile}`).disabled=true;
       //$(`#${tile}`).css("backgroundImage", `url(images/${color}Pawn.png)`).prop('disabled', true);
       this.board[row][col] = color[0];
