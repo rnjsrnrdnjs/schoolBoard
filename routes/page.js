@@ -378,6 +378,7 @@ router.get('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/join', isNotLoggedIn, (req, res, next) => {
 	res.render('join');
 });
+
 router.get('/findSchool', isNotLoggedIn, (req, res, next) => {
     res.render('findSchool');
 });

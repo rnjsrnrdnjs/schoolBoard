@@ -391,6 +391,7 @@ router.post('/post/dislike/:id', isLoggedIn, async (req, res, next) => {
 });
 router.post('/join/:find', isNotLoggedIn, async (req, res, next) => {
     try {
+		res.locals.schoolName=req.params.find;
         res.render('join', {
             find: req.params.find,
             code: req.body.code,
