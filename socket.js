@@ -202,21 +202,6 @@ module.exports = (server, app, sessionMiddleware) => {
             concaveRoom[socket.id] = { id: socket.id, member: [] };
             concaveRoom[socket.id].member[0] = socket.id;
         });
-		/*
-		socket.on('sendMessage', function (data) {
-            console.log('sendMessage!');
-            console.log(data.img);
-            for (var key in socketRoom) {
-                if (
-                    socketRoom[key].member[0] == socket.id ||
-                    socketRoom[key].member[1] == socket.id
-                ) {
-                    roomRandom.to(socketRoom[key].id).emit('chat', data);
-                    return;
-                }
-            }
-        });
-		*/
 		// 아마 고쳐야하는 부분
         socket.on('playTurn', (data) => {
             socket.broadcast.to(data.room).emit('turnPlayed', {
@@ -224,7 +209,11 @@ module.exports = (server, app, sessionMiddleware) => {
                 room: data.room,
             });
         });
-
+		 socket.on('gameEnded', (data) => {
+	        socket.broadcast.to(data.room).emit('gameEnd', data);
+     	   socket.leave(data.room);
+  		  });
+    
         socket.on('disconnect', () => {
             console.log('concave 네임스페이스에 접속 헤제');
             const currentRoom = socket.adapter.rooms;

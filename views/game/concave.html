@@ -1,96 +1,136 @@
 {% extends 'layout.html' %} {% block content %}
-<!--
-		<div class="concave">	
-			<div class="menu">
-				
-				<h1 id="title">Gomoku</h1>
-				<h2 id="alert"></h2>
-				<h3 class="welcome">Hello, Welcome in the gomoku multiplayer game site!</h3>
-					
-					<div style="display:inline-block; float:right; padding-top:15px;position:relative;
-    width: 140px;">
-		접속인원 : 
-		<span id="userCount"></span>
-	 </div> 
-					<button class="btn8" id="findMatch" type="submit" style="display:inline-block; float:right;margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 시작하기
-		 </button>
-	 	 <button class="btn8" id="cancelMatch" type="submit" style="display:none; float:right; margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 취소하기
-		 </button>
-	 	 <button class="btn8" id="reMatch" type="submit" style="display:none; float:right;margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 다시하기
-		 </button>
-		<div id="name" style="display:none;">{{user.nick}}</div>
-	</div>
-			
-			
-			<div class="gameBoard">
-				<h2 id="userHello"></h2>
-				<h3 id="turn"></h3>
-				<div id="color"></div>
-				<div class="center"></div>
-				<div id="time">Not your turn!</div>
-				<button class="goBack" onclick="window.location.reload()">Go back</button>
-			</div>
-	</div>
--->
+
 <div class="concave">
-	<div style="display:inline-block; float:right; padding-top:15px;position:relative;
-    width: 140px;">
-		접속인원 : 
-		<span id="userCount"></span>
-	 </div> 
-					<button class="btn8" id="findMatch" type="submit" style="display:inline-block; float:right;margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 시작하기
-		 </button>
-	 	 <button class="btn8" id="cancelMatch" type="submit" style="display:none; float:right; margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 취소하기
-		 </button>
-	 	 <button class="btn8" id="reMatch" type="submit" style="display:none; float:right;margin-top:5px;padding-top:10px;padding-bottom:10px;position:relative;
-    width: 80px;">
-			 다시하기
-		 </button>
-		<div id="name" style="display:none;">{{user.nick}}</div>
-	
-			<div class="menu">
-				<h1 id="title">Gomoku</h1>
-				<h2 id="alert"></h2>
-				<h3 class="welcome">Hello, Welcome in the gomoku multiplayer game site!</h3>
-				<div id="form">
-					<h4>Create a new game:</h4>
-					<input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
-					<button id="new">New Game</button>
-					<br><br>
-					<h4>Join to the existing game:</h4>
-					<input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
-					<input type="text" name="room" id="room" placeholder="Enter Game ID" required>
-					<button id="join">Join Game</button>
-				</div>		
-			</div>
-			<div class="gameBoard">
-				<h2 id="userHello"></h2>
-				<h3 id="turn"></h3>
-				<div id="color"></div>
-				<div class="center"></div>
-				<div id="time">Not your turn!</div>
-				<button class="goBack" onclick="window.location.reload()">Go back</button>
-			</div>
+    <div class="menu">
+        <div id="title" style="width: 100%; height: 10vh; background-color:#FFA8A5;"><span style="font-weight:bold; padding:5%;">
+			<span style="color:white;">마니또</span> <span>오목</span> <img src="/game-controller.svg" style="width:10%; height:auto;">  </span>
+			<div
+            style="
+               display: inline-block;
+    padding: 5%;
+    font-size: 0.8em;
+    color: #282828;
+    font-weight: bold;
+            "
+        >
+            접속인원 :
+            <span id="userCount"></span>
+        </div>
 		</div>
-{% endblock %} 
-{% block script %} 
-<script>
 
+        <div id="alert"></div>
+        <div class="welcome">앱 이용자들과 오목을 즐겨보세요!</div>
+        
+        <button
+            class="btn8"
+            id="findMatch"
+            type="submit"
+            style="
+                display: inline-block;
+                width: 80px;
+            "
+        >
+            시작하기
+        </button>
+        <button
+            class="btn8"
+            id="cancelMatch"
+            type="submit"
+            style="
+                display: none;
+                width: 80px;
+            "
+        >
+            취소하기
+        </button>
+        <button
+            class="btn8"
+            id="reMatch"
+            type="submit"
+            style="
+                display: none;
+                width: 80px;
+            "
+        >
+            다시하기
+        </button>
+        <div id="name" style="display: none;">{{user.nick}}</div>
+    </div>
+	
+    <div class="gameBoard">
+        <div id="userHello"></div>
+        <div id="turn"></div>
+        <div id="color"></div>
+        <div class="center"></div>
+        <div id="time">상대의 차례입니다!</div>
+        <button class="goBack" onclick="window.location.reload()">Go back</button>
+    </div>
+</div>
 
-</script>
-		<!--<script src="../node_modules/jquery/dist/jquery.min.js"></script>-->
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="/concaveScript/player.js"></script>
-		<script src="/concaveScript/game.js"></script>
-		<script src="/concaveScript/room.js"></script>
+<div class="push"></div>
+<footer>
+    <table>
+        <tr>
+            <td class="footerTd">
+                <a href="/main">
+                    <i class="fas fa-clipboard-list fa-2x" style="color: #b4b4b4;"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat">
+                    <i class="fas fa-envelope fa-2x" style="color: #b4b4b4;"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/game">
+                    <i class="fas fa-gamepad fa-2x" style="color: #ff5675;"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school">
+                    <i class="fas fa-school fa-2x" style="color: #b4b4b4;"></i>
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting">
+                    <i class="fas fa-cogs fa-2x" style="color: #b4b4b4;"></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="footerTd">
+                <a href="/main" class="btn2">
+                    게시판
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/chat" class="btn2">
+                    채팅
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/game" class="btn2" style="color: #ff5675;">
+                    게임
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/school" class="btn2">
+                    학급정보
+                </a>
+            </td>
+            <td class="footerTd">
+                <a href="/setting" class="btn2">
+                    설정
+                </a>
+            </td>
+        </tr>
+    </table>
+</footer>
+{% endblock %} {% block script %}
+<script></script>
+<!--<script src="../node_modules/jquery/dist/jquery.min.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/concaveScript/player.js"></script>
+<script src="/concaveScript/game.js"></script>
+<script src="/concaveScript/room.js"></script>
 {% endblock %}

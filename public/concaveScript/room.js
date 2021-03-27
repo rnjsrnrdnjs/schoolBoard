@@ -53,8 +53,6 @@ function init(){
 	document.getElementById('findMatch').addEventListener('click',function(){
 		//let showFoot = document.getElementById("showFoot"); while ( showFoot.hasChildNodes() ) { showFoot.removeChild( showFoot.firstChild ); }
 		
-
-		
 		socket.emit('requestRandomChat');
 		let find=document.getElementById('findMatch');
 		let cancel=document.getElementById('cancelMatch');
@@ -63,9 +61,6 @@ function init(){
 		const div = document.createElement('div');
         div.classList.add('system');
 		div.innerHTML='대화상대를 찾는중입니다.'
-				
-        //socket.emit('createGame', { name });
-		//document.querySelector('.chat-list').appendChild(div);
 	});
 	document.getElementById('cancelMatch').addEventListener('click',function(){
 		socket.emit('cancelRequest');
@@ -86,60 +81,6 @@ function init(){
 		cancel.style.display="inline-block";	
 	});
 	
-	/*
-    $('#new').on('click', () => {
-        const name = $('#nameNew').val();
-        if (!name) {
-          alert('Please enter your name:');
-          return;
-        }
-        player = new Player(name, p1Color);
-        socket.emit('createGame', { name });
-      });
-    
-      // Join an existing game on the entered roomId.
-	 
-	$('#join').on('click', () => {
-        const name = $('#nameJoin').val();
-        const roomID = $('#room').val();
-
-        if (!name || !roomID) {
-          alert('Please enter your name and game ID:');
-          return;
-        }
-        player = new Player(name, p2Color);
-        socket.emit('joinGame', { name, room: roomID });
-      });
-
-     
-    
-      // New Game created by current client
-      socket.on('newGame', (data) => {
-        const message = `Hello ${data.name}<br/> Game ID: 
-          ${data.room}<br/> Waiting for player 2...`;
-    
-        // Create game for first player
-        game = new Game(data.room);
-        game.displayBoard(message);
-      });
-    
-      //Player 1 joined the game
-      socket.on('player1', (data) => {
-        const message = `Hello, ${player.getPlayerName()}`;
-        $('#userHello').html(message);
-        player.setCurrentTurn(false);
-      });
-    
-      //Player 2 joined the game
-      socket.on('player2', (data) => {
-        const message = `Hello, ${data.name}`;
-    
-        // Create game for player 2
-        game = new Game(data.room);
-        game.displayBoard(message);
-        player.setCurrentTurn(true);
-      });
-    */
       //After played turn update board and give new turn to other player
       socket.on('turnPlayed', (data) => {
         let row = game.getRowFromTile(data.tile);
