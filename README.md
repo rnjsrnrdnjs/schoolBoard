@@ -48,7 +48,23 @@ socket emit을 이용하자
 axios로 포스트를 보내고 res.send('ok')시 부드러운 페이지 요청 가능?
 
 
+
+
+
 todo
+#1.오목구현
+#1-2.앱디자인 끝내기
+4.redis socketio 멀티프로세스 해결하기
+2.twilio 휴대폰인증,비밀번호찾기
+https://velog.io/@josworks27/Twilio%EB%A1%9C-SMS-%EB%B3%B4%EB%82%B4%EA%B8%B0
+https://darrengwon.tistory.com/919
+3.aws 람다? 데이터베이스? lightsail 배포하기, redis 이용
+5.expo push notification
+https://aspdotnet.tistory.com/2115
+6.expo 리액트네이티브 출시 및 애드몹
+
+
+
 -채팅 이미지 전송 버그 해결
 -게시글 스크롤마다 렌더링하기
 -알림,메시지 실시간 기능 구현 못함

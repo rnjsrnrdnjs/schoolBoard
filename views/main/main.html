@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <header>
-    <img src="/manito.svg" id="hdImg" />
+	<div class="headLine">		
     <div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
@@ -14,11 +14,26 @@
 	{% else %}
 		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
 	{% endif %}
+	</div>
+
 </header>
+<div style="background-color: #fcfcfc;
+    height: 80vh;
+    padding-top: 5%;">
+	
 <div class="title1">
 		{{school.name}} 게시판
 </div>
-<div class="boardBG" style="margin-bottom: 30px;margin-top: 10px; font-weight:bold;text-shadow: 1px 1px 2px pink, 0 0 1em #d2d2d2, 0 0 0.2em green;">
+<div class="boardBG" style="margin-bottom: 30px;
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+    font-weight: bold;
+    border-right: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: white;
+    text-shadow: 1px 1px 2px pink, 0 0 1em #d2d2d2, 0 0 0.2em #fffcdc;
+    box-shadow: 2px 2px blanchedalmond;">
 	<table style="    width: 90%;
     text-align: center;
     margin-left: 5%;">
@@ -62,6 +77,7 @@
 		<span style="margin-left:65%;color:#6e6e6e;"><i class="fas fa-arrow-left"></i> 더보기</span>
 	</div>
 	
+</div>
 </div>
 
 

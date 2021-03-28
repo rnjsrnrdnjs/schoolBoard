@@ -1,7 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
+	<div class="headLine"><div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
 	{% if alarm===true %}
@@ -14,12 +13,79 @@
 	{% else %}
 		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
 	{% endif %}
+	</div>
+
 </header>
 
 
 <div onclick="location.href='/concave';">
-	<img src="/concaveLogo.svg" style="width:30%;height:auto;">
-	오목
+	<div class="menu">
+        
+        <div style="    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #fff0f5;
+    border-left: 1px solid #fff0f5;
+    border-right: 1px solid #fff0f5;
+    margin-bottom: 3px;
+    text-align: center;
+    box-shadow: 3px 3px blanchedalmond;">
+            <div
+                id="alert"
+                style="text-align: center; margin-top: 2%; color: #282828; font-weight: bold;"
+            ></div>
+            <div
+                class="welcome"
+                style="
+                    text-align: center;
+                    margin-top: 2%;
+                    color: darksalmon;
+                    font-weight: bold;
+                    margin-bottom: 5%;
+                "
+            >
+                앱 이용자들과 오목을 즐겨보세요<img src="/war.svg" style="width: 5%;" />
+            </div>
+            <div style="width;100%; text-align:center;     margin-bottom: 4%;">
+                <img
+                    src="/concave.svg"
+                    style="
+                        width: 80%;
+                        border-radius: 5%;
+                        background-color: white;
+                        border: 1px solid pink;
+                    "
+                />
+                <div style="color: #828282; text-shadow: 1px 1px #d2d2d2;">
+                    흑돌은 3x3, 4x4, 6목 이상을 둘수없고 <br />흰돌은 제약이없는 <br />렌주룰로
+                    진행됩니다!
+                </div>
+            </div>
+
+            <div style="width: 100%; text-align: center;">
+                <button
+                    class="btn8"
+                    id="findMatch"
+                    type="submit"
+                    style="
+                        display: inline-block;
+                        width: 100px;
+                        font-size: 0.8rem;
+                        font-weight: bold;
+                        color: white;
+                        padding: 2%;
+                        background-color: rgb(255, 158, 155);
+                        box-shadow: crimson 5px 5px;
+                    "
+                >
+                    <img src="/start.svg" style="width: 100%;" />입장하기
+                </button>
+               
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="push">

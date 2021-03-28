@@ -1,7 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
+	<div class="headLine"><div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
 	{% if alarm===true %}
@@ -14,6 +13,8 @@
 	{% else %}
 		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
 	{% endif %}
+	</div>
+
 </header>
             <a
                 href="/auth/logout"
@@ -129,6 +130,7 @@
 	<div> 앱버전 - v1.0.0 </div>
     <div>개발자 github - <a class="ax" target='_blank' href="https://github.com/rnjsrnrdnjs">github.com/rnjsrnrdnjs</a></div>
     <div>학급정보 api 오픈소스 - <a class="ax" target='_blank' href="https://github.com/nnnlog/neis"> nnnlog</a></div>
+    <div>오목 api 오픈소스 - <a class="ax" target='_blank' href="https://github.com/pawe9N/Gomoku"> nnnlog</a></div>
     <div>그림 제공 - <a class="ax" target='_blank' href="https://pixabay.com/"> 픽사베이</a></div>
     <div>아이콘 제공1 - <a class="ax" target='_blank' href="https://fontawesome.com/"> 폰트어썸</a></div>
     <div>

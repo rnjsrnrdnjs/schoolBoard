@@ -9,7 +9,7 @@ class Game {
         //count of moves
         this.moves = 0;
     }
-
+	
     //Create the Game board and attach click event to tiles
     createGameBoard() {
         function tileClickHandler() {
@@ -17,30 +17,31 @@ class Game {
 
             row = game.getRowFromTile(this.id);
             col = game.getColFromTile(this.id);
-
             //If is not your turn
             if (!player.getCurrentTurn() || !game) {
-                alert('Its not your turn!');
                 return;
             }
-
-            //In gomoku first move for blacks have to be in the middle tile
-			/*
-            if (game.moves == 0 && !(row == 7 && col == 7)) {
-                alert('You have to put pawn in the middle of grid!');
-                return;
-            }
-            //In gomoku second move for blacks have to be beyond 5x5 grid in the middle
-            else if (game.moves == 2 && row >= 5 && row <= 9 && col >= 5 && col <= 9) {
-                alert('You have to put pawn beyond 5x5 grid in the middle!');
-                return;
-            }*/
-            //If tile has been already played
             else {
                 if (document.getElementById(`${this.id}`).disabled) {
-                    alert('그곳에는 둘수없습니다.');
                     return;
                 }
+				if(player.getPlayerColor()=='black' ){
+					console.log(game.checkBlack33(row,col));
+					/*
+					if(checkBlack33(row,col)==true){
+					   alert('흑돌은 3x3 자리에 둘수없습니다.')
+					   return;
+					}*/
+					/*
+					if(checkBlack44(row,col)){
+					   alert('흑돌은 4x4 자리에 둘수없습니다.')
+					   return;
+					}
+					if(checkBlack66(row,col)){
+					   alert('흑돌은 6목 이상에 둘수없습니다.')
+					   return;
+					}*/
+				}
 
                 //Update board after player turn.
                 game.playTurn(this);
@@ -119,11 +120,17 @@ class Game {
 
     //Set timer for turn
     setTimer() {
-        document.getElementById('time').innerHTML = `Time : ${player.getTimeForTurn()}`;
+			socket.emit('time',{
+				room:game.getRoomId(),
+				time:player.getTimeForTurn(),
+			});
 
         timePass = setInterval(function () {
             player.timeForTurn--;
-            document.getElementById('time').innerHTML = `Time : ${player.getTimeForTurn()}`;
+			socket.emit('time',{
+				room:game.getRoomId(),
+				time:player.getTimeForTurn(),
+			});
             //If time is even zero, then other player wins!
             if (player.getTimeForTurn() == 0) {
                 let winMessage;
@@ -136,6 +143,7 @@ class Game {
 
                 socket.emit('gameEnded', {
                     room: game.getRoomId(),
+					lose:player.getPlayerId(),
                     message: winMessage,
                 });
 
@@ -150,14 +158,12 @@ class Game {
     displayBoard(message) {
         document.getElementsByClassName('menu')[0].style.display = 'none';
         document.getElementsByClassName('gameBoard')[0].style.display = 'block';
-        document.getElementById('userHello').innerHTML = message;
         this.createGameBoard();
     }
 
     //Update board
     updateBoard(color, row, col, tile) {
         clearInterval(timePass);
-        document.getElementById('time').innerHTML = `상대의 차례입니다.`;
         document.getElementsByClassName('center')[0].disabled = true;
         if (!player.getCurrentTurn()) {
             game.setTimer();
@@ -198,12 +204,7 @@ class Game {
 
     // Send an update to the opponent game board
     playTurn(tile) {
-        console.log(tile.id);
-
         const clickedTile = tile.id;
-        //const clickedTile = $(tile).attr('id');
-
-        //Emit that turn was played by player
         socket.emit('playTurn', {
             tile: clickedTile,
             room: this.getRoomId(),
@@ -213,47 +214,88 @@ class Game {
     //When game is ended send message to player about winner
     endGameMessage(message) {
 		document.getElementsByClassName('tile').disabled=true;
-
-		
-		//$('.tile').attr('disabled', true);
-
         setTimeout(function () {
 			document.getElementsByClassName('gameBoard')[0].style.display='none';
-            //$('.gameBoard').css('display', 'none');
-            //$('.center').empty();
-			console.log(message+" @");
             if (message.includes(player.getPlayerColor())) {
 				document.getElementById('alert').innerHTML='당신의 승리!';
-                //$('#alert').text('You win!');
                 setTimeout(function () {
                     location.reload();
                 }, 2000);
             } else if (message.includes('disconnected')) {
-                //$('#alert').text(message);
-				document.getElementById('alert').innerHTML=message;
+				document.getElementById('alert').innerHTML='당신의 승리!';
                 setTimeout(function () {
                     location.reload();
                 }, 2000);
             } else if (message.includes('draw')) {
-				document.getElementById('alert').innerHTML=message;
-                //$('#alert').text(message);
+				document.getElementById('alert').innerHTML='무승부!';
                 setTimeout(function () {
                     location.reload();
                 }, 2000);
             } else {
 				document.getElementById('alert').innerHTML='당신의 패배!';
-                //$('#alert').text('You loose!');
                 setTimeout(function () {
                     location.reload();
                 }, 2000);
             }
 			document.getElementsByClassName('menu')[0].style.display="block";
-			//document.getElementsByClassName('welcome').style.display="block";
-            //$('.menu').css('display', 'block');
-            //$('.welcome').remove();
         }, 1000);
     }
+	checkBlack33(x,y){
+		let cnt=0;
+		let chkBlack=0;
+		//toRight
+		if(x-1>0 && game.board[x-1][y]=='b')
+		   chkBlack++;
+		if(x+1<15 && game.board[x+1][y]=='b')
+		   chkBlack++;
+		if(x+2<15 && game.board[x+2][y]=='b')
+		   chkBlack++;
+		if(x-1>0 && game.board[x-1][y]=='w')
+		   chkBlack=-10;
+		if(game.board[x][y]=='w')
+		   chkBlack=-10;
+		if(x+1<15 && game.board[x+1][y]=='w')
+		   chkBlack=-10;
+		if(x+2<15 && game.board[x+2][y]=='w')
+		   chkBlack=-10;
+		if(chkBlack==2)cnt++;
+		chkBlack=0;
+		//toRightTop
+		if(x-1>0 && y-1>0 && game.board[x-1][y-1]=='b')
+		   chkBlack++;
+		if(x+1<15 && y+1<15 && game.board[x+1][y+1]=='black')
+		   chkBlack++;
+		if(x+2<15 && y+2<15 && game.board[x+2][y+2]=='black')
+		   chkBlack++;
+		if(chkBlack==2)cnt++;
+		chkBlack=0;
+		//toTop
+		if(x-1>0 && game.board[x][y+1]=='black')
+		   chkBlack++;
+		if(x+1<15 && game.board[x+1][y]=='black')
+		   chkBlack++;
+		if(x+2<15 && game.board[x+2][y]=='black')
+		   chkBlack++;
+		if(toRight==2)cnt++;
+		chkBlack=0;
+		//toLeftTop
+		//toLeft
+		//toLeftBottom
+		//toBottom
+		//toRightBottom
 
+		return false;
+		
+		
+	}
+	checkBlack44(y,x){
+		return false;
+		
+	}
+	checkBlack66(y,x){
+		return false;
+		
+	}
     //Check if player has 5 pawns in row
     checkInHorizontal(color) {
         let value = 0;
@@ -367,6 +409,7 @@ class Game {
         const message = player.getPlayerColor();
         socket.emit('gameEnded', {
             room: this.getRoomId(),
+			win:player.getPlayerId(),
             message,
         });
         this.endGameMessage(message);

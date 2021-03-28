@@ -1,7 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
+	<div class="headLine"><div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
 	{% if alarm===true %}
@@ -14,6 +13,8 @@
 	{% else %}
 		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
 	{% endif %}
+	</div>
+
 </header>
 
 

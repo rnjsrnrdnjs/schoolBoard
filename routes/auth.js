@@ -100,11 +100,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 	  edu:neis.REGION[sname.edu],
 	  code:sname.code,
 	  kind:sname.kind,
-	  authority:0,
 	  schoolName:sname.name,
 	  SchoolId:sname.id, 
 	  profile:'blank-profile.svg',
-	  randomState:0,	
+	  concaveWin:0,	
+	  concaveLose:0,	
     });
 	  
     return res.redirect('/');

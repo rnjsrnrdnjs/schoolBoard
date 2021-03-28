@@ -1,6 +1,6 @@
 const SocketIO = require('socket.io');
 const axios = require('axios');
-const { Room } = require('./models');
+const { Room,User } = require('./models');
 
 var socketRoom = [];
 var concaveRoom = [];
@@ -159,49 +159,45 @@ module.exports = (server, app, sessionMiddleware) => {
                     socket.broadcast.to(roomKey).emit('completeMatch', {color:"black",room:roomKey,turn:true,});
                     socket.join(roomKey);
                     concaveRoom[roomKey].member[1] = socket.id;
-                    concave.to(roomKey).emit('completeMatch', {color:"white",room:roomKey,turn:false,});
+					concaveRoom[roomKey].youProfile = data.profile;
+					concaveRoom[roomKey].youName = data.name;
+					concaveRoom[roomKey].youId = data.id;
+					concaveRoom[roomKey].youWin = data.win;
+					concaveRoom[roomKey].youLose = data.lose;
+
+                    concave.to(roomKey).emit('completeMatch', {color:"white",room:roomKey,turn:false,meName:concaveRoom[roomKey].meName,
+															   meProfile:concaveRoom[roomKey].meProfile,
+															   meId:concaveRoom[roomKey].meId,
+															   meWin:concaveRoom[roomKey].meWin,
+															   meLose:concaveRoom[roomKey].meLose,
+															   youName:concaveRoom[roomKey].youName,
+															   youId:concaveRoom[roomKey].youId,
+															   youWin:concaveRoom[roomKey].youWin,
+															   youLose:concaveRoom[roomKey].youLose,
+															   youProfile:concaveRoom[roomKey].youProfile,});
                     return;
                 }
             }
 
             socket.join(socket.id);
-            concaveRoom[socket.id] = { id: socket.id, member: [] };
+            concaveRoom[socket.id] = { id: socket.id, member: []};
             concaveRoom[socket.id].member[0] = socket.id;
+			concaveRoom[socket.id].meProfile = data.profile;
+			concaveRoom[socket.id].meName = data.name;
+			concaveRoom[socket.id].meId = data.id;
+			concaveRoom[socket.id].meWin = data.win;
+			concaveRoom[socket.id].meLose = data.lose;
+			
+			
         });
         socket.on('cancelRequest', function (data) {
             socket.leave(socket.id);
             console.log('cancel');
             delete concaveRoom[socket.id];
         });
-        socket.on('reRequest', function (data) {
-            for (var key in concaveRoom) {
-                if (
-                    concaveRoom[key].member[0] == socket.id ||
-                    concaveRoom[key].member[1] == socket.id
-                ) {
-                    concave.to(key).emit('endChat', {});
-                    socket.leave(concaveRoom[key].member[0]);
-                    socket.leave(concaveRoom[key].member[1]);
-                    delete concaveRoom[socket.id];
-                }
-            }
-            for (var key in concaveRoom) {
-                console.log(concaveRoom[key]);
-                if (concaveRoom[key].member.length == 1) {
-                    var roomKey = concaveRoom[key].id;
-                    socket.broadcast.to(roomKey).emit('completeMatch', {color:"black",room:roomKey,turn:true,});
-                    socket.join(roomKey);
-                    concaveRoom[roomKey].member[1] = socket.id;
-                    concave.to(roomKey).emit('refind', {});
-                    concave.to(roomKey).emit('completeMatch', {color:"white",room:roomKey,turn:false,});
-                    return;
-                }
-            }
-            socket.join(socket.id);
-            socket.emit('refind', {});
-            concaveRoom[socket.id] = { id: socket.id, member: [] };
-            concaveRoom[socket.id].member[0] = socket.id;
-        });
+		socket.on('time',(data)=>{
+	        concave.to(data.room).emit('time', data);
+		})
 		// 아마 고쳐야하는 부분
         socket.on('playTurn', (data) => {
             socket.broadcast.to(data.room).emit('turnPlayed', {
@@ -209,23 +205,41 @@ module.exports = (server, app, sessionMiddleware) => {
                 room: data.room,
             });
         });
-		 socket.on('gameEnded', (data) => {
+		 socket.on('gameEnded', async(data) => {
+			 if(data.win){
+				 const lose=data.win==concaveRoom[data.room].meId?concaveRoom[data.room].youId:concaveRoom[data.room].meId;
+				 await User.increment({ concaveWin: 1 }, { where: { id: data.win } });
+				 await User.increment({ concaveLose: 1 }, { where: { id: lose } });
+			 }
+			 if(data.lose){
+				 const win=data.lose==concaveRoom[data.room].meId?concaveRoom[data.room].youId:concaveRoom[data.room].meId;
+				 await User.increment({ concaveLose: 1 }, { where: { id: data.lose } });
+				 await User.increment({ concaveWin: 1 }, { where: { id: win } });
+			 }
+			 
 	        socket.broadcast.to(data.room).emit('gameEnd', data);
      	   socket.leave(data.room);
+			 delete concave[data.room];
   		  });
     
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async() => {
             console.log('concave 네임스페이스에 접속 헤제');
             const currentRoom = socket.adapter.rooms;
             const userCount = currentRoom ? currentRoom.size : 0;
             concave.emit('exit', { userCount });
-
             for (var key in concaveRoom) {
                 if (
                     concaveRoom[key].member[0] == socket.id ||
                     concaveRoom[key].member[1] == socket.id
                 ) {
-                    concave.to(key).emit('endChat', {});
+					const win=concaveRoom[key].member[0]==socket.id?concaveRoom[key].youId :concaveRoom[key].meId;
+					const lose=concaveRoom[key].member[0]==socket.id?concaveRoom[key].meId :concaveRoom[key].youId;
+					
+				 await User.increment({ concaveLose: 1 }, { where: { id: lose } });
+				 await User.increment({ concaveWin: 1 }, { where: { id: win } });
+
+					concave.to(key).emit('endChat', {});
+					concave.to(key).emit('gameEnd',{room:key,message:'Game ended with disconnected',});
                     socket.leave(concaveRoom[key].member[0]);
                     socket.leave(concaveRoom[key].member[1]);
                     delete concaveRoom[socket.id];

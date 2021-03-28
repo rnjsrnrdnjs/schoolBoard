@@ -182,11 +182,19 @@ a{text-decoration : none;}
 	padding:5px;
 }
 header{
-	    width: 100%;
+	width: 100%;
+    background-image: url(/manito.svg);
+    background-size: 50% 100%;
+    padding-bottom: 10%;
+    background-repeat: no-repeat;
+    background-position: -20% 0%;
     height: 8%;
-    margin-bottom: 16%;
-    background: white;
+    background-color: white;
+}
+.headLine{
+	width: 100%;
     border-bottom: 2px solid #FFF0F5;
+    height: 8vh;
 }
 .push{
 	height:10%;
@@ -218,6 +226,7 @@ footer{
 	float:left;
 }
 #hdFont{
+	    margin-left: 25%;
 	color:#FF7A85;
 	font-size:1.5em;
 	float:left;
@@ -531,10 +540,6 @@ label[for='gif'] { cursor: pointer; padding: 5px; }
 
 /*  오목 css start */
 .concave{
-	/*
-	display: flex;
-	align-items: center;
-    justify-content: center;*/
 	margin: 0;
 	padding: 0;
 	font-weight: lighter;
@@ -543,8 +548,8 @@ label[for='gif'] { cursor: pointer; padding: 5px; }
 .tile{
 	display: block;
 	float: left;
-	width: 3em;
-	height: 3em;
+	width:6.666666666666667vw;
+	height:6.666666666666667vw;
 	font-family: Helvetica;
 	background-image: url("/cross.png");
 	background-repeat: no-repeat;
@@ -560,8 +565,7 @@ label[for='gif'] { cursor: pointer; padding: 5px; }
 
 .center{
 	margin: 0 auto;
-	width: 800px;
-	height: 800px;
+	width: 100%;
 }
 
 #color{
@@ -569,10 +573,6 @@ label[for='gif'] { cursor: pointer; padding: 5px; }
 	height: 30px;
 	border: 1px solid #b5a397;
 	border-radius: 20%;
-	margin-bottom: 1em;
-	margin-left:auto; 
-	margin-right:0;
-    margin-top: -2.5em;
 }
 
 #time{

@@ -1,107 +1,156 @@
 {% extends 'layout.html' %} {% block content %}
 
 <div class="concave">
-    <div class="menu" style="background-color:#fcfcfc">
-		
-        <div id="title" style="width: 100%; height: 10vh; background: linear-gradient(to right,#FFB4B9, #fffcdc);"><span style="font-weight:bold; padding:5%;">
-			<span style="color:white;">마니또</span> <span>오목</span> <img src="/game-controller.svg" style="width:10%; height:auto;">  </span>
-			<div
+    <div class="menu">
+        <div
+            id="title"
             style="
-               display: inline-block;
-    padding: 5%;
-    font-size: 0.8em;
-    color: #282828;
-    font-weight: bold;
+                width: 100%;
+                height: 10vh;
+                background: linear-gradient(to right, #ffb4b9, #fffcdc);
             "
         >
-            접속인원 :
-            <span id="userCount"></span>
+            <span style="font-weight: bold; padding: 5%;">
+                <span style="color: white;">마니또</span> <span>오목</span>
+                <img src="/game-controller.svg" style="width: 10%; height: auto;" />
+            </span>
+            <div
+                style="
+                    display: inline-block;
+                    padding: 5%;
+                    font-size: 0.8em;
+                    color: #282828;
+                    font-weight: bold;
+                "
+            >
+                접속인원 :
+                <span id="userCount"></span>
+            </div>
         </div>
-		</div>
 
-	<div style="border: 1px solid #d2d2d2;
-    background-color: aliceblue;
-    height: 80vh;">
-        <div id="alert" style="text-align: center;
-    margin-top: 2%;
-    color: #282828;font-weight: bold;"></div>
-        <div class="welcome" style="text-align: center;
-    margin-top: 2%;
-    color: #828282;
-    font-weight: bold;"><img src="/h1.svg" style="width:5%;">앱 이용자들과 오목을 즐겨보세요<img src="/h2.svg" style="width:5%;"></div>
-		<div style="width;100%; text-align:center;">
-		<img src="/c4.svg" style="width:50%;height:50%;">
-			<div> 흑돌은 3x3, 4x4, 6목 이상을 둘수없고 흰돌은 제약이없는 렌주룰로 진행됩니다! </div>
-		</div>
-        
-		<div style="width:100%; text-align:center;">			
-        <button
-            class="btn8"
-            id="findMatch"
-            type="submit"
-            style="
-                display: inline-block;
-     width: 100px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    padding: 2%;
-    background-color: rgb(255, 158, 155);
-    box-shadow: crimson 5px 5px;
-            "
-        >
-            <img src="/start.svg" style="width:100%;">시작하기
-        </button>
-        <button
-            class="btn8"
-            id="cancelMatch"
-            type="submit"
-            style="
-                display: none;
-    width: 100px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    padding: 2%;
-    background-color: rgb(255, 158, 155);
-    box-shadow: crimson 5px 5px;
-            "
-        >
-           <img src="/start.svg" style="width:100%;">취소하기
-        </button>
-        <button
-            class="btn8"
-            id="reMatch"
-            type="submit"
-            style="
-                display: none;
-                 width: 100px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    padding: 2%;
-    background-color: rgb(255, 158, 155);
-    box-shadow: crimson 5px 5px;
-            "
-        >
-           <img src="/start.svg" style="width:100%;">다시하기
-        </button>
-					</div>
+        <div style="border: 1px solid #d2d2d2; background-color: #fcfcfc; height: 80vh;">
+			<div style="text-align:center;    color: #828282;">
+				<span id="win" style="">승 : {{user.concaveWin}}</span>
+				<span id="lose" style="    margin-left: 10%;">패 : {{user.concaveLose}}</span>
+			</div>
 
-        <div id="name" style="display: none;">{{user.nick}}</div>
+			<div
+                id="alert"
+                style="text-align: center; margin-top: 2%; color: #282828; font-weight: bold;"
+            ></div>
+            <div
+                class="welcome"
+                style="
+                    text-align: center;
+                    margin-top: 2%;
+                    color: darksalmon;
+                    font-weight: bold;
+                    margin-bottom: 5%;
+                "
+            >
+                앱 이용자들과 오목을 즐겨보세요<img src="/war.svg" style="width: 5%;" />
+            </div>
+            <div style="width;100%; text-align:center;     margin-bottom: 4%;">
+                <img
+                    src="/concave.svg"
+                    style="
+                        width: 80%;
+                        border-radius: 5%;
+                        background-color: white;
+                        border: 1px solid pink;
+                    "
+                />
+                <div style="color: #828282; text-shadow: 1px 1px #d2d2d2;">
+                    흑돌은 3x3, 4x4, 6목 이상을 둘수없고 <br />흰돌은 제약이없는 <br />렌주룰로
+                    진행됩니다!
+                </div>
+            </div>
+
+            <div style="width: 100%; text-align: center;">
+                <button
+                    class="btn8"
+                    id="findMatch"
+                    type="submit"
+                    style="
+                        display: inline-block;
+                        width: 100px;
+                        font-size: 0.8rem;
+                        font-weight: bold;
+                        color: white;
+                        padding: 2%;
+                        background-color: rgb(255, 158, 155);
+                        box-shadow: crimson 5px 5px;
+                    "
+                >
+                    <img src="/start.svg" style="width: 100%;" />시작하기
+                </button>
+                <button
+                    class="btn8"
+                    id="cancelMatch"
+                    type="submit"
+                    style="
+                        display: none;
+                        width: 100px;
+                        font-size: 0.8rem;
+                        font-weight: bold;
+                        color: white;
+                        padding: 2%;
+                        background-color: rgb(255, 158, 155);
+                        box-shadow: crimson 5px 5px;
+                    "
+                >
+                    <img src="/start.svg" style="width: 100%;" />취소하기
+                </button>
+				<div id="alert2" style="margin-top:2%;">
 				</div>
-
+            </div>
+        </div>
     </div>
-	
-    <div class="gameBoard">
-        <button class="goBack" onclick="window.location.reload()">Go back</button>
-        <div id="userHello"></div>
-        <div id="turn"></div>
-        <div id="color"></div>
-        <div class="center"></div>
-        <div id="time">상대의 차례입니다!</div>
+
+    <div class="gameBoard" style="background-color: #fcfcfc;">
+        <div
+            id="title"
+            style="
+                width: 100%;
+                height: 10vh;
+                background: linear-gradient(to right, #ffb4b9, #fffcdc);
+            "
+        >
+            <span style="font-weight: bold; padding: 5%;">
+                <span style="color: white;">마니또</span> <span>오목</span>
+                <img src="/game-controller.svg" style="width: 10%; height: auto;" />
+            </span>
+            <button class="goBack btn8" style="padding: 2%;" onclick="window.location.reload()">
+                기권하기
+            </button>
+        </div>
+        <div style="text-align:center;">
+            <span id="me" style=" font-size: 0.4rem;"></span
+            >
+			<img src="/vs.svg" style="width: 10%;" />
+            <span id="you" style="font-size: 0.4rem;"></span>
+        </div>
+        <div style="text-align:center;">
+            <span id="me1" style=" font-size: 1rem;"></span
+            >,
+            <span id="you1" style="font-size: 1rem;"></span>
+        </div>
+
+        <div
+            id="turn"
+            style="display: inline-block; color: #ff9e9b; font-weight: bold; margin-right: 2%;"
+        ></div>
+        <div id="color" style="display: inline-block;"></div>
+        <div style="text-align: center;">
+            <div class="center"></div>
+        </div>
+        <div id="time">남은시간 : 30</div>
     </div>
 </div>
+<div id="name" style="display: none;">{{user.nick}}</div>
+<div id="profile" style="display: none;">{{user.profile}}</div>
+<div id="id" style="display: none;">{{user.id}}</div>
+
 
 <div class="push"></div>
 <footer>

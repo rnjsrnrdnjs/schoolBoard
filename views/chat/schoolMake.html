@@ -1,7 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <header>
-    <img src="/manito.svg" id="hdImg" />
-    <div id="hdFont">
+	<div class="headLine"><div id="hdFont">
         <a href="/main" class="ax">마니또</a>
     </div>
 	{% if alarm===true %}
@@ -14,9 +13,17 @@
 	{% else %}
 		<a class="ax" href="/myRoom"><i class="far fa-paper-plane "style=" vertical-align: middle; color: black; float: right; padding: 20px 20px 0px 0px;"></i></a>
 	{% endif %}
+	</div>
+
 </header>
 
-<fieldset style="    box-sizing: border-box; width:100%; text-align:center; border:none; height:60%;" class="makeBG">
+<div style="box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    border: 1px solid blanchedalmond;
+    height: 80vh;
+    background-color: cornsilk;
+    box-shadow: 3px 3px beige;">
     <legend style="padding-top:10%;">채팅방 생성</legend>
     <form action="/post/schoolMake" method="post">
        <div>
@@ -30,10 +37,13 @@
 		<input style="width:60%; height:20px; border:1px solid #ffdbde; margin-bottom:10px;" maxlength="15" type="password" name="password" placeholder="비밀번호(없으면 공개방)">  
 	  </div>
       <div>
-        <button class="btn8" style="background-color:white; font-size:1.2em;" type="submit"><i class="fas fa-dice-d6 fa-lg"></i> 생성</button>
+        <button class="btn8" style="background-color:white; font-size:1.2em;margin-bottom: 2%;" type="submit"><i class="fas fa-dice-d6 fa-lg"></i> 생성</button>
       </div>
+		<div  class="makeBG" style="width:100%;height:200px;">
+			
+		</div>
     </form>
-  </fieldset>
+  </div>
 
 
 
