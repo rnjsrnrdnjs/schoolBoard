@@ -1,13 +1,16 @@
-const SocketIO = require('socket.io');
+const Socket = require('socket.io');
+const redisAdapter = require('socket.io-redis');
 const axios = require('axios');
 const { Room,User } = require('./models');
+
 
 var socketRoom = [];
 var concaveRoom = [];
 
 module.exports = (server, app, sessionMiddleware) => {
-    const io = SocketIO(server, { path: '/socket.io' });
-    app.set('io', io);
+    const io = Socket(server, { path: '/socket.io' });
+    io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
+	app.set('io', io);
     const myRoom = io.of('/myRoom');
     const myChat = io.of('/myChat');
 
