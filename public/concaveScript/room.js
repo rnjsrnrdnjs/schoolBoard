@@ -1,6 +1,7 @@
 var player, game;
 const socket = io.connect('https://schoolboard-raidd.run.goorm.io/concave', {
       path: '/socket.io',
+	transports: [ 'websocket']
 });
 socket.on('join', function (data) {
 		document.getElementById('userCount').innerHTML=data.userCount;

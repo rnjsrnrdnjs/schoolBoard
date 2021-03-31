@@ -120,6 +120,7 @@ router.post('/roomAll/:id/img', isLoggedIn, upload.single('img'), async (req, re
                 },
             ],
         });
+
         req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
         res.send('ok');
     } catch (error) {
@@ -645,6 +646,7 @@ router.post('/roomAll/:id/chat', isLoggedIn, async (req, res, next) => {
                 },
             ],
         });
+
         req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
         res.send('ok');
     } catch (err) {

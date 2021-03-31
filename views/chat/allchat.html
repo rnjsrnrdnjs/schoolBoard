@@ -69,10 +69,10 @@
 	 
 const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chatAll', {
       path: '/socket.io',
-		  transports: ['websocket'],
-
+	transports: [ 'websocket']
     });
     socket.on('join', function (data) {
+		console.log(2);
       const div = document.createElement('div');
       div.classList.add('system');
       const chat = document.createElement('div');
@@ -91,7 +91,9 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chatAll', {
 		/*document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;*/
     });
     socket.on('chat', function (data) {
-      const div = document.createElement('div');
+		console.log(1);
+		console.log(data);
+		const div = document.createElement('div');
       if (data.user === '{{user}}') {
         div.classList.add('mine');
       } else {
@@ -151,7 +153,7 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chatAll', {
       axios.post('/post/roomAll/{{room.id}}/img', formData)
         .then(() => {
           e.target.file = null;
-		  location.href="";
+		  document.location.reload(true);
         })
         .catch((err) => {
           console.error(err);

@@ -8,10 +8,17 @@ var socketRoom = [];
 var concaveRoom = [];
 
 module.exports = (server, app, sessionMiddleware) => {
-    const io = Socket(server, { path: '/socket.io' });
-    io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
+    const io = Socket(server, { path: '/socket.io',
+     transports: ['websocket'],
+	  upgrade: false
+	});
 	app.set('io', io);
-    const myRoom = io.of('/myRoom');
+   
+	 io.use((socket, next) => {
+        sessionMiddleware(socket.request, socket.request.res, next);
+    });
+	
+	const myRoom = io.of('/myRoom');
     const myChat = io.of('/myChat');
 
     myRoom.on('connection', (socket) => {
@@ -27,8 +34,6 @@ module.exports = (server, app, sessionMiddleware) => {
         const {
             headers: { referer },
         } = req;
-        console.log(req.headers + ' ??');
-        console.log(referer + '! !');
 
         const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
         socket.join(roomId);
@@ -47,9 +52,7 @@ module.exports = (server, app, sessionMiddleware) => {
     const room = io.of('/room');
     const chat = io.of('/chat');
 
-    io.use((socket, next) => {
-        sessionMiddleware(socket.request, socket.request.res, next);
-    });
+   
 
     roomRandom.on('connection', async (socket) => {
         console.log('roomRandom 네임스페이스에 접속');
