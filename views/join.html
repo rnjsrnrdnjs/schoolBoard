@@ -12,24 +12,17 @@
 			<a href="/findSchool" class="btn"><i class="fas fa-search-location"></i>학교선택</a>
 		{% endif %}
 
-		{% if nick %}
-		    <div class="input_group">
-        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; "maxlength="8" id="nick" type="nick" name="nick" value="{{nick}}" placeholder="사용할 닉네임" required autofocus/>
-		<div id="overlap" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
-	    </div>
-		{% else %}
-		    <div class="input_group">
+		<div class="input_group">
         <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa; "maxlength="8" id="nick" type="nick" name="nick" placeholder="사용할 닉네임" required autofocus/>
-		<div id="overlap" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
+		<div id="overlapNick" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
 	    </div>
-		{% endif %}
     <p></p>
 		<div class="input_group">
 			
    		</div>
     <div class="input_group">
-        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa " id="email" type="email" name="email"  placeholder="이메일" required  />
-			<a href="/findSchool" class="btn"><i class="fas fa-envelope-square"></i>인증하기</a>
+        <input style="width:60% ;border:none; border-bottom:1px solid #828282; background-color:#fafafa " maxlength="20" id="email" type="Id" name="email"  placeholder="아이디" required  />
+		<div id="overlapId" class="btn"><i class="far fa-check-circle"></i>중복확인</div>
 
     </div>
     <p></p>
@@ -57,11 +50,32 @@
 </div>
 {% endblock %}
 {% block script %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-	 document.getElementById('overlap').addEventListener('click', function (e) {
-      e.preventDefault();
+	 document.getElementById('overlapNick').addEventListener('click', function (e) {
 		 const nick=document.getElementById('nick').value;
-	    location.href=`/auth/overlap/join/${nick}`;
+		  axios.post(`/auth/overlapNick/${nick}`)
+        	.then((data) => {
+			  if(data.data.chk)
+				alert('사용가능한 닉네임 입니다.')				  
+			  else
+				alert('중복된 닉네임 입니다.')				  
+	        })
+       		 .catch((err) => {
+      	  });
     });
+	 document.getElementById('overlapId').addEventListener('click', function (e) {
+		 const email=document.getElementById('email').value;
+		  axios.post(`/auth/overlapId/${email}`)
+        	.then((data) => {
+			  if(data.data.chk)
+				alert('사용가능한 닉네임 입니다.')				  
+			  else
+				alert('중복된 닉네임 입니다.')				  
+	        })
+       		 .catch((err) => {
+      	  });
+    });
+	
 </script>
 {% endblock %}

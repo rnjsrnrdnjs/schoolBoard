@@ -250,6 +250,7 @@ router.get('/roomAll/:id', isLoggedIn,async (req, res, next) => {
 				UserId:req.user.id,
 			},
 		});
+		
         if (!chk) {
 			await ChatAll.create({
 				user:'system',
@@ -324,7 +325,6 @@ router.get('/myRoom/:id', isLoggedIn,async (req, res, next) => {
 				});
 			}
 		}));
-		
 		if(room.kind=="individual"){
 	        return res.render('chat/myChat', {
 	            room,
@@ -464,7 +464,7 @@ router.get('/notice', isLoggedIn, async (req, res, next) => {
 });
 router.get('/admin', isLoggedIn, async (req, res, next) => {
     try {
-		if(req.user.nick!=="운영자" || req.user.email!=="090tree@gmail.com"){
+		if(req.user.nick!=="운영자" || req.user.email!=="admin090"){
 		   res.redirect('/?Error=운영자 전용페이지입니다.')
 		}
 		res.render('main/admin',{

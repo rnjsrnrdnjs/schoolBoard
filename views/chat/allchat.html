@@ -67,12 +67,16 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
 	 
-const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chatAll', {
+const socket = io.connect('http://3.36.85.152/chatAll', {
       path: '/socket.io',
 	transports: [ 'websocket']
     });
-    socket.on('join', function (data) {
-		console.log(2);
+	  const url=window.location.href;
+	  const referer=url.split('/')[url.split('/').length - 1].replace(/\?.+/, '');
+	  socket.emit('in',{referer});
+	  
+	  
+	socket.on('join', function (data) {
       const div = document.createElement('div');
       div.classList.add('system');
       const chat = document.createElement('div');
@@ -91,8 +95,6 @@ const socket = io.connect('https://schoolboard-raidd.run.goorm.io/chatAll', {
 		/*document.getElementById('showFoot').scrollTop = document.getElementById('showFoot').scrollHeight;*/
     });
     socket.on('chat', function (data) {
-		console.log(1);
-		console.log(data);
 		const div = document.createElement('div');
       if (data.user === '{{user}}') {
         div.classList.add('mine');

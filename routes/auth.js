@@ -55,38 +55,50 @@ router.post('/overlap/change', isLoggedIn, async (req, res, next) => {
 		next(err);
 	}
 });
-router.get('/overlap/join', isNotLoggedIn, async (req, res, next) => {
+router.post('/overlapNick/:nick', isNotLoggedIn, async (req, res, next) => {
 	try{
-		return res.redirect(`/join?nickError=닉네임을 입력해주세요`);
-	}catch(err){
-		console.error(err);
-		next(err);
-	}
-});
-router.get('/overlap/join/:nick', isNotLoggedIn, async (req, res, next) => {
-	try{
-		const user=await User.findOne({
-			where:{nick:req.params.nick},
+		const findUser=await User.findOne({
+			where:{
+				nick:req.params.nick,	
+			}
 		});
-		if(user){
-			return res.redirect(`/join?nickError=중복된 닉네임 입니다.`);
-		}
-		return res.redirect(`/join?nickError=사용가능한 닉네임 입니다.`);
+		if(findUser)
+			return res.json({ chk : false });
+		else
+			return res.json({ chk: true });
 	}catch(err){
 		console.error(err);
 		next(err);
 	}
 });
+router.post('/overlapId/:email', isNotLoggedIn, async (req, res, next) => {
+	try{
+		const findUser=await User.findOne({
+			where:{
+				email:req.params.email,	
+			}
+		});
+		if(findUser)
+			return res.json({ chk : false });
+		else
+			return res.json({ chk: true });
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { email, password , nick, sexual,code} = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
     const exUser2 = await User.findOne({ where: { nick } });
     if (exUser) {
-      return res.redirect(`/join?loginError=123`);
+      return res.redirect(`/join?loginError=중복된 아이디 입니다.`);
   }
 	if(exUser2){
-      return res.redirect(`/join?loginError=1234`);
+      return res.redirect(`/join?loginError=중복된 닉네임 입니다.`);
 	}
     const hash = await bcrypt.hash(password, 12);
 	const sname=await School.findOne({

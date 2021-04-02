@@ -1,5 +1,5 @@
 var player, game;
-const socket = io.connect('https://schoolboard-raidd.run.goorm.io/concave', {
+const socket = io.connect('http://3.36.85.152/concave', {
       path: '/socket.io',
 	transports: [ 'websocket']
 });

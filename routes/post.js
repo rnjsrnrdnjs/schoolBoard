@@ -647,7 +647,7 @@ router.post('/roomAll/:id/chat', isLoggedIn, async (req, res, next) => {
             ],
         });
 
-        req.app.get('io').of('/chatAll').to(req.params.id).emit('chat', chat2);
+        req.app.get('io').of('/chatAll').to(req.params.id).emit('chat',chat2);
         res.send('ok');
     } catch (err) {
         console.error(error);

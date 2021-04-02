@@ -1,26 +1,38 @@
 const Socket = require('socket.io');
-const redisAdapter = require('socket.io-redis');
+const redis = require('socket.io-redis');
 const axios = require('axios');
 const { Room,User } = require('./models');
-
+const cookieParser = require('cookie-parser');
+const cookie = require('cookie-signature');
 
 var socketRoom = [];
 var concaveRoom = [];
 
+
+
 module.exports = (server, app, sessionMiddleware) => {
+	
+
+	
     const io = Socket(server, { path: '/socket.io',
      transports: ['websocket'],
-	  upgrade: false
+	  upgrade: false,
 	});
+	//io.adapter(redis({ host: 'localhost', port: 6379 }));
+	
 	app.set('io', io);
-   
-	 io.use((socket, next) => {
-        sessionMiddleware(socket.request, socket.request.res, next);
-    });
+	const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 	
 	const myRoom = io.of('/myRoom');
     const myChat = io.of('/myChat');
-
+	myRoom.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	myRoom.use(wrap(sessionMiddleware));
+	myChat.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	myChat.use(wrap(sessionMiddleware));
+	
+	
+	
+	
     myRoom.on('connection', (socket) => {
         console.log('myRoom 네임스페이스에 접속');
         const req = socket.request;
@@ -30,16 +42,14 @@ module.exports = (server, app, sessionMiddleware) => {
     });
     myChat.on('connection', async (socket) => {
         console.log('myChat 네이스페이스 접속');
-        const req = socket.request;
-        const {
-            headers: { referer },
-        } = req;
-
-        const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
-        socket.join(roomId);
-        socket.on('disconnect', async () => {
+        socket.on('in',async(data)=>{
+			socket.join(data.referer);
+			app.set(`${socket.id}`,socket.id);
+		});
+       socket.on('disconnect', async () => {
             console.log('myChat 네이스페이스 접속 해제');
-            socket.leave(roomId);
+		console.log(app.get(`${socket.id}`)+" @");
+            socket.leave(app.get(`${socket.id}`));
         });
     });
 
@@ -51,8 +61,18 @@ module.exports = (server, app, sessionMiddleware) => {
 
     const room = io.of('/room');
     const chat = io.of('/chat');
-
-   
+   roomRandom.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	roomRandom.use(wrap(sessionMiddleware));
+	concave.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	concave.use(wrap(sessionMiddleware));
+	roomAll.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	roomAll.use(wrap(sessionMiddleware));
+	chatAll.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	chatAll.use(wrap(sessionMiddleware));
+	room.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	room.use(wrap(sessionMiddleware));
+	chat.use(wrap(cookieParser(process.env.COOKIE_SECRET)));
+	chat.use(wrap(sessionMiddleware));
 
     roomRandom.on('connection', async (socket) => {
         console.log('roomRandom 네임스페이스에 접속');
@@ -265,15 +285,13 @@ module.exports = (server, app, sessionMiddleware) => {
     });
     chatAll.on('connection', async (socket) => {
         console.log('chatAll 네이스페이스 접속');
-        const req = socket.request;
-        const {
-            headers: { referer },
-        } = req;
-        const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
-        socket.join(roomId);
+		socket.on('in',async(data)=>{
+			socket.join(data.referer);
+			app.set(`${socket.id}`,socket.id);
+		});
         socket.on('disconnect', async () => {
             console.log('chatAll 네이스페이스 접속 해제');
-            socket.leave(roomId);
+            socket.leave(app.get(`${socket.id}`));
         });
     });
 
@@ -287,15 +305,13 @@ module.exports = (server, app, sessionMiddleware) => {
 
     chat.on('connection', async (socket) => {
         console.log('chat 네이스페이스 접속');
-        const req = socket.request;
-        const {
-            headers: { referer },
-        } = req;
-        const roomId = referer.split('/')[referer.split('/').length - 1].replace(/\?.+/, '');
-        socket.join(roomId);
+        socket.on('in',async(data)=>{
+			socket.join(data.referer);
+			app.set(`${socket.id}`,socket.id);
+		});
         socket.on('disconnect', async () => {
             console.log('chat 네이스페이스 접속 해제');
-            socket.leave(roomId);
+            socket.leave(app.get(`${socket.id}`));
         });
     });
 };

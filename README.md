@@ -52,12 +52,7 @@ axios로 포스트를 보내고 res.send('ok')시 부드러운 페이지 요청 
 
 
 todo
-#1.오목구현
-#1-2.앱디자인 끝내기
-4.redis socketio 멀티프로세스 해결하기
-2.twilio 휴대폰인증,비밀번호찾기
-https://velog.io/@josworks27/Twilio%EB%A1%9C-SMS-%EB%B3%B4%EB%82%B4%EA%B8%B0
-https://darrengwon.tistory.com/919
+#4.redis socketio 멀티프로세스 해결하기
 3.aws 람다? 데이터베이스? lightsail 배포하기, redis 이용
 5.expo push notification
 https://aspdotnet.tistory.com/2115
