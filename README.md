@@ -8,6 +8,17 @@ https://github.com/nnnlog/neis
 https://fontawesome.com/
 https://www.flaticon.com/
 
+무료 이미지 사이트
+https://kor.pngtree.com/?source_id=1137&chnl=ggas&srid=1598531476&gpid=85147337420&asid=399611250442&ntwk=g&tgkw=aud-454159264999:kwd-298232662296&mchk=%EC%A0%80%EC%9E%91%EA%B6%8C%20%EC%97%86%EB%8A%94%20%EC%9D%B4%EB%AF%B8%EC%A7%80&mcht=b&pylc=1030760&dvic=c&gclid=EAIaIQobChMItJSRgYzd8AIV9sIWBR3kAAk9EAAYAyAAEgI94vD_BwE
+https://pixabay.com/ko/illustrations/search/%EB%8F%99%ED%99%94/
+https://undraw.co/illustrations
+https://www.freepik.com/search?dates=any&format=search&from_query=%EB%8F%99%ED%99%94&page=1&query=fairy%20tale&sort=popular&type=vector
+
+
+무료 아이콘 사이트 
+https://fontawesome.com/icons/play-circle?style=solid
+https://www.flaticon.com/search?word=start
+
 //pm2 종료시 npx pm2 kill, 재시작시 npx pm2 reload all
 
 데이터베이스 생성
